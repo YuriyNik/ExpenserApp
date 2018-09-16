@@ -1,0 +1,7 @@
+spring:
+    data:
+        mongodb:
+        #            host: 172.17.0.2
+            host: localhost
+            port: 27017
+            database: restapp

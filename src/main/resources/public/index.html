@@ -1,0 +1,60 @@
+<!doctype html>
+<html ng-app="App">
+<head>
+    <title>Expencies Application</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script src="js/public.js"></script>
+    <meta charset="utf-8">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</head>
+
+<body ng-controller="Expence">
+Привет <b>{{userDetails.username}}</b>!
+
+<form ng-submit="submit()">
+    Запиши-ка расходы - это просто:<br/>
+    <b>Сумма</b><input type="number" ng-model="expence.amount" name="amount" required /><br/>
+    <span ng-show="expence.amount.$touched && expence.amount.$invalid">The name is required.</span>
+    <b>Статья </b><select ng-model="expence.type" name="type" >
+    <option value=""> расходов </option>
+    <option ng-repeat="option in data.userTypes" value="{{option}}">{{option}}</option>
+</select> <a href="user.html">Изменить список</a> <br/>
+    <b>Дата</b><input type="date" ng-model="expence.date" name="date" /><br/>
+    <b>Комментарии</b><input type="memo" ng-model="expence.notes" name="notes" /><br/>
+    <input type="submit" id="submit" value="Добавить" />   <br/>
+</form>
+<br/>
+<b> Подитог на сегодня : {{getTotal()}}</b></br>
+<button ng-click="showForThisMonth(8)" style="color:blueviolet">Август</button>
+<button ng-click="showForThisMonth(9)" style="color:blueviolet">Сентябрь</button>
+<button ng-click="showForThisMonth(0)" style="color:blueviolet">Показать текущий месяц</button>
+<table border="1">
+    <td>Дата</td><td>  &nbsp; &nbsp;&nbsp; Сумма&nbsp;&nbsp;&nbsp;    </td><td>Тип(Кликни на него)</td><td>Примечание</td><td>Удалить</td></tr>
+    <!--<tr ng-repeat="expence in expences">-->
+    <tr ng-repeat="expence in expences | orderBy:'-date'">
+        <td align="center">{{expence.date|date:'dd/MM/yy'}}</td>
+        <td align="center"  ><b>{{expence.amount}}</b></td>
+        <td ng-click="showByType($index)" style="color:blueviolet" align="left">{{expence.type}}</td>
+        <td align="left">{{expence.notes}}</td>
+        <td><button ng-click="removeItem(expence)" style="color:blueviolet">Удалить</button></td>
+    </tr>
+</table>
+<br>
+<p>Сумма:<b>{{getTotal()}}</b></p>
+v1.2.3
+
+
+
+</body>
+</html>

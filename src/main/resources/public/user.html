@@ -1,0 +1,47 @@
+<!doctype html>
+<html ng-app="App">
+<head>
+    <title>Expencies Application</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script src="js/public.js"></script>
+    <meta charset="utf-8">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</head>
+
+<body ng-controller="User">
+Привет <b>{{userDetails.username}}</b>!<a href="/"> Домой</a>
+
+<br/>
+
+Придумай или исправь категории твоих расходов:<br/>
+
+<!-- list of items with a button to remove that item -->
+<ul>
+    <li ng-repeat="type in data.userTypes" >
+        {{type}}
+        <button ng-click="remove($index)" align="center">Удалить</button>
+    </li>
+</ul>
+
+<!-- input and button it add a new item -->
+<div>
+    >> <input type="text" ng-model="input">
+    <button type="submit" ng-click="add()">Добавить</button>
+</div>
+
+
+
+
+</body>
+</html>
