@@ -2,7 +2,8 @@
 .idea/
 *.iml
 target/
-src/main/resources/node_modules/
+src/main/resources/public/node_modules/
+src/main/resources/public/package-lock.json
 dataExp
 .DS_store
 
