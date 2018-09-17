@@ -2,6 +2,7 @@
 .idea/
 *.iml
 target/
+src/main/resources/node_modules/
 dataExp
 .DS_store
 
