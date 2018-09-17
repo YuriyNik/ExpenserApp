@@ -37,9 +37,9 @@
     <input type="submit" id="submit" value="Добавить" />   <br/>
 </form>
 <br/>
-<b> Подитог на сегодня : {{getTotal()}}</b> руб</br>
-<button ng-click="showForThisMonth(8)" style="color:blueviolet">Август</button>
-<button ng-click="showForThisMonth(9)" style="color:blueviolet">Сентябрь</button>
+<b> Подитог на сегодня {{today|date:'dd-MM-yyyy'}} : {{getTotal()}}</b> руб</br>
+<button ng-click="showForThisMonth(prePremonth)" style="color:blueviolet">2 месяца назад</button>
+<button ng-click="showForThisMonth(premonth)" style="color:blueviolet">Прошлый месяц</button>
 <button ng-click="showForThisMonth(0)" style="color:blueviolet">Показать текущий месяц</button>
 <table border="1">
     <td>Дата</td><td>  &nbsp; &nbsp;&nbsp; Сумма&nbsp;&nbsp;&nbsp;    </td><td>Тип(Кликни на него)</td><td>Примечание</td><td>Удалить</td></tr>

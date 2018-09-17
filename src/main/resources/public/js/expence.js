@@ -1,13 +1,19 @@
 
 myApp.controller('Expence', ['$scope','$http', function($scope,$http) {
 
+    $scope.today = new Date();
+    $scope.premonth = new Date().getMonth();
+    $scope.prePremonth = new Date().getMonth() - 1;
+
     $scope.currmonth = 0;
+
+    $scope.curryear = 0;//can be changed for testing
 
     $scope.data = {
         userTypes: []
        };
 
-    console.log('Expence started');
+    console.log('Expence started premonth='+$scope.premonth+';prePremonth='+$scope.prePremonth);
     $http.get(host+'/userDetails', config).
         then(function(response) {
             $scope.userDetails = response.data;
@@ -16,7 +22,7 @@ myApp.controller('Expence', ['$scope','$http', function($scope,$http) {
                 console.log('error!');
                 console.log(response);
                 });
-    $http.get(host+'/expenceForThisMonth/'+$scope.currmonth,config).
+    $http.get(host+'/expenceForThisMonth/'+$scope.currmonth+'/'+$scope.curryear,config).
     then(function(response) {
          $scope.expences = response.data;
     });
@@ -29,9 +35,9 @@ myApp.controller('Expence', ['$scope','$http', function($scope,$http) {
 
 
     $scope.showForThisMonth = function(month) {
-        console.log('show for month='+month);
         $scope.currmonth = month;
-        $http.get(host+'/expenceForThisMonth/'+$scope.currmonth,config).
+        console.log('show for month='+month+';year='+$scope.curryear);
+        $http.get(host+'/expenceForThisMonth/'+$scope.currmonth+'/'+$scope.curryear,config).
         then(function(response) {
         $scope.expences = response.data;
         console.log('expencies reloaded');
@@ -39,8 +45,8 @@ myApp.controller('Expence', ['$scope','$http', function($scope,$http) {
     };
 
     $scope.showByType = function(type) {
-        console.log('showByType for type='+type);
-        $http.get(host+'/expenceByType/'+type+'/'+$scope.currmonth,config).
+        console.log('showByType for type='+type+';month='+$scope.currmonth+';year='+$scope.curryear);
+        $http.get(host+'/expenceByType/'+type+'/'+$scope.currmonth+'/'+$scope.curryear,config).
             then(function(response) {
                 $scope.expences = response.data;
                 console.log('expencies reloaded by type for this month');
@@ -73,11 +79,7 @@ myApp.controller('Expence', ['$scope','$http', function($scope,$http) {
                 console.log('success');
                 console.log(response);
                 $scope.expences.push(response.data);
-
                 $scope.expence.amount = '';
-
-               // $scope.expence = '';
-
             }, function (response) {
                 console.log('error');
                 console.log(response);

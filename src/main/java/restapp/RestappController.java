@@ -116,15 +116,16 @@ public class RestappController {
         return null;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/expenceForThisMonth/{month}")
-    public List<Expence> expenceForParticularMonth(@PathVariable int month) {
+    @RequestMapping(method = RequestMethod.GET, value = "/expenceForThisMonth/{month}/{year}")
+    public List<Expence> expenceForParticularMonth(@PathVariable int month,@PathVariable int year) {
         if (month<1 || month>12) month = LocalDateTime.now().getMonthValue();
-        logger.info("expenceForParticularMonth: expenceForThisMonth for month="+month);
+        if (year<2010 || year>2030) year = LocalDateTime.now().getYear();
+        logger.info("expenceForParticularMonth: expenceForThisMonth for month="+month+";year="+year);
         UserDetails user =
                 (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         logger.info("expenceForParticularMonth:UserDetails getUsername="+user.getUsername()+";Roles="+user.getAuthorities());
 
-        return expenceRepository.findforMonth(user.getUsername(),month);
+        return expenceRepository.findforMonth(user.getUsername(),month,year);
     }
 
 
@@ -155,13 +156,15 @@ public class RestappController {
 
 
     // get all expenceies for partucular type for this month
-    @RequestMapping(method = RequestMethod.GET, value = "/expenceByType/{type}/{month}")
-    public List<Expence> expenceByTypeForMonth(@PathVariable String type,@PathVariable int month) {
+    @RequestMapping(method = RequestMethod.GET, value = "/expenceByType/{type}/{month}/{year}")
+    public List<Expence> expenceByTypeForMonth(@PathVariable String type,@PathVariable int month,@PathVariable int year) {
         if (month<1 || month>12) month = LocalDateTime.now().getMonthValue();
-        logger.info("expenceByTypeForMonth for type="+type+" for month="+month);
+        if (year<2010 || year>2030) year = LocalDateTime.now().getYear();
+
+        logger.info("expenceByTypeForMonth for type="+type+" for month="+month+";year="+year);
         UserDetails user =
                 (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return expenceRepository.findByTypeForMonth(user.getUsername(),type,month);
+        return expenceRepository.findByTypeForMonth(user.getUsername(),type,month,year);
     }
 
 

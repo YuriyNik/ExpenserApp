@@ -13,12 +13,12 @@ public interface ExpenceRepository extends MongoRepository<Expence,String> {
     public List<Expence> findAll();
     @Query("{ 'owner':'?0'}")
     public List<Expence> findAllForUser(String owner);
-    @Query("{ 'owner':'?0','$expr': { '$eq': [{ '$month': '$date' }, ?1 ] } }")
-    public List<Expence> findforMonth(String owner, int month);
+    @Query("{$and:[{'owner':'?0'},{'$expr': { '$eq': [{ '$month': '$date' }, ?1 ] }},{'$expr': { '$eq': [{ '$year': '$date' }, ?2 ] }}]}")
+    public List<Expence> findforMonth(String owner, int month, int year);
     @Query("{ 'owner':'?0'}")
     public List<Expence> findByType(String owner,String type);
-    @Query("{ 'owner':'?0','type':'?1','$expr': { '$eq': [{ '$month': '$date' }, ?2 ] } }")
-    public List<Expence> findByTypeForMonth(String owner,String type,int month);
+    @Query("{$and:[{'owner':'?0'},{'type':'?1'},{'$expr': { '$eq': [{ '$month': '$date' }, ?2 ] }},{'$expr': { '$eq': [{ '$year': '$date' }, ?3 ] }}]}")
+    public List<Expence> findByTypeForMonth(String owner,String type,int month,int year);
     @Query("{ 'owner':null}")
     public List<Expence> findByNullableOwner();
 
