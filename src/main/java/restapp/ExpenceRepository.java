@@ -10,7 +10,6 @@ public interface ExpenceRepository extends MongoRepository<Expence,String> {
     public Expence findByid(String id);
     @Query("{ 'owner':'?0','id':'?1'}")
     public Expence findByidForUser(String owner, String id);
-    public List<Expence> findByReportid(String reportid);
     public List<Expence> findAll();
     @Query("{ 'owner':'?0'}")
     public List<Expence> findAllForUser(String owner);

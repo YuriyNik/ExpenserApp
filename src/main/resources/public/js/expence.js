@@ -38,9 +38,9 @@ myApp.controller('Expence', ['$scope','$http', function($scope,$http) {
     });
     };
 
-    $scope.showByType = function(index) {
-        console.log('showByType for index='+index+';type='+$scope.expences[index].type);
-        $http.get(host+'/expenceByType/'+$scope.expences[index].type+'/'+$scope.currmonth,config).
+    $scope.showByType = function(type) {
+        console.log('showByType for type='+type);
+        $http.get(host+'/expenceByType/'+type+'/'+$scope.currmonth,config).
             then(function(response) {
                 $scope.expences = response.data;
                 console.log('expencies reloaded by type for this month');

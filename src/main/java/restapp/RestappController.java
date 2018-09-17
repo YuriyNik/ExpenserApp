@@ -110,8 +110,7 @@ public class RestappController {
         UserDetails user =
                 (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         logger.info("Your user's roles=" +user.getAuthorities().toString());
-        //TODO fix it to work for multiple roles
-        if (user.getAuthorities().toString().equals("[ROLE_ADMIN]"))
+        if (user.getAuthorities().toString().contains("ROLE_ADMIN"))
             return expenceRepository.findAll();
         logger.info("You user is not authorised for listAllExpence call");
         return null;
@@ -159,18 +158,12 @@ public class RestappController {
     @RequestMapping(method = RequestMethod.GET, value = "/expenceByType/{type}/{month}")
     public List<Expence> expenceByTypeForMonth(@PathVariable String type,@PathVariable int month) {
         if (month<1 || month>12) month = LocalDateTime.now().getMonthValue();
-        logger.info("expenceByTypeForMonth for month="+month);
+        logger.info("expenceByTypeForMonth for type="+type+" for month="+month);
         UserDetails user =
                 (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return expenceRepository.findByTypeForMonth(user.getUsername(),type,month);
     }
 
-    //get all expenceies for the Report by ReportId
-    @RequestMapping(method = RequestMethod.GET, value = "/expence/byReportid/{id}")
-    public List<Expence> listExpenceByReport(@PathVariable String id) {
-        logger.info("Reportid="+id);
-        return expenceRepository.findByReportid(id);
-    }
 
 //modify expence's data
     @RequestMapping(method = RequestMethod.PUT, value = "/expence/{id}")
@@ -192,9 +185,6 @@ public class RestappController {
 
         expenceFromDb.setModified(LocalDateTime.now());
 
-        if(expenceFromClient.getReportid()!=null) {
-            expenceFromDb.setReportid(expenceFromClient.getReportid());
-        }
             expenceRepository.save(expenceFromDb);
             return expenceFromDb.toString();
     }

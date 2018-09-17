@@ -47,7 +47,7 @@
     <tr ng-repeat="expence in expences | orderBy:'-date'">
         <td align="center">{{expence.date|date:'dd/MM/yy'}}</td>
         <td align="center"  ><b>{{expence.amount}}</b></td>
-        <td ng-click="showByType($index)" style="color:blueviolet" align="left">{{expence.type}}</td>
+        <td ng-click="showByType(expence.type)" style="color:blueviolet" align="left">{{expence.type}}</td>
         <td align="left">{{expence.notes}}</td>
         <td><button ng-click="removeItem(expence)" style="color:blueviolet">Удалить</button></td>
     </tr>
