@@ -37,10 +37,13 @@
     <input type="submit" id="submit" value="Добавить" />   <br/>
 </form>
 <br/>
-<b> Подитог на сегодня {{today|date:'dd-MM-yyyy'}} : {{getTotal()}}</b> руб</br>
+<b> Подитог на {{currmonth}}-{{curryear}} : {{getTotal()}}</b> руб<br/>
 <button ng-click="showForThisMonth(prePremonth)" style="color:blueviolet">2 месяца назад</button>
 <button ng-click="showForThisMonth(premonth)" style="color:blueviolet">Прошлый месяц</button>
-<button ng-click="showForThisMonth(0)" style="color:blueviolet">Показать текущий месяц</button>
+<button ng-click="showForThisMonth(0)" style="color:blueviolet">Показать текущий месяц</button><br/>
+<input type="number" ng-model="currmonth" required/>
+<input type="number" ng-model="curryear" required/>
+<button ng-click="showForThisMonth(currmonth)" style="color:blueviolet">Показать {{currmonth}}-{{curryear}} </button><br/>
 <table border="1">
     <td>Дата</td><td>  &nbsp; &nbsp;&nbsp; Сумма&nbsp;&nbsp;&nbsp;    </td><td>Тип(Кликни на него)</td><td>Примечание</td><td>Удалить</td></tr>
     <!--<tr ng-repeat="expence in expences">-->

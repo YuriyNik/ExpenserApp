@@ -5,9 +5,10 @@ myApp.controller('Expence', ['$scope','$http', function($scope,$http) {
     $scope.premonth = new Date().getMonth();
     $scope.prePremonth = new Date().getMonth() - 1;
 
-    $scope.currmonth = 0;
+    $scope.currmonth = new Date().getMonth() +1;
 
-    $scope.curryear = 0;//can be changed for testing
+    $scope.curryear = new Date().getFullYear();//can be changed for testing
+    console.log('curryear='+$scope.curryear);
 
     $scope.data = {
         userTypes: []
