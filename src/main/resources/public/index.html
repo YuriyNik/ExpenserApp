@@ -40,7 +40,7 @@
 <b> Подитог на {{currmonth}}-{{curryear}} : {{getTotal()}}</b> руб<br/>
 <button ng-click="showForThisMonth(prePremonth)" style="color:blueviolet">2 месяца назад</button>
 <button ng-click="showForThisMonth(premonth)" style="color:blueviolet">Прошлый месяц</button>
-<button ng-click="showForThisMonth(today.getMonth()+1)" style="color:blueviolet"><b>Показать текущий месяц</b></button>
+<button ng-click="curryear=today.getFullYear();showForThisMonth(today.getMonth()+1);" style="color:blueviolet"><b>Показать текущий месяц</b></button>
 <br/>
 Выбрать месяц:<input type="number" ng-model="currmonth" style="width: 5%;" required/>
 год:<input type="number" ng-model="curryear" style="width: 10%;" required/>
