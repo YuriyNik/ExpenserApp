@@ -62,4 +62,16 @@ myApp.controller('User', ['$scope','$http', function($scope,$http) {
         $scope.submit = function() {
 
         };
+        $scope.messagePassword='';
+        $scope.changePass = function() {
+            console.log("$scope.newpass="+$scope.newpass+"$scope.newpass2="+$scope.newpass2);
+
+            if (($scope.newpass==$scope.newpass2)&&($scope.newpass!=='')&&(typeof $scope.newpass!== "undefined")){
+                $scope.messagePassword='Пароль обновлён';
+            }else
+                {
+                $scope.messagePassword='Ввведите непустой пароль в оба поля';
+                }
+
+        };
     }]);

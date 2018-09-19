@@ -42,6 +42,16 @@
     <button type="submit" ng-click="add()">Добавить</button>
 </div>
 
+<br/>
+<br/>
+Также можешь изменить свой пароль
+<br/>
+<b>{{messagePassword}}</b>
+<br/>
+    Новый пароль<input type="password" ng-model="newpass" name="newpass" /><br/>
+    Новый пароль еще раз<input type="password" ng-model="newpass2" name="newpass2" /><br/>
+    <input type="submit" ng-click="changePass()" value="Изменить Пароль" />   <br/>
+
 
 
 
