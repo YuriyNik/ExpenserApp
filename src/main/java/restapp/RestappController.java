@@ -38,7 +38,7 @@ public class RestappController {
 
 
     @RequestMapping(method=RequestMethod.POST,value="/user")
-   public User postUser(@RequestBody User user) {
+   public User postNewUser(@RequestBody User user) {
        User userFromDb=userRepository.findByUsername(user.getUsername());
        String[] roles=user.getRoles();
        if ((Arrays.asList(roles).contains("ADMIN"))&&(!user.getUsername().equals("admin"))){
@@ -53,6 +53,24 @@ public class RestappController {
        }
        logger.info("Create user: User "+user.getUsername()+" is already created..");
        return null;
+    }
+
+    @RequestMapping(method=RequestMethod.POST,value="/userProfile")
+    public User postUserProfile(@RequestBody User user) {
+        UserDetails userAuthorised =
+                (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userFromDb=userRepository.findByUsername(userAuthorised.getUsername());
+        logger.info("postUserProfile for userFromDb=" + userFromDb);
+        if ((userFromDb!=null )&&(!user.getPassword().isEmpty())) {
+            userFromDb.setModified(LocalDateTime.now());
+            userFromDb.setPassword(user.getPassword());
+            userDetailsServiceImp.createUser(userFromDb);
+            logger.info("postUserProfile Updated user=" + userFromDb);
+            logger.info("postUserProfile load user to context="+userDetailsServiceImp.loadUserByUsername(userFromDb.getUsername()));
+            return userFromDb;
+        }
+        logger.info("postUserProfile user is not found at DB or empty password provided..");
+        return null;
     }
 ///for migration from v1 to v1.2 only - to be removed later
     @RequestMapping(method = RequestMethod.GET, value = "/upgrade/setOwner")

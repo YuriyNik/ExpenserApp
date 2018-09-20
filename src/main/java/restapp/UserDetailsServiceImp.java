@@ -51,17 +51,8 @@ public class UserDetailsServiceImp implements UserDetailsService {
 
    // @Override
     public User createUser(User user) {
-       // User returnValue = new User();
-       // ...
-
         // Generate secure password
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        //UserEntity userEntity = new UserEntity();
-      //  BeanUtils.copyProperties(userDto, userEntity);
-        // Record data into a database
-       // userEntity = userRepository.save(userEntity);
-
-         //...
         return userRepository.save(user);
     }
 
