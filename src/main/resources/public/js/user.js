@@ -7,6 +7,10 @@ myApp.controller('User', ['$scope','$http', function($scope,$http) {
           userTypes: []
       };
 
+       $scope.user = {
+                password: ''
+            };
+
       $scope.add = function() {
 
       var a = $scope.data.userTypes.indexOf($scope.input);
@@ -67,7 +71,17 @@ myApp.controller('User', ['$scope','$http', function($scope,$http) {
             console.log("$scope.newpass="+$scope.newpass+"$scope.newpass2="+$scope.newpass2);
 
             if (($scope.newpass==$scope.newpass2)&&($scope.newpass!=='')&&(typeof $scope.newpass!== "undefined")){
-                $scope.messagePassword='Пароль обновлён';
+                    $scope.user.password=$scope.newpass;
+                   $http.post(host+'/userProfile',$scope.user,config).
+                                    then(function(response) {
+                                     console.log('userProfile new pass success!');
+                                   $scope.messagePassword='Пароль обновлён';
+                                   $scope.user.password='';
+                                    }, function (response) {
+                                        console.log('error');
+                                        console.log(response);
+
+                                    });
             }else
                 {
                 $scope.messagePassword='Ввведите непустой пароль в оба поля';
