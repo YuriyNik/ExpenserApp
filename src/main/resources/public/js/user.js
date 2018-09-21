@@ -44,26 +44,29 @@ myApp.controller('User', ['$scope','$http', function($scope,$http) {
 
                         });
         console.log('Removed and updated='+$scope.data.userTypes);
-        };
+       };
+      $scope.onLoad = function(){
+            console.log('User onLoad');
+             $http.get(host+'/userDetails', config).
+                          then(function(response) {
+                              $scope.userDetails = response.data;
+                              console.log('userDetails loaded');
+                              }, function (response) {
+                                  console.log('error!');
+                                  console.log(response);
+                                  });
 
-        $http.get(host+'/userDetails', config).
-              then(function(response) {
-                  $scope.userDetails = response.data;
-                  console.log('userDetails loaded');
-                  }, function (response) {
-                      console.log('error!');
-                      console.log(response);
-                      });
+             $http.get(host+'/expenceTypes',config).
+                        then(function(response) {
+                            console.log('expenceTypes='+response.data);
+                            if (response.data=='')
+                            {$scope.data.userTypes = [];}
+                            else { $scope.data.userTypes = response.data;};
 
-        $http.get(host+'/expenceTypes',config).
-            then(function(response) {
-                console.log('expenceTypes='+response.data);
-                if (response.data=='')
-                {$scope.data.userTypes = [];}
-                else { $scope.data.userTypes = response.data;};
+                        });
 
-            });
-        $scope.submit = function() {
+       };
+       $scope.submit = function() {
 
         };
         $scope.messagePassword='';
@@ -84,8 +87,26 @@ myApp.controller('User', ['$scope','$http', function($scope,$http) {
                                     });
             }else
                 {
-                $scope.messagePassword='Ввведите непустой пароль в оба поля';
+                $scope.messagePassword='Введите непустой пароль в оба поля';
                 }
 
         };
+        $scope.newUser = function() {
+           console.log("newUser $scope.user="+$scope.user);
+
+        /*   $http.post(host+'/user',$scope.user,config).
+                                    then(function(response) {
+                                     console.log('newUser success!');
+
+                                   $scope.user.password='';
+                                    }, function (response) {
+                                        console.log('error');
+                                        console.log(response);
+
+                                    });
+          */
+
+        };
+
+
     }]);

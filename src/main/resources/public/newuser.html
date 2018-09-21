@@ -21,35 +21,14 @@
 
 </head>
 
-<body ng-controller="User" data-ng-init="onLoad()">
-Привет <b>{{userDetails.username}}</b>!<a href="/"> Домой</a>
 
-<br/>
+<body ng-controller="User">
+Привет !
 
-Придумай или исправь категории твоих расходов:<br/>
+Имя<input type="text" ng-model="user.username" name="username" /><br/>
+Пароль<input type="password" ng-model="user.password" name="password" /><br/>
+<input type="submit" ng-click="newUser()" value="Создать" />   <br/>
 
-<!-- list of items with a button to remove that item -->
-<ul>
-    <li ng-repeat="type in data.userTypes" >
-        {{type}}
-        <button ng-click="remove($index)" align="center">Удалить</button>
-    </li>
-</ul>
 
-<!-- input and button it add a new item -->
-<div>
-    >> <input type="text" ng-model="input">
-    <button type="submit" ng-click="add()">Добавить</button>
-</div>
-
-<br/>
-<br/>
-Также можешь изменить свой пароль
-<br/>
-<b>{{messagePassword}}</b>
-<br/>
-    Новый пароль<input type="password" ng-model="newpass" name="newpass" /><br/>
-    Новый пароль еще раз<input type="password" ng-model="newpass2" name="newpass2" /><br/>
-    <input type="submit" ng-click="changePass()" value="Изменить Пароль" />   <br/>
 </body>
 </html>
