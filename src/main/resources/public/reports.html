@@ -1,0 +1,51 @@
+<!doctype html>
+<html ng-app="App">
+<head>
+    <title>Expencies Application</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script src="js/public.js"></script>
+    <script src="js/expence.js"></script>
+
+    <meta charset="utf-8">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</head>
+
+
+<body ng-controller="Expence">
+
+<b> Подитог на {{currmonth}}-{{curryear}} : {{getTotal()}}</b> руб<br/>
+<button ng-click="showForThisMonth(prePremonth)" style="color:blueviolet">2 месяца назад</button>
+<button ng-click="showForThisMonth(premonth)" style="color:blueviolet">Прошлый месяц</button>
+<button ng-click="curryear=today.getFullYear();showForThisMonth(today.getMonth()+1);" style="color:blueviolet"><b>Показать текущий месяц</b></button>
+<br/>
+Выбрать месяц:<input type="number" ng-model="currmonth" style="width: 5%;" required/>
+год:<input type="number" ng-model="curryear" style="width: 10%;" required/>
+<button ng-click="showForThisMonth(currmonth)" style="color:blueviolet">Показать <b>{{currmonth}}-{{curryear}}</b> </button><br/>
+<table border="1">
+    <td >Дата</td><td>  &nbsp; &nbsp;&nbsp; Сумма&nbsp;&nbsp;&nbsp;    </td><td>Тип(Кликни на него)</td><td>Примечание</td></tr>
+
+    <!--<tr ng-repeat="expence in expences">-->
+    <tr ng-repeat="expence in expences | orderBy:'-date'">
+        <td align="center">{{expence.date|date:'dd/MM/yy'}}</td>
+        <td align="center"  ><b>{{expence.amount}}</b></td>
+        <td ng-click="showByType(expence.type)" style="color:blueviolet" align="left">{{expence.type}}</td>
+        <td align="left">{{expence.notes}}</td>
+        </td>
+    </tr>
+</table>
+<br>
+<p>Сумма:<b>{{getTotal()}}</b> руб</p>
+
+</body>
+</html>

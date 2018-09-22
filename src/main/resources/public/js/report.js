@@ -3,38 +3,37 @@ myApp.controller('Report', ['$scope','$http', function($scope,$http) {
 
         console.log('Report started');
 
-        $scope.removeItem = function(index) {
-            console.log('delete index='+index);
-            console.log('delete id='+$scope.reports[index].id);
-            $http.delete('http://localhost:8080/report/'+$scope.reports[index].id).
-                then(function(response) {
-                    console.log('deleted!');
-                    console.log(response);
-                    $scope.reports.splice(index, 1);
-                }, function (response) {
-                    console.log('error!');
-                    console.log(response);
-                });
-        };
 
-        $http.get('http://localhost:8080/report').
-                then(function(response) {
-                  $scope.reports = response.data;
-                 });
-        $scope.submit = function() {
-            $http.post('http://localhost:8080/report',$scope.report,{
-                headers: {'Content-Type': 'application/json'}}).
-                then(function(response) {
-                    console.log('first');
-                    console.log(response);
-                   $scope.reports.push(response.data);
-                  // console.log($scope.reports);
+db.expence.aggregate(
+   [ {
+       $match :
+        {$and:
+    [
+    {type : "Grocery" }
+    ,
+   // {'$expr': { '$eq': [{ '$month': '$date' }, 1 ] }}
+    //,
+       {'$expr': { '$eq': [{ '$year': '$date' }, 2016 ] }}
 
-                }, function (response) {
-                    console.log('second');
-                    console.log(response);
-                    console.log($scope.report);
+   //{date: {'$gte': ISODate("2013-01-01T00:00:00.0Z"), '$lt': ISODate("2015-02-01T00:00:00.0Z")}}
 
-                });
-        };
+     ]
+    }
+
+   } ,
+   {
+       $group:
+         {
+           _id: {type:"$type", month: { $month: "$date"},
+               year: { $year: "$date" }
+           },
+           totalAmount: { $sum:  "$amount" },
+           count: { $sum: 1 }
+         }
+     }
+   ]
+)
+
+
+
     }]);
