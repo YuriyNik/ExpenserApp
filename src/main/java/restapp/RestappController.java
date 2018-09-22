@@ -75,6 +75,7 @@ public class RestappController {
 ///for migration from v1 to v1.2 only - to be removed later
     @RequestMapping(method = RequestMethod.GET, value = "/upgrade/setOwner")
     public List<Expence> setOwner(){
+        logger.info("SetOwner triggered");
         List<Expence> expencesSetOwner =  expenceRepository.findByNullableOwner();
         for (Expence expence:expencesSetOwner){
             expence.setOwner("admin");

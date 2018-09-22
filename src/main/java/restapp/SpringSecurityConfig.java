@@ -32,19 +32,30 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .antMatchers("/js/**")
+                .antMatchers("/newuser.html")
+                .antMatchers("/user")
+        ;
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
+
+             //   .antMatchers("/user.html").hasAnyRole("ADMIN","USER")
+             //   .antMatchers("/expence**").hasAnyRole("ADMIN","USER")
+            //    .antMatchers("/userProfile").hasAnyRole("ADMIN","USER")
+                .antMatchers("/oldExpence").hasAnyRole("ADMIN")
+                .antMatchers("/upgrade/setOwner").hasAnyRole("ADMIN")
                 .antMatchers("/**").hasAnyRole("ADMIN","USER")
                 .and().httpBasic().realmName("ExpenceStack")
                 .authenticationEntryPoint(authenticationEntryPoint)
 
                 ;
                 //.and().formLogin().loginPage("/login");
-    }
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/user");
     }
 
     @Override
