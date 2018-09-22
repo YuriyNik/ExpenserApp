@@ -29,6 +29,17 @@
 Пароль<input type="password" ng-model="user.password" name="password" /><br/>
 <input type="submit" ng-click="newUser()" value="Создать" />   <br/>
 
+<ul>
+    <li ng-repeat="expenceType in user.expenceTypes" >
+        {{expenceType}}
+        <button ng-click="removeType($index)" align="center">Удалить</button>
+    </li>
+</ul>
+<div>
+    >> <input type="text" ng-model="newInput">
+    <button type="submit" ng-click="addType()">Добавить</button>
+</div>
+
 
 </body>
 </html>

@@ -8,7 +8,24 @@ myApp.controller('User', ['$scope','$http', function($scope,$http) {
       };
 
        $scope.user = {
-                password: ''
+                password: '',
+                roles:["USER"],
+                expenceTypes: [
+                 "Обеды-Еда",
+                 "Продукты",
+                 "Одежда",
+                 "Счета",
+                 "Overall",
+                 "Grocery",
+                 "Топливо",
+                 "Проезд",
+                 "Машина",
+                 "Развлечения",
+                 "Путешествия",
+                 "Хобби",
+                 "Аптека",
+                 "Подарки"
+                 ]
             };
 
       $scope.add = function() {
@@ -44,6 +61,22 @@ myApp.controller('User', ['$scope','$http', function($scope,$http) {
 
                         });
         console.log('Removed and updated='+$scope.data.userTypes);
+       };
+       $scope.addType = function() {
+
+         var a = $scope.user.expenceTypes.indexOf($scope.input);
+
+             if (($scope.newInput !== '') && (a == -1)) {
+
+               $scope.user.expenceTypes.push($scope.newInput);
+               console.log('Added type, now values='+$scope.user.expenceTypes);
+               }
+               $scope.newInput = '';
+
+               };
+       $scope.removeType = function(index) {
+               $scope.user.expenceTypes.splice(index, 1);
+              console.log('Removed type, now values='+$scope.user.expenceTypes);
        };
       $scope.onLoad = function(){
             console.log('User onLoad');
@@ -92,7 +125,10 @@ myApp.controller('User', ['$scope','$http', function($scope,$http) {
 
         };
         $scope.newUser = function() {
-           console.log("newUser $scope.user="+$scope.user);
+           console.log("newUser $scope.user.username="+$scope.user.username);
+           console.log("newUser $scope.user.password="+$scope.user.password);
+           console.log("newUser $scope.user.expenceTypes="+$scope.user.expenceTypes);
+
 
         /*   $http.post(host+'/user',$scope.user,config).
                                     then(function(response) {
