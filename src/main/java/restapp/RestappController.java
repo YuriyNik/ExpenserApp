@@ -1,7 +1,6 @@
 package restapp;
 
 import model.Expence;
-import model.Report;
 import model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,9 +20,6 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*")
 public class RestappController {
-
-    @Autowired
-    private ReportRepository reportRepository;
 
     @Autowired
     private ExpenceRepository expenceRepository;
@@ -230,49 +226,6 @@ public class RestappController {
         return null;
     }
 
-//Routes for reports
-    @RequestMapping(method=RequestMethod.POST,value="/report")
-    public Report postReport(@RequestBody Report report) {
-        logger.info("postReport="+report);
-        report.setCreated(LocalDateTime.now());
-        reportRepository.save(report);
-        return report;
-    }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/report/{id}")
-    public String updateReport(@PathVariable String id, @RequestBody Report reportFromClient) {
-        logger.info("Update report/{id} reportId="+id);
-        Report reportFromDb = reportRepository.findByid(id);
-        if(reportFromClient.getName()==null) {
-            logger.info("Report name is empty");
-            return "Nothing to Update";
-        } else {
-            reportFromDb.setName(reportFromClient.getName());
-            reportRepository.save(reportFromDb);
-            logger.info("report/{id} reportId="+id+" is updated with name "+reportFromClient.getName());
-            return reportFromDb.toString();
-        }
-
-    }
-
-    @RequestMapping(method=RequestMethod.GET,value="/report")
-    public List<Report> getAllReports() {
-        logger.info("getAllReports");
-        return reportRepository.findAll();
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/report/{id}")
-    public Report reportbyId(@PathVariable String id) {
-        logger.info("report/{id} reportId="+id);
-        return reportRepository.findByid(id);
-    }
-
-    @RequestMapping(method = RequestMethod.DELETE, value = "/report/{id}")
-    public String deleteReport(@PathVariable String id){
-        Report report = reportRepository.findByid(id);
-        reportRepository.delete(report);
-        logger.info("Report "+id+" is deleted");
-        return null;
-    }
 
 }

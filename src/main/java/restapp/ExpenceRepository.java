@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
 
-public interface ExpenceRepository extends MongoRepository<Expence,String> {
+public interface ExpenceRepository extends MongoRepository<Expence,String>, ExpenceRepositoryCustom {
     public Expence findByid(String id);
     @Query("{ 'owner':'?0','id':'?1'}")
     public Expence findByidForUser(String owner, String id);
