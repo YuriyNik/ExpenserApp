@@ -1,39 +1,58 @@
 
 myApp.controller('Report', ['$scope','$http', function($scope,$http) {
 
-        console.log('Report started');
+    console.log('Report started');
+
+    $scope.today = new Date();
+    $scope.currmonth = new Date().getMonth() +1;
+    $scope.curryear = new Date().getFullYear();//can be changed for testing
+    console.log('curryear='+$scope.curryear);
+
+    $scope.data = {
+        userTypes: []
+       };
+
+    console.log('Report started currmonth='+$scope.currmonth+';curryear='+$scope.curryear);
+    $http.get(host+'/userDetails', config).
+        then(function(response) {
+            $scope.userDetails = response.data;
+            console.log('Report userDetails loaded');
+            }, function (response) {
+                console.log('error!');
+                console.log(response);
+                });
+    $http.get(host+'/reports/'+$scope.currmonth+'/'+$scope.curryear+'/null',config).
+    then(function(response) {
+         $scope.expenceSummarys = response.data;
+    });
+
+    $http.get(host+'/expenceTypes',config).
+    then(function(response) {
+        console.log('Report expenceTypes='+response.data);
+        $scope.data.userTypes = response.data;
+    });
 
 
-db.expence.aggregate(
-   [ {
-       $match :
-        {$and:
-    [
-    {type : "Grocery" }
-    ,
-   // {'$expr': { '$eq': [{ '$month': '$date' }, 1 ] }}
-    //,
-       {'$expr': { '$eq': [{ '$year': '$date' }, 2016 ] }}
+    $scope.showForMonthYear = function(month,year) {
+        $scope.currmonth = month;
+        console.log('Report for month='+month+';year='+year);
+        $http.get(host+'/reports/'+$scope.currmonth+'/'+year+'/null',config).
+        then(function(response) {
+        $scope.expenceSummarys = response.data;
+        console.log('expenceSummary reloaded');
+    });
+    };
 
-   //{date: {'$gte': ISODate("2013-01-01T00:00:00.0Z"), '$lt': ISODate("2015-02-01T00:00:00.0Z")}}
-
-     ]
+  $scope.getTotalSummary = function(){
+        if (typeof $scope.expenceSummarys !== "undefined") {
+        var total = 0;
+        for(var i = 0; i < $scope.expenceSummarys.length; i++){
+            var expenceSummary = $scope.expenceSummarys[i].totalAmount;
+            total += expenceSummary;
+        }
+        return total;
+    }
     }
 
-   } ,
-   {
-       $group:
-         {
-           _id: {type:"$type", month: { $month: "$date"},
-               year: { $year: "$date" }
-           },
-           totalAmount: { $sum:  "$amount" },
-           count: { $sum: 1 }
-         }
-     }
-   ]
-)
 
-
-
-    }]);
+}]);

@@ -31,7 +31,7 @@
     <b>Статья </b><select ng-model="expence.type" name="type" >
     <option value=""> расходов </option>
     <option ng-repeat="option in data.userTypes" value="{{option}}">{{option}}</option>
-</select> <a href="user.html">Изменить список</a> <br/>
+</select> <a href="user.html">Изменить список</a> &nbsp;&nbsp;<a href="reports.html">Отчеты за год</a> <br/>
     <b>Дата</b><input type="date" ng-model="expence.date" name="date" /><br/>
     <b>Комментарии</b><input type="memo" ng-model="expence.notes" name="notes" /><br/>
     <input type="submit" id="submit" value="Добавить" />   <br/>

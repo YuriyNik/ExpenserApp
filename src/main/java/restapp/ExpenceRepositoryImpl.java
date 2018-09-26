@@ -27,10 +27,10 @@ public class ExpenceRepositoryImpl implements ExpenceRepositoryCustom {
 
 
     @Override
-    public List<ExpenceSummary> getReportsForYearAndType(int year, String type) {
+    public List<ExpenceSummary> getReportsForYearAndType(String owner,int year, String type) {
 
         AggregationResults<ExpenceSummary> results = operations.aggregate(newAggregation(Expence.class,
-                 match(where("owner").is("admin")
+                 match(where("owner").is(owner)
                  .andOperator(where("type").is(type))),
 
                 project()
@@ -50,10 +50,10 @@ public class ExpenceRepositoryImpl implements ExpenceRepositoryCustom {
     }
 
     @Override
-    public List<ExpenceSummary> getReportsForYear(int year) {
+    public List<ExpenceSummary> getReportsForYear(String owner,int year) {
 
         AggregationResults<ExpenceSummary> results = operations.aggregate(newAggregation(Expence.class, //
-                match(where("owner").is("admin")),
+                match(where("owner").is(owner)),
                 project()
                         .andExpression("type").as("type")
                         .andExpression("year(date)").as("year")
@@ -71,7 +71,7 @@ public class ExpenceRepositoryImpl implements ExpenceRepositoryCustom {
         return results.getMappedResults();
     }
     @Override
-    public List<ExpenceSummary> getReportsForMonth(int year, int month) {
+    public List<ExpenceSummary> getReportsForMonth(String owner,int year, int month) {
 
         //  String datestr = new String("2015-11-20 17:45:19");
         //  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -79,7 +79,7 @@ public class ExpenceRepositoryImpl implements ExpenceRepositoryCustom {
         //   LocalDateTime dateTo = LocalDateTime.now();
 
         AggregationResults<ExpenceSummary> results = operations.aggregate(newAggregation(Expence.class, //
-                match(where("owner").is("admin"))
+                match(where("owner").is(owner))
                 //   .andOperator(where("date").lte(LocalDateTime.now())
                 //.andOperator(where("year(date)").is(year)
                 //     .andOperator(where("date").regex("2016")
