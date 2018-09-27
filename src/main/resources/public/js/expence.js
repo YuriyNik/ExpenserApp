@@ -13,6 +13,7 @@ myApp.controller('Expence', ['$scope','$http', function($scope,$http) {
     $scope.data = {
         userTypes: []
        };
+    $scope.selected = {};
 
     console.log('Expence started premonth='+$scope.premonth+';prePremonth='+$scope.prePremonth);
     $http.get(host+'/userDetails', config).
@@ -33,6 +34,35 @@ myApp.controller('Expence', ['$scope','$http', function($scope,$http) {
         console.log('expenceTypes='+response.data);
         $scope.data.userTypes = response.data;
     });
+   // start of editing functions: gets the template to ng-include for a table row / item
+    $scope.getTemplate = function (expence) {
+        if (expence.id === $scope.selected.id) return 'edit';
+        else return 'display';
+    };
+
+    $scope.editExpence = function (expence) {
+    console.log('editing expence = '+ expence.id);
+    console.log('editing expence = '+ expence.amount);
+        $scope.selected = angular.copy(expence);
+    console.log('editing data.selected = '+ $scope.selected.id);
+    console.log('editing data.selected = '+ $scope.selected.type);
+    console.log('editing data.selected = '+ $scope.selected.amount);
+    console.log('editing data.selected = '+ $scope.selected.date);
+    };
+
+    $scope.saveExpence = function (selected) {
+        console.log("Saving data.selected = "+selected);
+      //  $scope.expences[index] = angular.copy($scope.data.selected);
+        $scope.reset();
+    };
+
+    $scope.reset = function () {
+        $scope.selected = {};
+    };
+    ////end of editing functions
+
+
+
 
 
     $scope.showForThisMonth = function(month) {
