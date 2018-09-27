@@ -49,25 +49,29 @@
     <td >Дата</td><td>  &nbsp; &nbsp;&nbsp; Сумма&nbsp;&nbsp;&nbsp;    </td><td>Тип(Кликни на него)</td><td>Примечание</td><td>Удалить</td></tr>
 
     <!--<tr ng-repeat="expence in expences">-->
-    <tr ng-repeat="expence in expences | orderBy:'-date'" ng-include="getTemplate(expence)">
+    <tr ng-repeat="expence in expences" ng-include="getTemplate(expence)">
     </tr>
 </table>
     <script type="text/ng-template" id="display">
-    <td align="center">{{expence.date|date:'dd/MM/yy'}}</td>
-    <td align="center"  ><b>{{expence.amount}}</b></td>
+    <td align="center">{{expence.date|date:'yyyy-MM-dd'}}</td>
+    <td align="center" ><b>{{expence.amount}}</b></td>
     <td ng-click="showByType(expence.type)" style="color:blueviolet" align="left">{{expence.type}}</td>
     <td align="left">{{expence.notes}}</td>
-    <td><button ng-click="editExpence(expence)">Edit</button>
+    <td><button ng-click="editExpence(expence)">Изменить</button>
         <button ng-click="removeItem(expence)" style="color:blueviolet">Удалить</button></td>
     </script>
     <script type="text/ng-template" id="edit">
         <td> <input type="date" ng-model="selected.date" /> </td>
         <td> <input type="number" ng-model="selected.amount" /> </td>
-        <td> <input type="text" ng-model="selected.type" /> </td>
+        <td><select ng-model="selected.type" name="type" >
+            <option value="{{selected.type}}">{{selected.type}}</option>
+            <option ng-repeat="option in data.userTypes" value="{{option}}">{{option}}</option>
+        </select>
+             </td>
         <td> <input type="text" ng-model="selected.notes" /> </td>
         <td>
-            <button ng-click="saveExpence(selected)">Save</button>
-            <button ng-click="reset()">Cancel</button>
+            <button ng-click="saveExpence(selected)">Сохранить</button>
+            <button ng-click="reset()">Отмена</button>
         </td>
     </script>
 

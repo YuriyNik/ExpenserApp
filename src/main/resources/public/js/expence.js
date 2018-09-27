@@ -41,19 +41,33 @@ myApp.controller('Expence', ['$scope','$http', function($scope,$http) {
     };
 
     $scope.editExpence = function (expence) {
-    console.log('editing expence = '+ expence.id);
-    console.log('editing expence = '+ expence.amount);
+        console.log('editing expence = '+ expence.id+';'+expence.amount);
+        expence.date= new Date(expence.date);
         $scope.selected = angular.copy(expence);
-    console.log('editing data.selected = '+ $scope.selected.id);
-    console.log('editing data.selected = '+ $scope.selected.type);
-    console.log('editing data.selected = '+ $scope.selected.amount);
-    console.log('editing data.selected = '+ $scope.selected.date);
+        console.log('saveExpence selected = '+ $scope.selected.id+';'+$scope.selected.type+';'+$scope.selected.amount+';'+$scope.selected.date);
     };
 
     $scope.saveExpence = function (selected) {
-        console.log("Saving data.selected = "+selected);
-      //  $scope.expences[index] = angular.copy($scope.data.selected);
-        $scope.reset();
+      console.log('saveExpence selected = '+ $scope.selected.id+';'+$scope.selected.type+';'+$scope.selected.amount+';'+$scope.selected.date);
+       var index = 0;
+       for(var i = 0; i < $scope.expences.length; i++){
+          if($scope.expences[i].id==selected.id) {
+             index= i;
+             break;
+          }
+       }
+       console.log('saveExpence index = '+index);
+       if (typeof $scope.selected.type == "undefined") $scope.selected.type='Overall';
+       $http.post(host+'/expence',$scope.selected,config).
+           then(function(response) {
+                       console.log('Update success');
+                       console.log(response);
+                       $scope.expences[index] = angular.copy($scope.selected);
+                       $scope.reset();
+           }, function (response) {
+                       console.log('Update error');
+                       console.log(response);
+           });
     };
 
     $scope.reset = function () {
@@ -102,8 +116,7 @@ myApp.controller('Expence', ['$scope','$http', function($scope,$http) {
             });
     };
     $scope.submit = function() {
-            console.log('$scope.expence.amount'+ $scope.expence.amount);
-            console.log('$scope.expence.type='+$scope.expence.type);
+            console.log('$scope.expence.amount:'+ $scope.expence.amount+';type='+$scope.expence.type);
             if (typeof $scope.expence.type == "undefined") $scope.expence.type='Overall';
             $http.post(host+'/expence',$scope.expence,config).
             then(function(response) {
