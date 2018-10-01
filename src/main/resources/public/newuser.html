@@ -23,12 +23,17 @@
 
 
 <body ng-controller="User">
-Привет !
-
-Имя<input type="text" ng-model="user.username" name="username" /><br/>
-Пароль<input type="password" ng-model="user.password" name="password" /><br/>
-<input type="submit" ng-click="newUser()" value="Создать" />   <br/>
-
+Привет ! на этой форме можно создать нового пользователя <br/>
+и пойти на <a href="/">Главную страницу</a>  <br/>
+<br/>
+<b>{{messagePassword}}</b>
+<br/>
+Имя <input type="text" ng-model="user.username" name="username" /><br/>
+Пароль <input type="password" ng-model="user.password" name="password" /><br/>
+<b><input type="submit" ng-click="newUser()" value="Создать" /> </b>  <br/>
+<br/>
+Ниже стандартные категории расходов, можешь поменять сейчас или позже
+<br/>
 <ul>
     <li ng-repeat="expenceType in user.expenceTypes" >
         {{expenceType}}

@@ -129,20 +129,23 @@ myApp.controller('User', ['$scope','$http', function($scope,$http) {
            console.log("newUser $scope.user.password="+$scope.user.password);
            console.log("newUser $scope.user.expenceTypes="+$scope.user.expenceTypes);
 
+           $http.post(host+'/user',$scope.user,config).
+                                   then(function(response) {
+                                   console.log('newUser success!='+response.data.username);
+                                   if(typeof response.data.username!=="undefined") {
+                                        $scope.messagePassword='Пользователь '+ response.data.username +' создан!';
+                                   } else {
+                                    $scope.messagePassword=$scope.user.username +' пользователь уже есть!';
+                                   }
 
-        /*   $http.post(host+'/user',$scope.user,config).
-                                    then(function(response) {
-                                     console.log('newUser success!');
+                                  $scope.user.username='';
+                                  $scope.user.password='';
 
-                                   $scope.user.password='';
                                     }, function (response) {
                                         console.log('error');
                                         console.log(response);
-
                                     });
-          */
 
         };
-
 
     }]);
