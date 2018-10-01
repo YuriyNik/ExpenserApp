@@ -27,6 +27,9 @@ myApp.controller('Expence', ['$scope','$http', function($scope,$http) {
     $http.get(host+'/expenceForThisMonth/'+$scope.currmonth+'/'+$scope.curryear,config).
     then(function(response) {
          $scope.expences = response.data;
+         $scope.expences.sort(function(a,b){
+           return new Date(b.date) - new Date(a.date);
+         });
     });
 
     $http.get(host+'/expenceTypes',config).
@@ -75,16 +78,15 @@ myApp.controller('Expence', ['$scope','$http', function($scope,$http) {
     };
     ////end of editing functions
 
-
-
-
-
     $scope.showForThisMonth = function(month) {
         $scope.currmonth = month;
         console.log('show for month='+month+';year='+$scope.curryear);
         $http.get(host+'/expenceForThisMonth/'+$scope.currmonth+'/'+$scope.curryear,config).
         then(function(response) {
         $scope.expences = response.data;
+        $scope.expences.sort(function(a,b){
+                                           return new Date(b.date) - new Date(a.date);
+                                          });
         console.log('expencies reloaded');
     });
     };
