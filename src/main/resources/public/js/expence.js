@@ -96,6 +96,9 @@ myApp.controller('Expence', ['$scope','$http', function($scope,$http) {
         $http.get(host+'/expenceByType/'+type+'/'+$scope.currmonth+'/'+$scope.curryear,config).
             then(function(response) {
                 $scope.expences = response.data;
+                $scope.expences.sort(function(a,b){
+                                                           return new Date(b.date) - new Date(a.date);
+                                                          });
                 console.log('expencies reloaded by type for this month');
             }, function (response) {
                 console.log('error!');
