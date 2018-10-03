@@ -61,7 +61,7 @@ myApp.controller('Expence', ['$scope','$http', function($scope,$http) {
        }
        console.log('saveExpence index = '+index);
        if (typeof $scope.selected.type == "undefined") $scope.selected.type='Overall';
-       $http.post(host+'/expence',$scope.selected,config).
+       $http.put(host+'/expence/'+$scope.selected.id,$scope.selected,config).
            then(function(response) {
                        console.log('Update success');
                        console.log(response);

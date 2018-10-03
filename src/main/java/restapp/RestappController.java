@@ -185,7 +185,7 @@ public class RestappController {
 
 //modify expence's data
     @RequestMapping(method = RequestMethod.PUT, value = "/expence/{id}")
-    public String updateExpence(@PathVariable String id, @RequestBody Expence expenceFromClient) {
+    public Expence updateExpence(@PathVariable String id, @RequestBody Expence expenceFromClient) {
         logger.info("Update expence/{id} expenceId="+id);
         Expence expenceFromDb = expenceRepository.findByid(id);
         if(expenceFromClient.getAmount()!=null) {
@@ -204,7 +204,7 @@ public class RestappController {
         expenceFromDb.setModified(LocalDateTime.now());
 
             expenceRepository.save(expenceFromDb);
-            return expenceFromDb.toString();
+            return expenceFromDb;
     }
 
 
