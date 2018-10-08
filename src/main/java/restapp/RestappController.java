@@ -195,10 +195,11 @@ public class RestappController {
             expenceFromDb.setType(expenceFromClient.getType());
         }
         if(expenceFromClient.getDate()!=null) {
-            expenceFromDb.setDate(expenceFromClient.getDate());
+            expenceFromDb.setDate(expenceFromClient.getDate().plusHours(4));
         }
-        if(expenceFromClient.getCreated()!=null) {
-            expenceFromDb.setCreated(expenceFromClient.getCreated());
+
+        if(expenceFromClient.getNotes()!=null) {
+            expenceFromDb.setNotes(expenceFromClient.getNotes());
         }
 
         expenceFromDb.setModified(LocalDateTime.now());
