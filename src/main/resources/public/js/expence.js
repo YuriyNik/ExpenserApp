@@ -14,7 +14,11 @@ myApp.controller('Expence', ['$scope','$http', function($scope,$http) {
         userTypes: []
        };
     $scope.selected = {};
-
+    function sortByDateDesc(){
+        return function(a,b){
+               return new Date(b.date) - new Date(a.date);
+        };
+    };
     console.log('Expence started premonth='+$scope.premonth+';prePremonth='+$scope.prePremonth);
     $http.get(host+'/userDetails', config).
         then(function(response) {
@@ -27,9 +31,7 @@ myApp.controller('Expence', ['$scope','$http', function($scope,$http) {
     $http.get(host+'/expenceForThisMonth/'+$scope.currmonth+'/'+$scope.curryear,config).
     then(function(response) {
          $scope.expences = response.data;
-         $scope.expences.sort(function(a,b){
-           return new Date(b.date) - new Date(a.date);
-         });
+         $scope.expences.sort(sortByDateDesc());
     });
 
     $http.get(host+'/expenceTypes',config).
@@ -84,9 +86,7 @@ myApp.controller('Expence', ['$scope','$http', function($scope,$http) {
         $http.get(host+'/expenceForThisMonth/'+$scope.currmonth+'/'+$scope.curryear,config).
         then(function(response) {
         $scope.expences = response.data;
-        $scope.expences.sort(function(a,b){
-                                           return new Date(b.date) - new Date(a.date);
-                                          });
+        $scope.expences.sort(sortByDateDesc());
         console.log('expencies reloaded');
     });
     };
@@ -96,9 +96,7 @@ myApp.controller('Expence', ['$scope','$http', function($scope,$http) {
         $http.get(host+'/expenceByType/'+type+'/'+$scope.currmonth+'/'+$scope.curryear,config).
             then(function(response) {
                 $scope.expences = response.data;
-                $scope.expences.sort(function(a,b){
-                                                           return new Date(b.date) - new Date(a.date);
-                                                          });
+                $scope.expences.sort(sortByDateDesc());
                 console.log('expencies reloaded by type for this month');
             }, function (response) {
                 console.log('error!');
@@ -128,6 +126,7 @@ myApp.controller('Expence', ['$scope','$http', function($scope,$http) {
                 console.log('success');
                 console.log(response);
                 $scope.expences.push(response.data);
+                $scope.expences.sort(sortByDateDesc());
                 $scope.expence.amount = '';
             }, function (response) {
                 console.log('error');
