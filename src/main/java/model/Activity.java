@@ -27,8 +27,8 @@ public class Activity {
     @Override
     public String toString() {
         return String.format(
-                "Activity[id=%s, date = '%s', type='%s', duration =%s , distance = %s, pulseAve = %s, pulseMax=%s,  location =%s, notes=%S , weather =%s, speedAve =%s, paceAve =%s, date='%s', created='%s', modified='%s', owner='%s']",
-                id, date, type, date, duration,distance , pulseAve, pulseMax, location, notes, weather, speedAve, paceAve, created, modified, owner);
+                "Activity[id=%s, date = '%s', type='%s', duration =%s , distance = %s, pulseAve = %s, pulseMax=%s,  location =%s, notes=%S , weather =%s, speedAve =%s, paceAve =%s, created='%s', modified='%s', owner='%s']",
+                id, date, type,  duration,distance , pulseAve, pulseMax, location, notes, weather, speedAve, paceAve, created, modified, owner);
     }
 
     public Activity(){

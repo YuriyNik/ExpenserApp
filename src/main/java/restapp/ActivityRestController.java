@@ -6,10 +6,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -39,4 +36,92 @@ public class ActivityRestController {
         return activity;
     }
 
+    //get all expenses for ADMIN only
+    @RequestMapping(method = RequestMethod.GET, value = "/activity")
+    public List<Activity> getAllActivity() {
+        logger.info("ADMIN's method:listAllActivity");
+        UserDetails user =
+                (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        logger.info("Your user's roles=" +user.getAuthorities().toString());
+        if (user.getAuthorities().toString().contains("ROLE_ADMIN"))
+            return activityRepository.findAll();
+        logger.info("You user is not authorised for listAllActivity call");
+        return null;
     }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/activity/{id}")
+    public Activity updateactivity(@PathVariable String id, @RequestBody Activity activityFromClient) {
+        logger.info("Update activity/{id} activityId="+id);
+        logger.info("Activity to str:"+activityFromClient.toString());
+        Activity activityFromDb = activityRepository.findByid(id);
+
+       /* LocalDateTime date,
+        String type,
+        int duration,
+        Double distance,
+        int pulseAve,
+        int pulseMax,
+        String location,
+        String notes,
+        String weather,
+        Double speedAve,
+        Double paceAve,*/
+
+        if(activityFromClient.getDate()!=null) {
+            activityFromDb.setDate(activityFromClient.getDate().plusHours(4));
+        }
+
+
+        if(activityFromClient.getDuration()!=0) {
+            activityFromDb.setDuration(activityFromClient.getDuration());
+        }
+
+///
+
+        if(activityFromClient.getType()!=null) {
+            activityFromDb.setType(activityFromClient.getType());
+        }
+
+        if(activityFromClient.getDistance()!=null) {
+            activityFromDb.setDistance(activityFromClient.getDistance());
+        }
+
+        if(activityFromClient.getLocation()!=null){
+          activityFromClient.setLocation(activityFromClient.getLocation());
+        }
+
+        if(activityFromClient.getNotes()!=null){
+            activityFromClient.setNotes(activityFromClient.getNotes());
+        }
+
+        if (activityFromClient.getWeather()!=null){
+            activityFromClient.setWeather(activityFromClient.getWeather());
+        }
+
+        if (activityFromClient.getSpeedAve()!=null) {
+            activityFromClient.setSpeedAve(activityFromClient.getSpeedAve());
+        }
+
+        if (activityFromClient.getPaceAve()!=null) {
+            activityFromClient.setPaceAve(activityFromClient.getSpeedAve());
+        }
+
+        activityFromDb.setModified(LocalDateTime.now());
+
+        activityRepository.save(activityFromDb);
+        return activityFromDb;
+    }
+
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/activity/{id}")
+    public String deleteActivity(@PathVariable String id){
+        UserDetails user =
+                (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Activity activity = activityRepository.findByid(id);
+        activityRepository.delete(activity);
+        logger.info("Activity with id="+id+" deleted");
+        return null;
+    }
+
+
+}
