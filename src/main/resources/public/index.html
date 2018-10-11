@@ -25,7 +25,7 @@
 Привет <b>{{userDetails.username}}</b>!
 
 <form ng-submit="submit()">
-    Запиши-ка расходы - это просто:<br/>
+    Запиши-ка Расходы или <a href="trainings.html">Тренировки</a><br/>
     <b>Сумма</b><input type="number" ng-model="expence.amount" name="amount" required /><br/>
     <span ng-show="expence.amount.$touched && expence.amount.$invalid">The name is required.</span>
     <b>Статья </b><select ng-model="expence.type" name="type" >
