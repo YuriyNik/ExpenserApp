@@ -26,5 +26,20 @@
 Вот и твои тренировки <b>{{userDetails.username}}</b>! <a href="/"> Домой</a><br/><br/>
 
 
+<table border="1">
+    <td >Дата </td><td>Тип     </td><td>Продолжительность </td><td>Расстояние </td><td>Пульс средний</td><td>Пульс мах</td><</tr>
+
+    <tr ng-repeat="activitySummary in activitySummarys | orderBy:'-type'">
+        <td align="center">{{activitySummary.date}}</td>
+        <td align="center"  >{{activitySummary.type}}</td>
+        <td align="center" >{{activitySummary.duration}}</td>
+        <td align="center" >{{activitySummary.distance}}</td>
+        <td align="center" >{{activitySummary.pulseAve}}</td>
+        <td align="center" >{{activitySummary.pulseMax}}</td>
+
+
+    </tr>
+</table>
+
 </body>
 </html>

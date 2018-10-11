@@ -20,37 +20,42 @@ myApp.controller('Training', ['$scope','$http', function($scope,$http) {
                 console.log('error!');
                 console.log(response);
                 });
-/*
-    $http.get(host+'/reports/'+$scope.currmonth+'/'+$scope.curryear+'/null',config).
+
+
+    //$http.get(host+'/activity/'+$scope.currmonth+'/'+$scope.curryear+'/null',config).
+
+     $http.get(host+'/activity/',config).
+
     then(function(response) {
-         $scope.expenceSummarys = response.data;
+         $scope.activitySummarys = response.data;
     });
 
-    $http.get(host+'/expenceTypes',config).
+
+  /*  $http.get(host+'/activityTypes',config).
     then(function(response) {
-        console.log('Report expenceTypes='+response.data);
+        console.log('Report activityTypes='+response.data);
         $scope.data.userTypes = response.data;
-    });
+    });*/
 
-*/
+
 /*
     $scope.showForMonthYear = function(month,year) {
         $scope.currmonth = month;
         console.log('Report for month='+month+';year='+year);
         $http.get(host+'/reports/'+$scope.currmonth+'/'+year+'/null',config).
         then(function(response) {
-        $scope.expenceSummarys = response.data;
-        console.log('expenceSummary reloaded');
+        $scope.activitySummarys = response.data;
+        console.log('activitySummarys reloaded');
     });
     };
 */
-/*
-  $scope.getTotalSummary = function(){
-        if (typeof $scope.expenceSummarys !== "undefined") {
+
+/*  $scope.getTotalSummary = function(){
+        if (typeof $scope.activitySummarys !== "undefined") {
         var total = 0;
-        for(var i = 0; i < $scope.expenceSummarys.length; i++){
-            var expenceSummary = $scope.expenceSummarys[i].totalAmount;
-            total += expenceSummary;
+        for(var i = 0; i < $scope.activitySummarys.length; i++){
+            var activitySummarys = $scope.activitySummarys[i].totalAmount;
+            total += activitySummarys;
         }
         return total;
     }
