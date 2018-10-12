@@ -1,9 +1,13 @@
 
-myApp.controller('Expence', ['$scope','$http', function($scope,$http) {
+myApp.controller('Expence', ['$scope','$http', '$base64', function($scope,$http,$base64) {
 
     $scope.today = new Date();
     $scope.premonth = new Date().getMonth();
     $scope.prePremonth = new Date().getMonth() - 1;
+
+var auth = $base64.encode("admin:1");
+console.log ('auth='+auth);
+config.headers['Authorization'] = 'Basic ' + auth;
 
     $scope.currmonth = new Date().getMonth() +1;
 
@@ -14,6 +18,7 @@ myApp.controller('Expence', ['$scope','$http', function($scope,$http) {
         userTypes: []
        };
     $scope.selected = {};
+
     function sortByDateDesc(){
         return function(a,b){
                return new Date(b.date) - new Date(a.date);

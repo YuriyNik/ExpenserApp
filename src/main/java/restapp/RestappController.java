@@ -144,19 +144,9 @@ public class RestappController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET, value="/logoutPage")
-    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        logger.info("logout procedure started");
-        if (auth != null){
-            logger.info("logout procedure");
-            new SecurityContextLogoutHandler().logout(request, response, auth);
-        } else {
-            logger.info("Authentication is null");
-
-        }
-        return "redirect:/";
+    @RequestMapping(method = RequestMethod.GET, value="/login")
+    public String getLogin () {
+        return null;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/userDetails")
