@@ -2,9 +2,7 @@
 
   var app = angular.module("ExpenceApplication");
 
-  var host='http://localhost:8080';
-
-  var HomeController = function($scope, $rootScope, $location, $http) {
+  var HomeController = function($scope, $rootScope, $location, $http, host) {
 
      $scope.today = new Date();
      $scope.premonth = new Date().getMonth();

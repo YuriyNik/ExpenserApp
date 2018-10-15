@@ -2,6 +2,7 @@
 
   var app = angular.module("ExpenceApplication", ["ngRoute", "ngCookies", 'base64']);
 
+  app.constant('host', '');//http://localhost:8080');
 
   app.config(function($routeProvider) {
 
@@ -11,22 +12,25 @@
         templateUrl: 'login.html',
         hideMenus: true
       })
-
+     .when('/register', {
+        controller: 'LoginController',
+        templateUrl: 'register.html'
+      })
     .when('/', {
       controller: 'HomeController',
       templateUrl: 'home.html'
     })
-/*
-    .when('/', {
-      controller: 'HomeController',
+
+    .when('/reports', {
+      controller: 'ReportController',
       templateUrl: 'reports.html'
     })
 
-    .when('/', {
-      controller: 'HomeController',
+    .when('/user', {
+      controller: 'UserController',
       templateUrl: 'user.html'
     })
-*/
+
 
     .otherwise({
       redirectTo: '/login'
@@ -34,7 +38,7 @@
 
   });
 
-   app.run(function($rootScope, $location, $cookieStore, $http) {
+   app.run(function($rootScope, $location, $cookieStore, $http ) {
  // keep user logged in after page refresh
         $rootScope.globals = $cookieStore.get('globals') || {};
         if ($rootScope.globals.currentUser) {
@@ -43,7 +47,7 @@
 
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             // redirect to login page if not logged in
-            if ($location.path() !== '/login' && !$rootScope.globals.currentUser) {
+            if ($location.path() !== '/login' && !$rootScope.globals.currentUser && $location.path() !== '/register') {
                 $location.path('/login');
             }
         });

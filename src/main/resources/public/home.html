@@ -7,7 +7,7 @@
     <b>Статья </b><select ng-model="expence.type" name="type" >
     <option value=""> расходов </option>
     <option ng-repeat="option in data.userTypes" value="{{option}}">{{option}}</option>
-</select> <a href="user.html">Изменить список</a> &nbsp;&nbsp;<a href="reports.html">Отчеты </a> <br/>
+</select> <a href="#/user">Изменить список</a> &nbsp;&nbsp;<a href="#/reports">Отчеты </a> <br/>
     <b>Дата</b><input type="date" ng-model="expence.date" name="date" /><br/>
     <b>Комментарии</b><input type="memo" ng-model="expence.notes" name="notes" /><br/>
     <input type="submit" id="submit" value="Добавить" />   <br/>
@@ -18,8 +18,8 @@
 <button ng-click="showForThisMonth(premonth)" style="color:blueviolet">Прошлый месяц</button>
 <button ng-click="curryear=today.getFullYear();showForThisMonth(today.getMonth()+1);" style="color:blueviolet"><b>Показать текущий месяц</b></button>
 <br/>
-Выбрать месяц:<input type="number" ng-model="currmonth" style="width: 5%;" required/>
-год:<input type="number" ng-model="curryear" style="width: 10%;" required/>
+Выбрать месяц:<input type="number" ng-model="currmonth" style="width: 8%;" required/>
+год:<input type="number" ng-model="curryear" style="width: 14%;" required/>
 <button ng-click="showForThisMonth(currmonth)" style="color:blueviolet">Показать <b>{{currmonth}}-{{curryear}}</b> </button><br/>
 <table border="1">
     <td >Дата</td><td>  &nbsp; &nbsp;&nbsp; Сумма&nbsp;&nbsp;&nbsp;    </td><td>Тип(Кликни на него)</td><td>Примечание</td><td>Удалить</td></tr>
@@ -53,4 +53,4 @@
 
 <br>
 <p>Сумма:<b>{{getTotal()}}</b> руб</p>
-v1.4.3
+v1.5.1

@@ -1,10 +1,13 @@
+(function (){
 
-myApp.controller('Report', ['$scope','$http', function($scope,$http) {
+  var app = angular.module("ExpenceApplication");
+
+  var ReportController = function($scope, $http, host) {
 
     console.log('Report started');
 
     $scope.today = new Date();
-    $scope.currmonth = new Date().getMonth() +1;
+    $scope.currmonth = new Date().getMonth() + 1;
     $scope.curryear = new Date().getFullYear();//can be changed for testing
     console.log('curryear='+$scope.curryear);
 
@@ -13,7 +16,7 @@ myApp.controller('Report', ['$scope','$http', function($scope,$http) {
        };
 
     console.log('Report started currmonth='+$scope.currmonth+';curryear='+$scope.curryear);
-    $http.get(host+'/userDetails', config).
+    $http.get(host+'/userDetails').
         then(function(response) {
             $scope.userDetails = response.data;
             console.log('Report userDetails loaded');
@@ -21,12 +24,12 @@ myApp.controller('Report', ['$scope','$http', function($scope,$http) {
                 console.log('error!');
                 console.log(response);
                 });
-    $http.get(host+'/reports/'+$scope.currmonth+'/'+$scope.curryear+'/null',config).
+    $http.get(host+'/reports/'+$scope.currmonth+'/'+$scope.curryear+'/null').
     then(function(response) {
          $scope.expenceSummarys = response.data;
     });
 
-    $http.get(host+'/expenceTypes',config).
+    $http.get(host+'/expenceTypes').
     then(function(response) {
         console.log('Report expenceTypes='+response.data);
         $scope.data.userTypes = response.data;
@@ -36,7 +39,7 @@ myApp.controller('Report', ['$scope','$http', function($scope,$http) {
     $scope.showForMonthYear = function(month,year) {
         $scope.currmonth = month;
         console.log('Report for month='+month+';year='+year);
-        $http.get(host+'/reports/'+$scope.currmonth+'/'+year+'/null',config).
+        $http.get(host+'/reports/'+$scope.currmonth+'/'+year+'/null').
         then(function(response) {
         $scope.expenceSummarys = response.data;
         console.log('expenceSummary reloaded');
@@ -54,5 +57,8 @@ myApp.controller('Report', ['$scope','$http', function($scope,$http) {
     }
     }
 
+  };
 
-}]);
+  app.controller("ReportController", ReportController);
+
+})();

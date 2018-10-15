@@ -3,15 +3,12 @@
 
 (function() {
 
-  var AuthenticationService = function($http, $cookieStore, $rootScope, $timeout , $base64) {
-
-        var host = 'http://localhost:8080';
+  var AuthenticationService = function($http, $cookieStore, $rootScope, $timeout , $base64, host) {
 
         var Login = function (username, password, callback) {
             authdata = $base64.encode(username + ':' + password);
             var config = {headers: {}};
             config.headers['Authorization'] = 'Basic ' + authdata;
-            console.log('login='+config.headers['Authorization']);
             $http.get(host+'/login', config).
                     then(function(response) {
                           console.log('Login success!');
@@ -29,7 +26,6 @@
         var SetCredentials = function (username, password) {
 
             var authdata = $base64.encode(username + ':' + password);
-            console.log ('authdata='+authdata);
 
             $rootScope.globals = {
                 currentUser: {

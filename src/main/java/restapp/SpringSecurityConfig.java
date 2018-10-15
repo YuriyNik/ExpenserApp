@@ -35,8 +35,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .antMatchers("/js/**")
-                .antMatchers("/newuser.html")
+                .antMatchers("/index.html")
+                .antMatchers("/home.html")
+                .antMatchers("/login.html")
+                .antMatchers("/register.html")
+                .antMatchers("/reports.html")
+                .antMatchers("/user.html")
+                .antMatchers("/favicon.ico")
                 .antMatchers("/user")
+                .antMatchers("/")
+
         ;
     }
 
