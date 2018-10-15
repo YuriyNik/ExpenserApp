@@ -1,6 +1,10 @@
-myApp.controller('Training', ['$scope','$http', function($scope,$http) {
+(function (){
 
-    console.log('Training started');
+  var app = angular.module("ExpenceApplication");
+
+  var TrainingController = function($scope, $http, host) {
+
+   console.log('Training started');
 
     $scope.today = new Date();
     $scope.currmonth = new Date().getMonth() +1;
@@ -12,7 +16,7 @@ myApp.controller('Training', ['$scope','$http', function($scope,$http) {
        };
 
     console.log('Training started currmonth='+$scope.currmonth+';curryear='+$scope.curryear);
-    $http.get(host+'/userDetails', config).
+    $http.get(host+'/userDetails').
         then(function(response) {
             $scope.userDetails = response.data;
             console.log('Training userDetails loaded');
@@ -24,41 +28,15 @@ myApp.controller('Training', ['$scope','$http', function($scope,$http) {
 
     //$http.get(host+'/activity/'+$scope.currmonth+'/'+$scope.curryear+'/null',config).
 
-     $http.get(host+'/activity/',config).
+     $http.get(host+'/activity/').
 
     then(function(response) {
          $scope.activitySummarys = response.data;
     });
 
 
-  /*  $http.get(host+'/activityTypes',config).
-    then(function(response) {
-        console.log('Report activityTypes='+response.data);
-        $scope.data.userTypes = response.data;
-    });*/
+  };
 
+  app.controller("TrainingController", TrainingController);
 
-/*
-    $scope.showForMonthYear = function(month,year) {
-        $scope.currmonth = month;
-        console.log('Report for month='+month+';year='+year);
-        $http.get(host+'/reports/'+$scope.currmonth+'/'+year+'/null',config).
-        then(function(response) {
-        $scope.activitySummarys = response.data;
-        console.log('activitySummarys reloaded');
-    });
-    };
-*/
-
-/*  $scope.getTotalSummary = function(){
-        if (typeof $scope.activitySummarys !== "undefined") {
-        var total = 0;
-        for(var i = 0; i < $scope.activitySummarys.length; i++){
-            var activitySummarys = $scope.activitySummarys[i].totalAmount;
-            total += activitySummarys;
-        }
-        return total;
-    }
-    }
-*/
-}]);
+})();
