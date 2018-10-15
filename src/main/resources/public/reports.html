@@ -1,36 +1,10 @@
-<!doctype html>
-<html ng-app="App">
-<head>
-    <title>Expencies Application</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-    <script src="js/public.js"></script>
-    <script src="js/report.js"></script>
-
-    <meta charset="utf-8">
-
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-</head>
-
-
-<body ng-controller="Report">
-
-Вот и твои отчеты <b>{{userDetails.username}}</b>! <a href="/"> Домой</a><br/><br/>
+Вот и твои отчеты <b>{{userDetails.username}}</b>! <a href="#/"> Домой</a><br/><br/>
 
 <button ng-click="curryear=today.getFullYear();showForMonthYear(today.getMonth()+1,curryear);" style="color:blueviolet"><b>Показать текущий месяц</b></button>
 <br/>
 <h3>Отчеты за месяц ( 0  - годовой отчет) </h3>
-Выбрать месяц:<input type="number" ng-model="currmonth" style="width: 5%;" required/>
-год:<input type="number" ng-model="curryear" style="width: 10%;" required/>
+Выбрать месяц:<input type="number" ng-model="currmonth" style="width: 4%;" required/>
+год:<input type="number" ng-model="curryear" style="width: 7%;" required/>
 <button ng-click="showForMonthYear(currmonth,curryear)" style="color:blueviolet">Показать <b>{{currmonth}}-{{curryear}}</b> </button><br/>
 <table border="1">
     <td >Месяц</td><td>Год    </td><td>Статья</td><td>Сумма</td><td>Количество</td></tr>
@@ -47,6 +21,3 @@
 </table>
 <br>
 <p>Сумма:<b>{{getTotalSummary()}}</b> руб</p>
-
-</body>
-</html>

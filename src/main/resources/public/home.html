@@ -1,0 +1,56 @@
+Привет <b>{{userDetails.username}}</b>!<a href="#/login">   Выйти</a>
+
+<form ng-submit="submit()">
+    Запиши-ка расходы - это просто:<br/>
+    <b>Сумма</b><input type="number" ng-model="expence.amount" name="amount" required /><br/>
+    <span ng-show="expence.amount.$touched && expence.amount.$invalid">The name is required.</span>
+    <b>Статья </b><select ng-model="expence.type" name="type" >
+    <option value=""> расходов </option>
+    <option ng-repeat="option in data.userTypes" value="{{option}}">{{option}}</option>
+</select> <a href="#/user">Изменить список</a> &nbsp;&nbsp;<a href="#/reports">Отчеты </a> <br/>
+    <b>Дата</b><input type="date" ng-model="expence.date" name="date" /><br/>
+    <b>Комментарии</b><input type="memo" ng-model="expence.notes" name="notes" /><br/>
+    <input type="submit" id="submit" value="Добавить" />   <br/>
+</form>
+<br/>
+<b> Подитог на {{currmonth}}-{{curryear}} : {{getTotal()}}</b> руб<br/>
+<button ng-click="showForThisMonth(prePremonth)" style="color:blueviolet">2 месяца назад</button>
+<button ng-click="showForThisMonth(premonth)" style="color:blueviolet">Прошлый месяц</button>
+<button ng-click="curryear=today.getFullYear();showForThisMonth(today.getMonth()+1);" style="color:blueviolet"><b>Показать текущий месяц</b></button>
+<br/>
+Выбрать месяц:<input type="number" ng-model="currmonth" style="width: 4%;" required/>
+год:<input type="number" ng-model="curryear" style="width: 6%;" required/>
+<button ng-click="showForThisMonth(currmonth)" style="color:blueviolet">Показать <b>{{currmonth}}-{{curryear}}</b> </button><br/>
+<table border="1">
+    <td >Дата</td><td>  &nbsp; &nbsp;&nbsp; Сумма&nbsp;&nbsp;&nbsp;    </td><td>Тип(Кликни на него)</td><td>Примечание</td><td>Удалить</td></tr>
+
+    <!--<tr ng-repeat="expence in expences">-->
+    <tr ng-repeat="expence in expences" ng-include="getTemplate(expence)">
+    </tr>
+</table>
+<script type="text/ng-template" id="display">
+    <td align="center">{{expence.date|date:'yyyy-MM-dd'}}</td>
+    <td align="center" ><b>{{expence.amount}}</b></td>
+    <td ng-click="showByType(expence.type)" style="color:blueviolet" align="left">{{expence.type}}</td>
+    <td align="left">{{expence.notes}}</td>
+    <td><button ng-click="editExpence(expence)">Изменить</button>
+        <button ng-click="removeItem(expence)" style="color:blueviolet">Удалить</button></td>
+</script>
+<script type="text/ng-template" id="edit">
+    <td> <input type="date" ng-model="selected.date" /> </td>
+    <td> <input type="number" ng-model="selected.amount" /> </td>
+    <td><select ng-model="selected.type" name="type" >
+        <option value="{{selected.type}}">{{selected.type}}</option>
+        <option ng-repeat="option in data.userTypes" value="{{option}}">{{option}}</option>
+    </select>
+    </td>
+    <td> <input type="text" ng-model="selected.notes" /> </td>
+    <td>
+        <button ng-click="saveExpence(selected)">Сохранить</button>
+        <button ng-click="reset()">Отмена</button>
+    </td>
+</script>
+
+<br>
+<p>Сумма:<b>{{getTotal()}}</b> руб</p>
+v1.5.1

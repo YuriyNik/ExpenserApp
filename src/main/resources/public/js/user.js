@@ -1,33 +1,19 @@
+(function (){
 
-myApp.controller('User', ['$scope','$http', function($scope,$http) {
+  var app = angular.module("ExpenceApplication");
 
+  var UserController = function($scope, $http, $location, AuthenticationService, host) {
       console.log('User started');
 
       $scope.data = {
           userTypes: []
       };
 
-       $scope.user = {
-                password: '',
-                roles:["USER"],
-                expenceTypes: [
-                 "Обеды-Еда",
-                 "Продукты",
-                 "Одежда",
-                 "Счета",
-                 "Overall",
-                 "Grocery",
-                 "Топливо",
-                 "Проезд",
-                 "Машина",
-                 "Развлечения",
-                 "Путешествия",
-                 "Хобби",
-                 "Аптека",
-                 "Подарки"
-                 ]
-            };
+      $scope.user = {
+                      password: ''
+                      };
 
+//add - post new expence type
       $scope.add = function() {
 
       var a = $scope.data.userTypes.indexOf($scope.input);
@@ -35,7 +21,7 @@ myApp.controller('User', ['$scope','$http', function($scope,$http) {
       if (($scope.input !== '') && (a == -1)) {
 
         $scope.data.userTypes.push($scope.input);
-        $http.post(host+'/expenceTypes',$scope.data.userTypes,config).
+        $http.post(host+'/expenceTypes',$scope.data.userTypes).
                 then(function(response) {
                     console.log('success');
                     console.log(response);
@@ -49,9 +35,10 @@ myApp.controller('User', ['$scope','$http', function($scope,$http) {
         $scope.input = '';
 
         };
+//remove expence type
       $scope.remove = function(index) {
-           	$scope.data.userTypes.splice(index, 1);
-        $http.post(host+'/expenceTypes',$scope.data.userTypes,config).
+        $scope.data.userTypes.splice(index, 1);
+        $http.post(host+'/expenceTypes',$scope.data.userTypes).
                         then(function(response) {
                             console.log('success');
                             console.log(response);
@@ -62,25 +49,9 @@ myApp.controller('User', ['$scope','$http', function($scope,$http) {
                         });
         console.log('Removed and updated='+$scope.data.userTypes);
        };
-       $scope.addType = function() {
 
-         var a = $scope.user.expenceTypes.indexOf($scope.input);
-
-             if (($scope.newInput !== '') && (a == -1)) {
-
-               $scope.user.expenceTypes.push($scope.newInput);
-               console.log('Added type, now values='+$scope.user.expenceTypes);
-               }
-               $scope.newInput = '';
-
-               };
-       $scope.removeType = function(index) {
-               $scope.user.expenceTypes.splice(index, 1);
-              console.log('Removed type, now values='+$scope.user.expenceTypes);
-       };
-      $scope.onLoad = function(){
-            console.log('User onLoad');
-             $http.get(host+'/userDetails', config).
+       console.log('User(Expence Types form) onLoad');
+       $http.get(host+'/userDetails').
                           then(function(response) {
                               $scope.userDetails = response.data;
                               console.log('userDetails loaded');
@@ -89,7 +60,7 @@ myApp.controller('User', ['$scope','$http', function($scope,$http) {
                                   console.log(response);
                                   });
 
-             $http.get(host+'/expenceTypes',config).
+       $http.get(host+'/expenceTypes').
                         then(function(response) {
                             console.log('expenceTypes='+response.data);
                             if (response.data=='')
@@ -98,21 +69,19 @@ myApp.controller('User', ['$scope','$http', function($scope,$http) {
 
                         });
 
-       };
-       $scope.submit = function() {
-
-        };
         $scope.messagePassword='';
         $scope.changePass = function() {
             console.log("$scope.newpass="+$scope.newpass+"$scope.newpass2="+$scope.newpass2);
 
             if (($scope.newpass==$scope.newpass2)&&($scope.newpass!=='')&&(typeof $scope.newpass!== "undefined")){
                     $scope.user.password=$scope.newpass;
-                   $http.post(host+'/userProfile',$scope.user,config).
+                   $http.post(host+'/userProfile',$scope.user).
                                     then(function(response) {
-                                     console.log('userProfile new pass success!');
-                                   $scope.messagePassword='Пароль обновлён';
-                                   $scope.user.password='';
+                               console.log('userProfile new pass success!');
+                               $scope.messagePassword='Пароль обновлён';
+                              // AuthenticationService.SetCredentials(username, password);
+                               $location.path('/login');
+                               $scope.user.password='';
                                     }, function (response) {
                                         console.log('error');
                                         console.log(response);
@@ -124,28 +93,10 @@ myApp.controller('User', ['$scope','$http', function($scope,$http) {
                 }
 
         };
-        $scope.newUser = function() {
-           console.log("newUser $scope.user.username="+$scope.user.username);
-           console.log("newUser $scope.user.password="+$scope.user.password);
-           console.log("newUser $scope.user.expenceTypes="+$scope.user.expenceTypes);
 
-           $http.post(host+'/user',$scope.user,config).
-                                   then(function(response) {
-                                   console.log('newUser success!='+response.data.username);
-                                   if(typeof response.data.username!=="undefined") {
-                                        $scope.messagePassword='Пользователь '+ response.data.username +' создан!';
-                                   } else {
-                                    $scope.messagePassword=$scope.user.username +' пользователь уже есть!';
-                                   }
 
-                                  $scope.user.username='';
-                                  $scope.user.password='';
+  };
 
-                                    }, function (response) {
-                                        console.log('error');
-                                        console.log(response);
-                                    });
+  app.controller("UserController", UserController);
 
-        };
-
-    }]);
+})();

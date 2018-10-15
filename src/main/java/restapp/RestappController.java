@@ -144,19 +144,9 @@ public class RestappController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET, value="/logoutPage")
-    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        logger.info("logout procedure started");
-        if (auth != null){
-            logger.info("logout procedure");
-            new SecurityContextLogoutHandler().logout(request, response, auth);
-        } else {
-            logger.info("Authentication is null");
-
-        }
-        return "redirect:/";
+    @RequestMapping(method = RequestMethod.GET, value="/login")
+    public String getLogin () {
+        return null;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/userDetails")
@@ -195,10 +185,11 @@ public class RestappController {
             expenceFromDb.setType(expenceFromClient.getType());
         }
         if(expenceFromClient.getDate()!=null) {
-            expenceFromDb.setDate(expenceFromClient.getDate());
+            expenceFromDb.setDate(expenceFromClient.getDate().plusHours(4));
         }
-        if(expenceFromClient.getCreated()!=null) {
-            expenceFromDb.setCreated(expenceFromClient.getCreated());
+
+        if(expenceFromClient.getNotes()!=null) {
+            expenceFromDb.setNotes(expenceFromClient.getNotes());
         }
 
         expenceFromDb.setModified(LocalDateTime.now());
