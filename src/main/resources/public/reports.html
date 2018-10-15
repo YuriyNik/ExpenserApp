@@ -3,8 +3,8 @@
 <button ng-click="curryear=today.getFullYear();showForMonthYear(today.getMonth()+1,curryear);" style="color:blueviolet"><b>Показать текущий месяц</b></button>
 <br/>
 <h3>Отчеты за месяц ( 0  - годовой отчет) </h3>
-Выбрать месяц:<input type="number" ng-model="currmonth" style="width: 8%;" required/>
-год:<input type="number" ng-model="curryear" style="width: 14%;" required/>
+Выбрать месяц:<input type="number" ng-model="currmonth" style="width: 4%;" required/>
+год:<input type="number" ng-model="curryear" style="width: 7%;" required/>
 <button ng-click="showForMonthYear(currmonth,curryear)" style="color:blueviolet">Показать <b>{{currmonth}}-{{curryear}}</b> </button><br/>
 <table border="1">
     <td >Месяц</td><td>Год    </td><td>Статья</td><td>Сумма</td><td>Количество</td></tr>
