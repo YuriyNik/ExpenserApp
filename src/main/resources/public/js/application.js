@@ -31,6 +31,10 @@
       templateUrl: 'user.html'
     })
 
+    .when('/training', {
+      controller: 'TrainingController',
+      templateUrl: 'trainings.html'
+    })
 
     .otherwise({
       redirectTo: '/login'
