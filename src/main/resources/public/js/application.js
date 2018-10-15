@@ -1,20 +1,32 @@
 (function() {
 
-  var app = angular.module("BasicHttpAuthentication", ["ngRoute", "ngCookies", 'base64']);
+  var app = angular.module("ExpenceApplication", ["ngRoute", "ngCookies", 'base64']);
+
 
   app.config(function($routeProvider) {
 
     $routeProvider
-      .when('/login', {
+     .when('/login', {
         controller: 'LoginController',
         templateUrl: 'login.html',
         hideMenus: true
       })
 
     .when('/', {
-    //  controller: 'HomeController',
+      controller: 'HomeController',
       templateUrl: 'home.html'
     })
+/*
+    .when('/', {
+      controller: 'HomeController',
+      templateUrl: 'reports.html'
+    })
+
+    .when('/', {
+      controller: 'HomeController',
+      templateUrl: 'user.html'
+    })
+*/
 
     .otherwise({
       redirectTo: '/login'

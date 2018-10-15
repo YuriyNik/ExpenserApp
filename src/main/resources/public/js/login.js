@@ -3,7 +3,7 @@
 
 (function (){
 
-  var app = angular.module("BasicHttpAuthentication");
+  var app = angular.module("ExpenceApplication");
 
   var LoginController = function($scope, $rootScope, $location, AuthenticationService) {
 

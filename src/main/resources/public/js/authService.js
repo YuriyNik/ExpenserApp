@@ -5,19 +5,21 @@
 
   var AuthenticationService = function($http, $cookieStore, $rootScope, $timeout , $base64) {
 
-        //  Function defined for when the user login is initiate
+        var host = 'http://localhost:8080';
+
         var Login = function (username, password, callback) {
             authdata = $base64.encode(username + ':' + password);
             var config = {headers: {}};
             config.headers['Authorization'] = 'Basic ' + authdata;
             console.log('login='+config.headers['Authorization']);
-                $http.get('http://localhost:8080'+'/login', config).
+            $http.get(host+'/login', config).
                     then(function(response) {
-                           console.log('Login success!');
-                           response.success=1;
+                          console.log('Login success!');
+                        //  response.success=1;
                           callback('Ok');
                         }, function (response) {
                             response.message = 'Username or password is incorrect..';
+                            callback(response.message);
                             console.log('Login error!'+response.message);
                             });
 
@@ -37,6 +39,7 @@
             };
 
             $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
+            $http.defaults.headers.common['Content-Type'] = 'application/json';
             $cookieStore.put('globals', $rootScope.globals);
         };
 
@@ -57,7 +60,7 @@
   }
 
   //  Register the service with the application
-  var module = angular.module("BasicHttpAuthentication");
+  var module = angular.module("ExpenceApplication");
   module.factory("AuthenticationService", AuthenticationService)
 
 }());
