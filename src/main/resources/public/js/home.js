@@ -112,10 +112,10 @@
                console.log('delete expence:'+expence+';id='+expence.id);
                $http.delete(host+'/expence/'+expence.id).
                    then(function(response) {
-                       console.log(response);
+                      console.log(response);
                       var index = $scope.expences.indexOf(expence);
                       console.log('index='+index);
-                       $scope.expences.splice(index, 1);
+                      $scope.expences.splice(index, 1);
 
                    }, function (response) {
                        console.log('error!');

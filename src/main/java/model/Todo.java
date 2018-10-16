@@ -10,6 +10,7 @@ public class Todo {
     @Id
     private String id;
     private String description;
+    private String label;
     private LocalDateTime date;
     private LocalDateTime created;
     private LocalDateTime modified;
@@ -20,14 +21,23 @@ public class Todo {
 
     }
 
-    public Todo(String description, LocalDateTime date, LocalDateTime created, LocalDateTime modified, String owner, boolean completed){
+    public Todo(String description, String label, LocalDateTime date, LocalDateTime created, LocalDateTime modified, String owner, boolean completed){
         this.description=description;
+        this.label=label;
         this.date=date;
         this.created=created;
         this.modified=modified;
         this.owner=owner;
         this.completed=completed;
 
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public boolean isCompleted() {
@@ -87,7 +97,7 @@ public class Todo {
     @Override
     public String toString() {
         return String.format(
-                "{id=%s, description='%s', date='%s',created='%s',modified='%s', owner='%s',completed='%s' }",
-                id, description,date,created,modified,owner,completed );
+                "{id=%s, description='%s',label='%s', date='%s',created='%s',modified='%s', owner='%s',completed='%s' }",
+                id, description,label,date,created,modified,owner,completed );
     }
 }

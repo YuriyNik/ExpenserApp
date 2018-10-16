@@ -28,6 +28,9 @@ public class TodosRestController {
         if(todoFromClient.getDescription()!=null) {
             todoFromDb.setDescription(todoFromClient.getDescription());
         }
+        if(todoFromClient.getLabel()!=null) {
+            todoFromDb.setLabel(todoFromClient.getLabel());
+        }
         if(todoFromClient.getDate()!=null) {
             todoFromDb.setDate(todoFromClient.getDate().plusHours(4));
         }
@@ -45,9 +48,7 @@ public class TodosRestController {
     @RequestMapping(method= RequestMethod.POST,value="/todo")
     public Todo postTodo(@RequestBody Todo todo) {
         logger.info("postTodo="+todo);
-        if(todo.getDate()==null) {
-            todo.setDate(LocalDateTime.now());
-        } else {
+        if(todo.getDate()!=null) {
             todo.setDate(todo.getDate().plusHours(4));
         }
         todo.setCreated(LocalDateTime.now());
@@ -59,17 +60,20 @@ public class TodosRestController {
         return todo;
     }
 
-    //get all expenses for ADMIN only
-    @RequestMapping(method = RequestMethod.GET, value = "/todo")
+    @RequestMapping(method = RequestMethod.GET, value = "/todo/all")
     public List<Todo> listAllTodo() {
-        logger.info("ADMIN's method:listAllTodo");
+        logger.info("method:listAllTodo");
         UserDetails user =
                 (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        logger.info("Your user's roles=" +user.getAuthorities().toString());
-        if (user.getAuthorities().toString().contains("ROLE_ADMIN"))
-            return todosRepository.findAll();
-        logger.info("You user is not authorised for listAllTodo call");
-        return null;
+            return todosRepository.findAllForUser(user.getUsername());
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/todo")
+    public List<Todo> listAllNotDoneTodo() {
+        logger.info("method:listAllNotDoneTodo");
+        UserDetails user =
+                (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return todosRepository.findAllNotCompletedForUser(user.getUsername());
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/todo/{id}")
