@@ -1,0 +1,15 @@
+Вот и твои заметки <b>{{userDetails.username}}</b>! <a href="#/"> Домой</a><br/><br/>
+
+<table border="1">
+    <td >Заметка</td><td>Дата    </td><td>Готово?</td></tr>
+
+    <tr ng-repeat="todo in todos">
+        <td align="center">{{todo.description}}</td>
+        <td align="center"  >{{todo.date}}</td>
+        <td align="center" >{{todo.completed}}</td>
+
+
+        </td>
+    </tr>
+</table>
+
