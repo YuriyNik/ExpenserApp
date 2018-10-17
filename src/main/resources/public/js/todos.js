@@ -33,7 +33,7 @@
 
 
     $scope.addTodo = function () {
-     if (typeof $scope.formTodoText == "undefined") return;
+     if ((typeof $scope.formTodoText == "undefined")||($scope.formTodoText == '')) return;
        console.log('$scope.formTodoText:'+ $scope.formTodoText);
        $scope.todo.description=$scope.formTodoText;
        $scope.todo.date=$scope.formTodoDate;

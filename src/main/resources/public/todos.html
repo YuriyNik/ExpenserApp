@@ -1,20 +1,19 @@
 Вот и твои заметки <b>{{userDetails.username}}</b>! <a href="#/"> Домой</a><br/><br/>
-
-<table border="1">
-    <td>Готово?</td><td>Что сделать?</td><td>Когда?</td></tr>
-
+<b>&nbsp;&nbsp; Что и когда сделать, если сделал - кликни на галочку</b>
+<br/><br/>
+<table>
     <tr ng-repeat="todo in todos">
-        <td><input type="checkbox" ng-model="todo.completed" ng-click="onCheckboxClick(todo)"/></td>
-        <td align="center">{{todo.description}}</td>
-        <td align="center">{{todo.date|date:'yyyy-MM-dd'}}</td>
+        <td>&nbsp; &nbsp; &nbsp;<input type="checkbox" ng-model="todo.completed" ng-click="onCheckboxClick(todo)"/>
+            {{todo.description}}&nbsp;&nbsp;&nbsp;{{todo.date|date:'yyyy-MM-dd'}}</td>
+
         </td>
     </tr>
 </table>
 <br/>
-<form>
-    <input class="add-input" placeholder="Надо сделать..." type="text" ng-model="formTodoText" ng-model-instant required/>
-    <button class="add-btn" ng-click="addTodo()">Добавить</button><br/>
-    <input class="add-input" type="date" ng-model="formTodoDate" ng-model-instant /> Когда сделать
+<form id="todoform">
+    &nbsp;&nbsp; <textarea class="add-input" name="comment" form="todoform" ng-model="formTodoText" required>Надо сделать...</textarea>
+    &nbsp;&nbsp; <button class="add-btn" ng-click="addTodo()">Добавить</button><br/>
+    &nbsp;&nbsp; <input class="add-input" type="date" ng-model="formTodoDate" ng-model-instant /> Когда сделать
 
 </form>
 
