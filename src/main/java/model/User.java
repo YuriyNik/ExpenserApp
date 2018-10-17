@@ -15,6 +15,7 @@ public class User {
     private LocalDateTime created;
     private LocalDateTime modified;
     private String[] expenceTypes;
+    private String[] todoLabels;
 
     public User(){
 
@@ -78,11 +79,19 @@ public class User {
         return expenceTypes;
     }
 
+    public void setTodoLabels(String[] todoLabels) {
+        this.todoLabels = todoLabels;
+    }
+
+    public String[] getTodoLabels() {
+        return todoLabels;
+    }
+
     @Override
     public String toString() {
         return String.format(
-                "{id=%s, username='%s', roles='%s',expenceTypes='%s' }",
-                id, username, Arrays.toString(roles),Arrays.toString(expenceTypes));
+                "{id=%s, username='%s', roles='%s',expenceTypes='%s',todoLabels='%s'}",
+                id, username, Arrays.toString(roles),Arrays.toString(expenceTypes),Arrays.toString(todoLabels));
     }
 
 }

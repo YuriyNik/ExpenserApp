@@ -2,6 +2,7 @@ package restapp;
 
 
 import model.Todo;
+import model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -19,6 +21,9 @@ public class TodosRestController {
 
     @Autowired
     private TodosRepository todosRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     //modify todos data
     @RequestMapping(method = RequestMethod.PUT, value = "/todo/{id}")
@@ -84,6 +89,14 @@ public class TodosRestController {
         return todosRepository.findByidForUser(user.getUsername(),id);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/todoByLabel/{label}")
+    public List<Todo> getTodobyLabel(@PathVariable String label) {
+        logger.info("Todo/{label} Todolabel="+label);
+        UserDetails user =
+                (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return todosRepository.findByLabelNotCompleted(user.getUsername(),label);
+    }
+
     @RequestMapping(method = RequestMethod.DELETE, value = "/todo/{id}")
     public String deleteTodo(@PathVariable String id){
         UserDetails user =
@@ -92,6 +105,26 @@ public class TodosRestController {
         todosRepository.delete(todo);
         logger.info("Todo with id="+id+" deleted");
         return null;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/todoLabels")
+    public String[] getTodoLabels(){
+        UserDetails user =
+                (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String[] todoLabels =  userRepository.findByUsername(user.getUsername()).getTodoLabels();
+        return todoLabels;
+    }
+
+    @RequestMapping(method=RequestMethod.POST,value="/todoLabels")
+    public String[] postTodoLabels(@RequestBody String[] todoLabels) {
+        logger.info("postTodoLabels="+ Arrays.toString(todoLabels));
+        UserDetails user =
+                (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userFromDB = userRepository.findByUsername(user.getUsername());
+        userFromDB.setTodoLabels(todoLabels);
+        userFromDB.setModified(LocalDateTime.now());
+        userRepository.save(userFromDB);
+        return todoLabels;
     }
 
 }

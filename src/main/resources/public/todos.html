@@ -1,17 +1,25 @@
 Вот и твои заметки <b>{{userDetails.username}}</b>! <a href="#/"> Домой</a><br/><br/>
 <b>&nbsp;&nbsp; Что и когда сделать, если сделал - кликни на галочку</b>
 <br/><br/>
+
 <table>
+    <button ng-click="showTodos('all')" align="center"><b><< Все >></b></button>
+
+    <b ng-repeat="label in data.todoLabels">
+
+            <button ng-click="showTodos(label)" align="center">{{label}}</button>
+    </b>
     <tr ng-repeat="todo in todos">
         <td>&nbsp; &nbsp; &nbsp;<input type="checkbox" ng-model="todo.completed" ng-click="onCheckboxClick(todo)"/>
-            {{todo.description}}&nbsp;&nbsp;&nbsp;{{todo.date|date:'yyyy-MM-dd'}}</td>
+            {{todo.description}}&nbsp;&nbsp;&nbsp;{{todo.label}}&nbsp;&nbsp;&nbsp;{{todo.date|date:'yyyy-MM-dd'}}</td>
 
         </td>
-    </tr>
+    </tr><a href="#/user">Настроить</a> &nbsp;&nbsp;
 </table>
 <br/>
 <form id="todoform">
     &nbsp;&nbsp; <textarea class="add-input" name="comment" form="todoform" ng-model="formTodoText" required>Надо сделать...</textarea>
+    {{todo.label}}
     &nbsp;&nbsp; <button class="add-btn" ng-click="addTodo()">Добавить</button><br/>
     &nbsp;&nbsp; <input class="add-input" type="date" ng-model="formTodoDate" ng-model-instant /> Когда сделать
 

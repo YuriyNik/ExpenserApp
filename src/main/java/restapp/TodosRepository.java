@@ -12,6 +12,8 @@ public interface TodosRepository extends MongoRepository<Todo, String> {
     public Todo findByidForUser(String owner, String id);
     @Query("{ 'owner':'?0'}")
     public List<Todo> findAllForUser(String owner);
+    @Query("{ 'owner':'?0','label':'?1','completed':false}")
+    public List<Todo> findByLabelNotCompleted(String owner, String label);
     @Query("{ 'owner':'?0','completed':false}")
     public List<Todo> findAllNotCompletedForUser(String owner);
     public List<Todo> findAll();

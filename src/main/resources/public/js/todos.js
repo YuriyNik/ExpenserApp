@@ -7,12 +7,11 @@
     console.log('Todos started');
 
     $scope.data = {
-        userTypes: []
        };
     $scope.todo ={
         description:'',
-        date:''
-
+        date:'',
+        label:''
     }
 
     $http.get(host+'/userDetails').
@@ -26,12 +25,38 @@
     $http.get(host+'/todo').then(function(response) {
          $scope.todos = response.data;
     });
+    $http.get(host+'/todoLabels').
+           then(function(response) {
+                            console.log('todoLabels='+response.data);
+                            if (response.data=='')
+                            {$scope.data.todoLabels = [];}
+                            else { $scope.data.todoLabels = response.data;};
+
+           });
 
    $scope.getTotalTodos = function () {
     return $scope.todos.length;
      };
 
+    $scope.showTodos = function(label){
+    console.log('showTodos='+label);
+    if (label=='all')  {
+         $scope.todo.label='';
+         $http.get(host+'/todo').then(function(response) {
+         $scope.todos = response.data;
+         });
+    } else {
+        $scope.todo.label=label;
+        $http.get(host+'/todoByLabel/'+label).then(function(response) {
+            console.log('todoByLabel=');
+            console.log(response);
+            $scope.todos = response.data;
+        });
 
+    }
+
+
+    };
     $scope.addTodo = function () {
      if ((typeof $scope.formTodoText == "undefined")||($scope.formTodoText == '')) return;
        console.log('$scope.formTodoText:'+ $scope.formTodoText);
