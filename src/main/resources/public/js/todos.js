@@ -46,17 +46,23 @@
          $scope.todos = response.data;
          });
     } else {
-        $scope.todo.label=label;
-        $http.get(host+'/todoByLabel/'+label).then(function(response) {
+        if (label=='completed')  {
+                    $scope.todo.label='';
+                    $http.get(host+'/todoAll/completed').then(function(response) {
+                    $scope.todos = response.data;
+                    });
+            } else {
+            $scope.todo.label=label;
+            $http.get(host+'/todoByLabel/'+label).then(function(response) {
             console.log('todoByLabel=');
             console.log(response);
             $scope.todos = response.data;
-        });
-
+                }
+                ); }
     }
 
-
     };
+
     $scope.addTodo = function () {
      if ((typeof $scope.formTodoText == "undefined")||($scope.formTodoText == '')) return;
        console.log('$scope.formTodoText:'+ $scope.formTodoText);
@@ -91,8 +97,22 @@
                            });
     };
 
+    $scope.onDeleteClick = function(todo){
 
+    console.log('onDeleteClick todo='+todo.id+';'+todo.description+';'+todo.completed);
+        $http.delete(host+'/todo/'+todo.id).
+                               then(function(response) {
+                                   console.log('Delete success');
+                                   var index = $scope.todos.indexOf(todo);
+                                   console.log('index='+index);
+                                   $scope.todos.splice(index, 1);
+                               }, function (response) {
+                                   console.log('error');
+                                   console.log(response);
+                                   console.log(todo);
+                               });
 
+    };
   };
 
   app.controller("TodoController", TodoController);
