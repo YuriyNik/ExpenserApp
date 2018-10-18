@@ -65,13 +65,22 @@ public class TodosRestController {
         return todo;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/todo/all")
+    @RequestMapping(method = RequestMethod.GET, value = "/todoAll")
     public List<Todo> listAllTodo() {
         logger.info("method:listAllTodo");
         UserDetails user =
                 (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             return todosRepository.findAllForUser(user.getUsername());
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/todoAll/completed")
+    public List<Todo> listAllTodoCompleted() {
+        logger.info("method:listAllTodo_completed");
+        UserDetails user =
+                (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return todosRepository.findAllCompleted(user.getUsername());
+    }
+
 
     @RequestMapping(method = RequestMethod.GET, value = "/todo")
     public List<Todo> listAllNotDoneTodo() {
