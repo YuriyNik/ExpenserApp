@@ -36,6 +36,11 @@
       templateUrl: 'trainings.html'
     })
 
+    .when('/todos', {
+      controller: 'TodoController',
+      templateUrl: 'todos.html'
+    })
+
     .otherwise({
       redirectTo: '/login'
     });

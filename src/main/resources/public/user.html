@@ -1,8 +1,5 @@
-Привет <b>{{userDetails.username}}</b>!<a href="#/"> Домой</a>
-
 <br/>
-
-Придумай или исправь категории твоих расходов:<br/>
+<b>Категории твоих расходов <b>{{userDetails.username}}</b> :</b><br/>
 
 <!-- list of items with a button to remove that item -->
 <ul>
@@ -19,8 +16,23 @@
 </div>
 
 <br/>
+
+<b>Лайблы(категории) твоих заметок:</b><br/>
+<ul>
+    <li ng-repeat="label in data.todoLabels" >
+        {{label}}
+        <button ng-click="removeTodoLabel($index)" align="center">Удалить</button>
+    </li>
+</ul>
+
+<div>
+    >> <input type="text" ng-model="inputTodo">
+    <button type="submit" ng-click="addTodoLabel()">Добавить</button>
+</div>
+
 <br/>
-Также можешь изменить свой пароль
+<br/>
+<b>Также можешь изменить свой пароль</b>
 <br/>
 <b>{{messagePassword}}</b>
 <br/>

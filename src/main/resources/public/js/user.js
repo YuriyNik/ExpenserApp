@@ -6,7 +6,8 @@
       console.log('User started');
 
       $scope.data = {
-          userTypes: []
+          userTypes: [],
+          todoLabels: []
       };
 
       $scope.user = {
@@ -49,8 +50,43 @@
                         });
         console.log('Removed and updated='+$scope.data.userTypes);
        };
+//add - post new todoLabels
+      $scope.addTodoLabel = function() {
 
-       console.log('User(Expence Types form) onLoad');
+      var a = $scope.data.todoLabels.indexOf($scope.inputTodo);
+
+      if (($scope.inputTodo !== '') && (a == -1)) {
+
+        $scope.data.todoLabels.push($scope.inputTodo);
+        $http.post(host+'/todoLabels',$scope.data.todoLabels).
+                then(function(response) {
+                    console.log('success');
+                    console.log(response);
+                }, function (response) {
+                    console.log('error');
+                    console.log(response);
+
+                });
+        console.log('Added and updated='+$scope.data.todoLabels);
+        }
+        $scope.inputTodo = '';
+
+        };
+//remove expence todoLabels
+      $scope.removeTodoLabel = function(index) {
+        $scope.data.todoLabels.splice(index, 1);
+        $http.post(host+'/todoLabels',$scope.data.todoLabels).
+                        then(function(response) {
+                            console.log('success');
+                            console.log(response);
+                        }, function (response) {
+                            console.log('error');
+                            console.log(response);
+
+                        });
+        console.log('Removed and updated='+$scope.data.todoLabels);
+       };
+       console.log('user.js onLoad');
        $http.get(host+'/userDetails').
                           then(function(response) {
                               $scope.userDetails = response.data;
@@ -68,7 +104,14 @@
                             else { $scope.data.userTypes = response.data;};
 
                         });
+       $http.get(host+'/todoLabels').
+                        then(function(response) {
+                            console.log('todoLabels='+response.data);
+                            if (response.data=='')
+                            {$scope.data.todoLabels = [];}
+                            else { $scope.data.todoLabels = response.data;};
 
+                        });
         $scope.messagePassword='';
         $scope.changePass = function() {
             console.log("$scope.newpass="+$scope.newpass+"$scope.newpass2="+$scope.newpass2);
