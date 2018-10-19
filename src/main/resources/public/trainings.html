@@ -1,4 +1,18 @@
 Вот и твои тренировки <b>{{userDetails.username}}</b>! <br/><br/>
+
+<form>
+    &nbsp;&nbsp; <input class="add-input" type="date" ng-model="activity.date"/>Дата Занятия <br/>
+    &nbsp;&nbsp; <input class="add-input" type="type" ng-model="activity.type"/>Тип <br/>
+    &nbsp;&nbsp;<input type="number" ng-model="activity.duration" required />Продолжительность <br/>
+    &nbsp;&nbsp;<input type="number" ng-model="activity.distance" required />Дистанция <br/>
+    &nbsp;&nbsp;<input type="number" ng-model="activity.pulseAve" /> ЧСС Средний <br/>
+    &nbsp;&nbsp;<input type="number" ng-model="activity.pulseMax" /> ЧСС Макс <br/>
+    &nbsp;&nbsp;<input type="text" ng-model="activity.location"  /> Место <br/>
+    &nbsp;&nbsp;<input type="text" ng-model="activity.notes" /> Заметки <br/>
+    &nbsp;&nbsp;<input type="text" ng-model="activity.weather" /> Погода <br/>
+    &nbsp;&nbsp; <button class="add-btn" ng-click="addActivity()">Добавить</button><br/>
+</form>
+
 <table border="1">
     <td> Дата </td><td>Тип     </td><td>Продолжительность </td><td>Расстояние </td><td>Пульс средний</td><td>Пульс мах</td></tr>
     <tr ng-repeat="activitySummary in activitySummarys | orderBy:'-type'">
@@ -8,5 +22,8 @@
         <td align="center" >{{activitySummary.distance}}</td>
         <td align="center" >{{activitySummary.pulseAve}}</td>
         <td align="center" >{{activitySummary.pulseMax}}</td>
+        <td align="center" >{{activitySummary.location}}</td>
+        <td align="center" >{{activitySummary.notes}}</td>
+        <td align="center" >{{activitySummary.weather}}</td>
     </tr>
 </table>

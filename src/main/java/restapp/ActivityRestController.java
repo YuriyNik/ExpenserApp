@@ -38,7 +38,7 @@ public class ActivityRestController {
     }
 
     //get all expenses for ADMIN only
-    @RequestMapping(method = RequestMethod.GET, value = "/activity")
+    @RequestMapping(method = RequestMethod.GET, value = "/activityAll")
     public List<Activity> getAllActivity() {
         logger.info("ADMIN's method:listAllActivity");
         UserDetails user =
@@ -50,12 +50,31 @@ public class ActivityRestController {
         return null;
     }
 
+    //get all expenses for user
+    @RequestMapping(method = RequestMethod.GET, value = "/activity")
+    public List<Activity> getAllActivityForUser() {
+        logger.info("getAllActivityForUser");
+        UserDetails user =
+                (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return activityRepository.findAllForUser(user.getUsername());
+    }
+
+    //get all expenses for user by type
+    @RequestMapping(method = RequestMethod.GET, value = "/activity/{type}")
+    public List<Activity> getAllActivityForUserByType(@PathVariable String type) {
+        logger.info("getAllActivityForUserByType");
+        UserDetails user =
+                (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return activityRepository.findByTypeForUser(user.getUsername(),type);
+    }
+
     @RequestMapping(method = RequestMethod.PUT, value = "/activity/{id}")
     public Activity updateactivity(@PathVariable String id, @RequestBody Activity activityFromClient) {
         logger.info("Update activity/{id} activityId="+id);
         logger.info("Activity to str:"+activityFromClient.toString());
-        Activity activityFromDb = activityRepository.findByid(id);
-
+        UserDetails user =
+                (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Activity activityFromDb = activityRepository.findByidForUser(user.getUsername(),id);
        /* LocalDateTime date,
         String type,
         int duration,
@@ -118,7 +137,7 @@ public class ActivityRestController {
     public String deleteActivity(@PathVariable String id){
         UserDetails user =
                 (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Activity activity = activityRepository.findByid(id);
+        Activity activity = activityRepository.findByidForUser(user.getUsername(),id);
         activityRepository.delete(activity);
         logger.info("Activity with id="+id+" deleted");
         return null;
