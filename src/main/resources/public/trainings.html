@@ -1,4 +1,4 @@
-Вот и твои тренировки <b>{{userDetails.username}}</b>! <a href="#/"> Домой</a><br/><br/>
+Вот и твои тренировки <b>{{userDetails.username}}</b>! <br/><br/>
 <table border="1">
     <td> Дата </td><td>Тип     </td><td>Продолжительность </td><td>Расстояние </td><td>Пульс средний</td><td>Пульс мах</td></tr>
     <tr ng-repeat="activitySummary in activitySummarys | orderBy:'-type'">
