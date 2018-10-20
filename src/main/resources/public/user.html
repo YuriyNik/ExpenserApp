@@ -17,6 +17,21 @@
 
 <br/>
 
+<b>Категории по СПОРТУ:</b><br/>
+<ul>
+    <li ng-repeat="sportlabel in data.activityLabels" >
+        {{sportlabel}}
+        <button ng-click="removeActivityLabel($index)" align="center">Удалить</button>
+    </li>
+</ul>
+<div>
+    >> <input type="text" ng-model="inputActivity">
+    <button type="submit" ng-click="addActivityLabel()">Добавить</button>
+</div>
+
+
+
+
 <b>Лайблы(категории) твоих заметок:</b><br/>
 <ul>
     <li ng-repeat="label in data.todoLabels" >

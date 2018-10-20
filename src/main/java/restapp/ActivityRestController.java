@@ -1,6 +1,7 @@
 package restapp;
 
 import model.Activity;
+import model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -17,7 +19,10 @@ public class ActivityRestController {
     
     @Autowired
     private ActivityRepository activityRepository;
-    
+
+    @Autowired
+    private UserRepository userRepository;
+
     private static final Logger logger = LogManager.getLogger(ActivityRestController.class);
 
     @RequestMapping(method= RequestMethod.POST,value="/activity")
@@ -143,5 +148,23 @@ public class ActivityRestController {
         return null;
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/activityLabels")
+    public String[] getActivityLabels(){
+        UserDetails user =
+                (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String[] activityLabels =  userRepository.findByUsername(user.getUsername()).getActivityLabels();
+        return activityLabels;
+    }
+    @RequestMapping(method=RequestMethod.POST,value="/activityLabels")
+    public String[] postФсешмшенLabels(@RequestBody String[] activityLabels) {
+        logger.info("postTodoLabels="+ Arrays.toString(activityLabels));
+        UserDetails user =
+                (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userFromDB = userRepository.findByUsername(user.getUsername());
+        userFromDB.setActivityLabels(activityLabels);
+        userFromDB.setModified(LocalDateTime.now());
+        userRepository.save(userFromDB);
+        return activityLabels;
+    }
 
 }

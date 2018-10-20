@@ -38,6 +38,12 @@
                 console.log(response);
                 });
 
+    $http.get(host+'/activityLabels').
+        then(function(response) {
+            console.log('activityLabels='+response.data);
+            $scope.data.activityLabels = response.data;
+        });
+
 
     //$http.get(host+'/activity/'+$scope.currmonth+'/'+$scope.curryear+'/null',config).
 

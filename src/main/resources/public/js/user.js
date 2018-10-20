@@ -7,7 +7,9 @@
 
       $scope.data = {
           userTypes: [],
+          activityLabels: [],
           todoLabels: []
+
       };
 
       $scope.user = {
@@ -50,6 +52,51 @@
                         });
         console.log('Removed and updated='+$scope.data.userTypes);
        };
+
+//add - post new  activityLabels
+      $scope.addActivityLabel = function() {
+
+      var a = $scope.data.activityLabels.indexOf($scope.inputActivity);
+
+      if (($scope.inputActivity !== '') && (a == -1)) {
+
+        $scope.data.activityLabels.push($scope.inputActivity);
+        $http.post(host+'/activityLabels',$scope.data.activityLabels).
+                then(function(response) {
+                    console.log('success');
+                    console.log(response);
+                }, function (response) {
+                    console.log('error');
+                    console.log(response);
+
+                });
+        console.log('Added and updated='+$scope.data.activityLabels);
+        }
+        $scope.inputActivity = '';
+
+        };
+//remove expence activityLabels
+      $scope.removeActivityLabel = function(index) {
+        $scope.data.activityLabels.splice(index, 1);
+        $http.post(host+'/activityLabels',$scope.data.activityLabels).
+                        then(function(response) {
+                            console.log('success');
+                            console.log(response);
+                        }, function (response) {
+                            console.log('error');
+                            console.log(response);
+
+                        });
+        console.log('Removed and updated='+$scope.data.activityLabels);
+       };
+
+
+
+
+
+
+
+
 //add - post new todoLabels
       $scope.addTodoLabel = function() {
 
@@ -112,6 +159,16 @@
                             else { $scope.data.todoLabels = response.data;};
 
                         });
+
+         $http.get(host+'/activityLabels').
+                                 then(function(response) {
+                                     console.log('activityLabels='+response.data);
+                                     if (response.data=='')
+                                     {$scope.data.activityLabels= [];}
+                                     else { $scope.data.activityLabels = response.data;};
+
+                                 });
+
         $scope.messagePassword='';
         $scope.changePass = function() {
             console.log("$scope.newpass="+$scope.newpass+"$scope.newpass2="+$scope.newpass2);
