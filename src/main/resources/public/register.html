@@ -18,4 +18,29 @@
     >> <input type="text" ng-model="newInput">
     <button type="submit" ng-click="addType()">Добавить</button>
 </div>
+<br/><br/>
+категории Спорта, можешь поменять сейчас или позже
+<br/>
+<ul>
+    <li ng-repeat="activityLabel in user.activityLabels" >
+        {{activityLabel}}
+        <button ng-click="removeActivity($index)" align="center">Удалить</button>
+    </li>
+</ul>
+<div>
+    >> <input type="text" ng-model="newInputActivity">
+    <button type="submit" ng-click="addActivity()">Добавить</button>
+</div>
+категории Заметок, можешь поменять сейчас или позже
+<br/>
+<ul>
+    <li ng-repeat="todoLabel in user.todoLabels" >
+        {{todoLabel}}
+        <button ng-click="removeTodoLabel($index)" align="center">Удалить</button>
+    </li>
+</ul>
+<div>
+    >> <input type="text" ng-model="newInputTodoLabel">
+    <button type="submit" ng-click="addTodoLabel()">Добавить</button>
+</div>
 

@@ -22,7 +22,9 @@
                  "Хобби",
                  "Аптека",
                  "Подарки"
-                 ]
+                 ],
+                 activityLabels: ["Лыжи","Роллеры","Бег"],
+                 todoLabels: ["Личные","Работа","Купить"]
             };
 
        $scope.newUser = function() {
@@ -69,8 +71,41 @@
               console.log('Removed type, now values='+$scope.user.expenceTypes);
        };
 
+         //new user form
+       $scope.addActivity = function() {
 
+       var a = $scope.user.activityLabels.indexOf($scope.newInputActivity);
 
+       if (($scope.newInputActivity !== '') && (a == -1)) {
+       $scope.user.activityLabels.push($scope.newInputActivity);
+       console.log('Added Activity, now values='+$scope.user.activityLabels);
+       }
+       $scope.newInputActivity = '';
+       };
+       //new user form
+       $scope.removeActivity = function(index) {
+               $scope.user.activityLabels.splice(index, 1);
+              console.log('Removed type, now values='+$scope.user.activityLabels);
+       };
+
+            //new user form
+        $scope.addTodoLabel = function() {
+
+                var a = $scope.user.todoLabels.indexOf($scope.newInputTodoLabel);
+
+                    if (($scope.newInputTodoLabel !== '') && (a == -1)) {
+
+                      $scope.user.todoLabels.push($scope.newInputTodoLabel);
+                      console.log('Added todo, now values='+$scope.user.todoLabels);
+                      }
+                      $scope.newInputTodoLabel = '';
+
+                      };
+              //new user form
+        $scope.removeTodoLabel = function(index) {
+                      $scope.user.todoLabels.splice(index, 1);
+                     console.log('Removed todo, now values='+$scope.user.todoLabels);
+        };
 
       // Reset the login status before we start
       AuthenticationService.ClearCredentials();
