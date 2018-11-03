@@ -9,9 +9,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+
+import static java.time.temporal.ChronoUnit.HOURS;
+import static java.time.temporal.ChronoUnit.MINUTES;
+import static java.time.temporal.ChronoUnit.SECONDS;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -34,6 +39,21 @@ public class ActivityRestController {
         } else {
             activity.setDate(activity.getDate().plusHours(4));
         }
+
+        //calculate ave Speed and Pace
+        Duration duration = Duration.ZERO.plus(activity.getDurationHours(), HOURS).plus(activity.getDurationMins(), MINUTES).plus(activity.getDurationSecs(), SECONDS);
+        activity.setSpeedAve(activity.getDistance()/(duration.getSeconds()/3600));
+        logger.info(activity.getDistance()/(duration.getSeconds()/3600));
+        Double avePaceSecs = duration.getSeconds()/activity.getDistance();
+        logger.info(avePaceSecs);
+        Duration avePace = Duration.ZERO.plus(avePaceSecs.intValue(),SECONDS);
+        // String newAvePace="";
+        // if (avePace.toMinutes()<10) newAvePace=n
+        activity.setPaceAve(
+                avePace.toMinutes()+":"+avePace.getSeconds() % 60
+        );
+
+
         activity.setCreated(LocalDateTime.now());
         UserDetails user =
                 (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -97,8 +117,14 @@ public class ActivityRestController {
         }
 
 
-        if(activityFromClient.getDuration()!=0) {
-            activityFromDb.setDuration(activityFromClient.getDuration());
+        if(activityFromClient.getDurationHours()>=0) {
+            activityFromDb.setDurationHours(activityFromClient.getDurationHours());
+        }
+        if(activityFromClient.getDurationMins()>=0) {
+            activityFromDb.setDurationMins(activityFromClient.getDurationMins());
+        }
+        if(activityFromClient.getDurationSecs()>=0) {
+            activityFromDb.setDurationSecs(activityFromClient.getDurationSecs());
         }
 
 ///
@@ -128,8 +154,19 @@ public class ActivityRestController {
         }
 
         if (activityFromClient.getPaceAve()!=null) {
-            activityFromClient.setPaceAve(activityFromClient.getSpeedAve());
+            activityFromClient.setPaceAve(activityFromClient.getPaceAve());
         }
+
+        //calculate ave Speed and Pace
+
+        Duration duration = Duration.ZERO.plus(activityFromDb.getDurationHours(), HOURS).plus(activityFromDb.getDurationMins(), MINUTES).plus(activityFromDb.getDurationSecs(), SECONDS);
+        activityFromDb.setSpeedAve(activityFromDb.getDistance()/(duration.getSeconds()/3600));
+        Duration avePace = Duration.ZERO.plus(duration.getSeconds()/activityFromDb.getDistance().longValue(),SECONDS);
+       // String newAvePace="";
+       // if (avePace.toMinutes()<10) newAvePace=n
+        activityFromDb.setPaceAve(
+                avePace.toMinutes()+":"+avePace.getSeconds() % 60
+        );
 
         activityFromDb.setModified(LocalDateTime.now());
 

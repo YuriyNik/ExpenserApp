@@ -6,10 +6,15 @@
     <option value=""> тренировки </option>
     <option ng-repeat="option in data.activityLabels" value="{{option}}">{{option}}</option>
 </select> <a href="#/user">Изменить список</a><br/>
-    &nbsp;&nbsp;<input type="number" ng-model="activity.duration" required />Продолжительность <br/>
-    &nbsp;&nbsp;<input type="number" ng-model="activity.distance" required />Дистанция <br/>
-    &nbsp;&nbsp;<input type="number" ng-model="activity.pulseAve" /> ЧСС Средний <br/>
-    &nbsp;&nbsp;<input type="number" ng-model="activity.pulseMax" /> ЧСС Макс <br/>
+    <input ng-model="activity.durationHours" type="number" class="minutes" placeholder="00" min="0" max="24" step="1"/>
+    <span class="duration-sep">:</span>
+    <input ng-model="activity.durationMins" type="number" class="minutes" placeholder="00" min="0" max="59" step="1"/>
+    <span class="duration-sep">:</span>
+    <input ng-model="activity.durationSecs" type="number" class="seconds" placeholder="00" min="0" max="59" step="1"/>
+    Продолжительность <br/>
+    &nbsp;&nbsp;<input type="number" ng-model="activity.distance" required min="0" max="350" step="0.01"/>Дистанция <br/>
+    &nbsp;&nbsp;<input type="number" ng-model="activity.pulseAve" min="35" max="200" /> ЧСС Средний <br/>
+    &nbsp;&nbsp;<input type="number" ng-model="activity.pulseMax" min="35" max="220"/> ЧСС Макс <br/>
     &nbsp;&nbsp;<input type="text" ng-model="activity.location"  /> Место <br/>
     &nbsp;&nbsp;<input type="text" ng-model="activity.notes" /> Заметки <br/>
     &nbsp;&nbsp;<input type="text" ng-model="activity.weather" /> Погода <br/>
@@ -21,12 +26,16 @@
     <tr ng-repeat="activitySummary in activitySummarys | orderBy:'-date'">
         <td align="center">{{activitySummary.date|date:'dd.MM.yy'}} </td>
         <td align="center"  >{{activitySummary.type}}</td>
-        <td align="center" >{{activitySummary.duration}}</td>
+        <td align="center" >{{activitySummary.durationHours}}:{{activitySummary.durationMins}}:{{activitySummary.durationSecs}}</td>
         <td align="center" >{{activitySummary.distance}}</td>
         <td align="center" >{{activitySummary.pulseAve}}</td>
         <td align="center" >{{activitySummary.pulseMax}}</td>
         <td align="center" >{{activitySummary.location}}</td>
         <td align="center" >{{activitySummary.notes}}</td>
         <td align="center" >{{activitySummary.weather}}</td>
+        <td align="center" >{{activitySummary.speedAve}}</td>
+        <td align="center" >{{activitySummary.paceAve}}</td>
+
+
     </tr>
 </table>

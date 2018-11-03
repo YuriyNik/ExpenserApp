@@ -10,15 +10,17 @@ public class Activity {
     private String id;
     private LocalDateTime date;
     private String type;
-    private int duration;
+    private int durationHours;
+    private int durationMins;
+    private int durationSecs;
     private Double distance;
     private int pulseAve;
     private int pulseMax;
     private String location;
     private String notes;
     private String weather;
-    private Double speedAve;
-    private Double paceAve;
+    private Double speedAve;//kmpH 13.3
+    private String paceAve;//mins per hour 4:30
 
     private LocalDateTime created;
     private LocalDateTime modified;
@@ -27,8 +29,8 @@ public class Activity {
     @Override
     public String toString() {
         return String.format(
-                "Activity[id=%s, date = '%s', type='%s', duration =%s , distance = %s, pulseAve = %s, pulseMax=%s,  location =%s, notes=%S , weather =%s, speedAve =%s, paceAve =%s, created='%s', modified='%s', owner='%s']",
-                id, date, type,  duration,distance , pulseAve, pulseMax, location, notes, weather, speedAve, paceAve, created, modified, owner);
+                "Activity[id=%s, date = '%s', type='%s', durationHours =%s ,durationMins =%s ,durationSecs =%s , distance = %s, pulseAve = %s, pulseMax=%s,  location =%s, notes=%S , weather =%s, speedAve =%s, paceAve =%s, created='%s', modified='%s', owner='%s']",
+                id, date, type,  durationHours,durationMins,durationSecs,distance , pulseAve, pulseMax, location, notes, weather, speedAve, paceAve, created, modified, owner);
     }
 
     public Activity(){
@@ -38,7 +40,9 @@ public class Activity {
     public Activity(String id,
             LocalDateTime date,
             String type,
-            int duration,
+            int durationHours,
+             int durationMins,
+             int durationSecs,
              Double distance,
              int pulseAve,
              int pulseMax,
@@ -46,7 +50,7 @@ public class Activity {
              String notes,
              String weather,
              Double speedAve,
-             Double paceAve,
+             String paceAve,
 
              LocalDateTime created,
              LocalDateTime modified,
@@ -54,7 +58,9 @@ public class Activity {
     {
         this.id = id;
         this.date = date;
-        this.duration = duration;
+        this.durationHours = durationHours;
+        this.durationMins=durationMins;
+        this.durationSecs=durationSecs;
         this.type = type;
         this.distance = distance;
         this.pulseAve = pulseAve;
@@ -86,12 +92,36 @@ public class Activity {
         this.date = date;
     }
 
-    public int getDuration() {
-        return duration;
+    public int getDurationHours() {
+        return durationHours;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
+    public void setDurationHours(int durationHours) {
+        this.durationHours = durationHours;
+    }
+
+    public int getDurationMins() {
+        return durationMins;
+    }
+
+    public void setDurationMins(int durationMins) {
+        this.durationMins = durationMins;
+    }
+
+    public int getDurationSecs() {
+        return durationSecs;
+    }
+
+    public void setDurationSecs(int durationSecs) {
+        this.durationSecs = durationSecs;
+    }
+
+    public String getPaceAve() {
+        return paceAve;
+    }
+
+    public void setPaceAve(String paceAve) {
+        this.paceAve = paceAve;
     }
 
     public String getType() {
@@ -160,13 +190,7 @@ public class Activity {
         this.speedAve = speedAve;
     }
 
-    public Double getPaceAve() {
-        return paceAve;
-    }
 
-    public void setPaceAve(Double paceAve) {
-        this.paceAve = paceAve;
-    }
 
     public LocalDateTime getCreated() {
         return created;

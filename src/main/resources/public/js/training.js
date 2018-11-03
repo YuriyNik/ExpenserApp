@@ -11,6 +11,13 @@
     $scope.curryear = new Date().getFullYear();//can be changed for testing
     console.log('curryear='+$scope.curryear);
 
+
+    $scope.activity= {
+   // timeDuration: {
+    //    minutes: 2,
+    //    seconds: 50 }
+     };
+
     $scope.activity = {
     };
         /* LocalDateTime date,
