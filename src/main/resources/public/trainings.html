@@ -1,31 +1,40 @@
-Вот и твои тренировки <b>{{userDetails.username}}</b>! <br/><br/>
-
+&nbsp;&nbsp;Вот и твои тренировки <b>{{userDetails.username}}</b>! <br/>
 <form>
     &nbsp;&nbsp; <input class="add-input" type="date" ng-model="activity.date"/>Дата Занятия <br/>
     &nbsp;&nbsp; <b>Тип</b><select ng-model="activity.type" name="type" >
     <option value=""> тренировки </option>
     <option ng-repeat="option in data.activityLabels" value="{{option}}">{{option}}</option>
 </select> <a href="#/user">Изменить список</a><br/>
-    <input ng-model="activity.durationHours" type="number" class="minutes" placeholder="00" min="0" max="24" step="1"/>
+    &nbsp;&nbsp;<input ng-model="activity.durationHours" type="number" class="hours" placeholder="00" min="0" max="24" step="1"/>
     <span class="duration-sep">:</span>
     <input ng-model="activity.durationMins" type="number" class="minutes" placeholder="00" min="0" max="59" step="1"/>
     <span class="duration-sep">:</span>
     <input ng-model="activity.durationSecs" type="number" class="seconds" placeholder="00" min="0" max="59" step="1"/>
-    Продолжительность <br/>
-    &nbsp;&nbsp;<input type="number" ng-model="activity.distance" required min="0" max="350" step="0.01"/>Дистанция <br/>
+    Продолжительность (Час:Мин:Сек)<br/>
+    &nbsp;&nbsp;<input type="number" ng-model="activity.distance" required min="0" max="350" step="0.01"/> Дистанция (Км)<br/>
     &nbsp;&nbsp;<input type="number" ng-model="activity.pulseAve" min="35" max="200" /> ЧСС Средний <br/>
     &nbsp;&nbsp;<input type="number" ng-model="activity.pulseMax" min="35" max="220"/> ЧСС Макс <br/>
-    &nbsp;&nbsp;<input type="text" ng-model="activity.location"  /> Место <br/>
-    &nbsp;&nbsp;<input type="text" ng-model="activity.notes" /> Заметки <br/>
+    &nbsp;&nbsp;Место<select ng-model="activity.location" name="location" >
+    <option value=""> тренировки </option>
+    <option ng-repeat="option in data.activityPlaces" value="{{option}}">{{option}}</option>
+    </select><br/>
+    &nbsp;&nbsp; <textarea class="add-input" name="comment" ng-model="activity.notes">Что делал, какой темп и тд ...</textarea>
+    Заметки <br/>
     &nbsp;&nbsp;<input type="text" ng-model="activity.weather" /> Погода <br/>
     &nbsp;&nbsp; <button class="add-btn" ng-click="addActivity()">Добавить</button><br/>
 </form>
+<br/>
+<b> Подитог на {{currmonth}}-{{curryear}} : {{getTotal()}}</b> км <b>{{ActivityType}}</b><br/>
+<button ng-click="showAll()" style="color:blueviolet">Показать все</button>
 
 <table border="1">
-    <td> Дата </td><td>Тип     </td><td>T(мин) </td><td>Дистанция </td><td>Пульс средний</td><td>Пульс мах</td><td>Место</td><td>Заметки</td><td>Погода</td></tr>
-    <tr ng-repeat="activitySummary in activitySummarys | orderBy:'-date'">
-        <td align="center">{{activitySummary.date|date:'dd.MM.yy'}} </td>
-        <td align="center"  >{{activitySummary.type}}</td>
+    <td> Дата </td><td>Тип</td><td>Длит</td><td>Дист</td><td>ЧСС Ср</td><td>ЧСС Max</td><td>Место</td><td>Заметки</td><td>Погода</td>
+    <td>СрСкор</td><td>СрТемп</td><td>Кнопки</td>
+    </tr>
+    <tr ng-repeat="activitySummary in activitySummarys" ng-include="getTemplate(activitySummary)">
+    <script type="text/ng-template" id="display">
+    <td align="center">{{activitySummary.date|date:'dd.MM.yy'}} </td>
+    <td ng-click="showByType(activitySummary.type)" style="color:blueviolet" align="left">{{activitySummary.type}}</td>
         <td align="center" >{{activitySummary.durationHours}}:{{activitySummary.durationMins}}:{{activitySummary.durationSecs}}</td>
         <td align="center" >{{activitySummary.distance}}</td>
         <td align="center" >{{activitySummary.pulseAve}}</td>
@@ -35,6 +44,41 @@
         <td align="center" >{{activitySummary.weather}}</td>
         <td align="center" >{{activitySummary.speedAve}}</td>
         <td align="center" >{{activitySummary.paceAve}}</td>
+        <td><button ng-click="editActivity(activitySummary)">Изменить</button>
+            <button ng-click="deleteActivity(activitySummary)" style="color:blueviolet">Удалить</button></td>
+    </script>
+        <script type="text/ng-template" id="edit">
+
+            <td> <input type="date" ng-model="selected.date" /> </td>
+            <td><select ng-model="selected.type" name="type" >
+                <option value="{{selected.type}}">{{selected.type}}</option>
+                <option ng-repeat="option in data.activityLabels" value="{{option}}">{{option}}</option>
+            </select>
+            </td>
+            <td>
+            <input ng-model="selected.durationHours" type="number" class="hours" placeholder="00" min="0" max="24" step="1"/>
+            <span class="duration-sep">:</span>
+            <input ng-model="selected.durationMins" type="number" class="minutes" placeholder="00" min="0" max="59" step="1"/>
+            <span class="duration-sep">:</span>
+            <input ng-model="selected.durationSecs" type="number" class="seconds" placeholder="00" min="0" max="59" step="1"/>
+            </td>
+            <td><input type="number" ng-model="selected.distance"  min="0" max="350" step="0.01"/></td>
+            <td><input type="number" ng-model="selected.pulseAve" min="35" max="200" /></td>
+            <td><input type="number" ng-model="selected.pulseMax" min="35" max="220"/></td>
+            <td><select ng-model="selected.location" name="location" >
+                <option value="{{selected.location}}">{{selected.location}}</option>
+                <option ng-repeat="option in data.activityPlaces" value="{{option}}">{{option}}</option>
+                </select></td>
+            <td> <textarea class="add-input" name="notes" ng-model="selected.notes" ></textarea></td>
+            <td><input type="text" ng-model="selected.weather" /></td>
+
+            <td align="center" >{{selected.speedAve}}</td>
+            <td align="center" >{{selected.paceAve}}</td>
+            <td>
+                <button ng-click="saveActivity(selected)">Сохранить</button>
+                <button ng-click="reset()">Отмена</button>
+            </td>
+        </script>
 
 
     </tr>

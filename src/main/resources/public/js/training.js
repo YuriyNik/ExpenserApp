@@ -11,6 +11,9 @@
     $scope.curryear = new Date().getFullYear();//can be changed for testing
     console.log('curryear='+$scope.curryear);
 
+    $scope.ActivityType = '';
+
+    $scope.selected = {};
 
     $scope.activity= {
    // timeDuration: {
@@ -18,8 +21,6 @@
     //    seconds: 50 }
      };
 
-    $scope.activity = {
-    };
         /* LocalDateTime date,
         String type,
         int duration,
@@ -32,7 +33,10 @@
         Double speedAve,
         Double paceAve,*/
     $scope.data = {
-        userTypes: []
+        userTypes: [],
+        activityPlaces:[
+        'ЛО', 'ГАБО','Снежинка','ПаркЛианозово'
+        ]
        };
 
     console.log('Training started currmonth='+$scope.currmonth+';curryear='+$scope.curryear);
@@ -56,7 +60,15 @@
 
     $http.get(host+'/activity/').then(function(response) {
          $scope.activitySummarys = response.data;
+         $scope.activitySummarys.sort(sortByDateDesc());
     });
+
+    function sortByDateDesc(){
+            return function(a,b){
+                   return new Date(b.date) - new Date(a.date);
+            };
+    };
+
 //post new
     $scope.addActivity = function(){
          console.log('addActivity');
@@ -67,34 +79,101 @@
                        console.log('success');
                        console.log(response);
                        $scope.activitySummarys.push(response.data);
+                       $scope.activitySummarys.sort(sortByDateDesc());
                        $scope.activity = {};
                    }, function (response) {
                        console.log('error');
                        console.log(response);
                        console.log($scope.activity);
-
                    });
     };
 //delete selected
-    $scope.deleteActivity = function(){
-
+    $scope.deleteActivity = function(activity){
+               console.log('delete activity:'+activity+';id='+activity.id);
+               $http.delete(host+'/activity/'+activity.id).
+                   then(function(response) {
+                      console.log(response);
+                      var index = $scope.activitySummarys.indexOf(activity);
+                      console.log('index='+index);
+                      $scope.activitySummarys.splice(index, 1);
+                   }, function (response) {
+                       console.log('error!');
+                       console.log(response);
+                   });
     };
-//update exisiting via PUT
-    $scope.updateActivity = function(){
+
+     $scope.getTemplate = function (activity) {
+                   if (activity.id === $scope.selected.id) return 'edit';
+                   else return 'display';
+               };
+
+     $scope.editActivity = function (activity) {
+                   console.log('editing activity = '+ activity.id+';'+activity.amount);
+                   activity.date= new Date(activity.date);
+                   $scope.selected = angular.copy(activity);
+                   console.log('saveActivity selected = '+ $scope.selected.id+';'+$scope.selected.type+';'+$scope.selected.distance+';'+$scope.selected.date);
+               };
+
+    $scope.reset = function () {
+               $scope.selected = {};
+    };
+    $scope.saveActivity = function(selected){
+            console.log('saveExpence selected = '+ $scope.selected.id+';'+$scope.selected.type+';'+$scope.selected.amount+';'+$scope.selected.date);
+              var index = 0;
+              for(var i = 0; i < $scope.activitySummarys.length; i++){
+                 if($scope.activitySummarys[i].id==selected.id) {
+                    index= i;
+                    break;
+                 }
+              }
+              console.log('saveActivity index = '+index);
+              if (typeof $scope.selected.type == "undefined") $scope.selected.type='Overall';
+              $http.put(host+'/activity/'+$scope.selected.id,$scope.selected).
+                  then(function(response) {
+                              console.log('Update success');
+                              console.log(response);
+                              $scope.activitySummarys[index] = angular.copy($scope.selected);
+                          //    $scope.activitySummarys.sort(sortByDateDesc());
+                              $scope.reset();
+                  }, function (response) {
+                              console.log('Update error');
+                              console.log(response);
+                  });
 
     };
 
     $scope.showByType = function(type) {
-      console.log('showByType for type='+type);
+      console.log('Activities showByType for type='+type);
       $http.get(host+'/activity/'+type).
                        then(function(response) {
-                       $scope.expences = response.data;
+                       $scope.activitySummarys = response.data;
+                       $scope.activitySummarys.sort(sortByDateDesc());
                        console.log('activity reloaded by type');
+                       $scope.ActivityType = type;
                        }, function (response) {
                            console.log('error!');
                            console.log(response);
                        });
     };
+
+    $scope.showAll = function(){
+        $http.get(host+'/activity/').then(function(response) {
+             $scope.activitySummarys = response.data;
+             $scope.activitySummarys.sort(sortByDateDesc());
+        });
+        $scope.ActivityType = '';
+    };
+
+     $scope.getTotal = function(){
+                   if (typeof $scope.activitySummarys !== "undefined") {
+                   var total = 0;
+                   for(var i = 0; i < $scope.activitySummarys.length; i++){
+                       var distance = $scope.activitySummarys[i].distance;
+                       total += distance;
+                   }
+                   return total;
+               }
+               }
 
 
   };

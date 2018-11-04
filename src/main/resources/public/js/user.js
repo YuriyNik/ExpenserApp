@@ -8,8 +8,8 @@
       $scope.data = {
           userTypes: [],
           activityLabels: [],
-          todoLabels: []
-
+          todoLabels: [],
+          activityPlaces: []
       };
 
       $scope.user = {

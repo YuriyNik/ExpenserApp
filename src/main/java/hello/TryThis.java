@@ -32,20 +32,48 @@ public class TryThis {
                 absSeconds % 60);
         return seconds < 0 ? "-" + positive : positive;
     }
+    private static double calculateSpeedAve(int hours, int minutes, int seconds, double distance){
+        //calculate ave Speed and Pace
+        Duration duration = Duration.ZERO.plus(hours, HOURS).plus(minutes, MINUTES).plus(seconds, SECONDS);
+        double totalSecs = duration.getSeconds();
+        int secsInHour= 3600;
+        double kmPerHour = distance / (totalSecs/secsInHour);
+        double kmPerHourRoundOff = (double) Math.round(kmPerHour * 10) / 10;
+        return kmPerHourRoundOff;
+    }
+
+    private static String calculatePaceAve(int hours, int minutes, int seconds, double distance){
+        //calculate ave Speed and Pace
+        Duration duration = Duration.ZERO.plus(hours, HOURS).plus(minutes, MINUTES).plus(seconds, SECONDS);
+        double totalSecs = duration.getSeconds();
+        double secsPerKm = totalSecs / distance;
+        int secsPerKmRoundOff = (int) Math.round(secsPerKm);
+        Duration paceSecs = Duration.ZERO.plus(secsPerKmRoundOff,SECONDS);
+        return paceSecs.toMinutes()+":"+paceSecs.getSeconds() % 60;
+    }
 
 
     public static void durationSample() {
         //Let's say duration of 2days 3hours 12minutes and 46seconds
-        Duration d = Duration.ZERO.plus(2, HOURS).plus(1, MINUTES).plus(46, SECONDS);
+        Duration d = Duration.ZERO.plus(1, HOURS).plus(25, MINUTES).plus(35, SECONDS);
         System.out.println(d);
-        Double distance = 30.11;
+        Double distance = 16.5;
+        Double aveSecs = new Double(d.getSeconds());
+        Double secsH= new Double(3600);
+        Double aveH =aveSecs/secsH;
+        double kmPh = distance/aveH;
+        double roundOff = (double) Math.round(kmPh * 10) / 10;
+
+        System.out.println(calculateSpeedAve(1,25,35, distance));
+        System.out.println(calculatePaceAve(1,25,35, distance));
+
+        System.out.println("aveH="+aveH+":::"+"kmPh="+roundOff);
 
         long inHours = d.getSeconds();
         Double inH =new Double(7306/3600);
         System.out.println("d.getSeconds()/3600="+inH);
         System.out.println(7306/3600);
         System.out.println("inHours="+inHours);
-        System.out.println("kmPh="+distance/(d.getSeconds()/3600));
         System.out.println("SecsPerKm="+d.getSeconds()/distance);
         Double SecsPerKm=d.getSeconds()/distance;
         System.out.println("SecsPerKm="+SecsPerKm.longValue());

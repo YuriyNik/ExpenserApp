@@ -30,6 +30,26 @@ public class ActivityRestController {
 
     private static final Logger logger = LogManager.getLogger(ActivityRestController.class);
 
+    private double calculateSpeedAve(int hours, int minutes, int seconds, double distance){
+        //calculate ave Speed and Pace
+        Duration duration = Duration.ZERO.plus(hours, HOURS).plus(minutes, MINUTES).plus(seconds, SECONDS);
+        double totalSecs = duration.getSeconds();
+        int secsInHour= 3600;
+        double kmPerHour = distance / (totalSecs/secsInHour);
+        double kmPerHourRoundOff = (double) Math.round(kmPerHour * 10) / 10;
+        return kmPerHourRoundOff;
+    }
+
+    private String calculatePaceAve(int hours, int minutes, int seconds, double distance){
+        //calculate ave Speed and Pace
+        Duration duration = Duration.ZERO.plus(hours, HOURS).plus(minutes, MINUTES).plus(seconds, SECONDS);
+        double totalSecs = duration.getSeconds();
+        double secsPerKm = totalSecs / distance;
+        int secsPerKmRoundOff = (int) Math.round(secsPerKm);
+        Duration paceSecs = Duration.ZERO.plus(secsPerKmRoundOff,SECONDS);
+        return paceSecs.toMinutes()+":"+paceSecs.getSeconds() % 60;
+    }
+
     @RequestMapping(method= RequestMethod.POST,value="/activity")
     public Activity postActivity(@RequestBody Activity  activity) {
         logger.info("POST activity call");
@@ -41,18 +61,8 @@ public class ActivityRestController {
         }
 
         //calculate ave Speed and Pace
-        Duration duration = Duration.ZERO.plus(activity.getDurationHours(), HOURS).plus(activity.getDurationMins(), MINUTES).plus(activity.getDurationSecs(), SECONDS);
-        activity.setSpeedAve(activity.getDistance()/(duration.getSeconds()/3600));
-        logger.info(activity.getDistance()/(duration.getSeconds()/3600));
-        Double avePaceSecs = duration.getSeconds()/activity.getDistance();
-        logger.info(avePaceSecs);
-        Duration avePace = Duration.ZERO.plus(avePaceSecs.intValue(),SECONDS);
-        // String newAvePace="";
-        // if (avePace.toMinutes()<10) newAvePace=n
-        activity.setPaceAve(
-                avePace.toMinutes()+":"+avePace.getSeconds() % 60
-        );
-
+        activity.setSpeedAve(calculateSpeedAve(activity.getDurationHours(),activity.getDurationMins(),activity.getDurationSecs(),activity.getDistance()));
+        activity.setPaceAve(calculatePaceAve(activity.getDurationHours(),activity.getDurationMins(),activity.getDurationSecs(),activity.getDistance()));;
 
         activity.setCreated(LocalDateTime.now());
         UserDetails user =
@@ -138,35 +148,19 @@ public class ActivityRestController {
         }
 
         if(activityFromClient.getLocation()!=null){
-          activityFromClient.setLocation(activityFromClient.getLocation());
+            activityFromDb.setLocation(activityFromClient.getLocation());
         }
 
         if(activityFromClient.getNotes()!=null){
-            activityFromClient.setNotes(activityFromClient.getNotes());
+            activityFromDb.setNotes(activityFromClient.getNotes());
         }
 
         if (activityFromClient.getWeather()!=null){
-            activityFromClient.setWeather(activityFromClient.getWeather());
+            activityFromDb.setWeather(activityFromClient.getWeather());
         }
-
-        if (activityFromClient.getSpeedAve()!=null) {
-            activityFromClient.setSpeedAve(activityFromClient.getSpeedAve());
-        }
-
-        if (activityFromClient.getPaceAve()!=null) {
-            activityFromClient.setPaceAve(activityFromClient.getPaceAve());
-        }
-
         //calculate ave Speed and Pace
-
-        Duration duration = Duration.ZERO.plus(activityFromDb.getDurationHours(), HOURS).plus(activityFromDb.getDurationMins(), MINUTES).plus(activityFromDb.getDurationSecs(), SECONDS);
-        activityFromDb.setSpeedAve(activityFromDb.getDistance()/(duration.getSeconds()/3600));
-        Duration avePace = Duration.ZERO.plus(duration.getSeconds()/activityFromDb.getDistance().longValue(),SECONDS);
-       // String newAvePace="";
-       // if (avePace.toMinutes()<10) newAvePace=n
-        activityFromDb.setPaceAve(
-                avePace.toMinutes()+":"+avePace.getSeconds() % 60
-        );
+        activityFromDb.setSpeedAve(calculateSpeedAve(activityFromDb.getDurationHours(),activityFromDb.getDurationMins(),activityFromDb.getDurationSecs(),activityFromDb.getDistance()));
+        activityFromDb.setPaceAve(calculatePaceAve(activityFromDb.getDurationHours(),activityFromDb.getDurationMins(),activityFromDb.getDurationSecs(),activityFromDb.getDistance()));;
 
         activityFromDb.setModified(LocalDateTime.now());
 
