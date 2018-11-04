@@ -132,7 +132,7 @@
                   then(function(response) {
                               console.log('Update success');
                               console.log(response);
-                              $scope.activitySummarys[index] = angular.copy($scope.selected);
+                              $scope.activitySummarys[index] = angular.copy(response.data);
                           //    $scope.activitySummarys.sort(sortByDateDesc());
                               $scope.reset();
                   }, function (response) {
