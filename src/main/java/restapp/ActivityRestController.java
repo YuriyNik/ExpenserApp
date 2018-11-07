@@ -1,6 +1,7 @@
 package restapp;
 
 import model.Activity;
+import model.MigrateActivity;
 import model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -196,6 +199,51 @@ public class ActivityRestController {
         userFromDB.setModified(LocalDateTime.now());
         userRepository.save(userFromDB);
         return activityLabels;
+    }
+
+    @RequestMapping(method= RequestMethod.POST,value="/oldActivity")
+    public List<Activity> postActivity(@RequestBody List <MigrateActivity> migrateActivitys) {
+        logger.info("ADMIN's method:oldActivity");
+        UserDetails user =
+                (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        logger.info("Your user's roles=" +user.getAuthorities().toString());
+
+        if (user.getAuthorities().toString().contains("ROLE_ADMIN")){
+
+            logger.info("List size="+migrateActivitys.size());
+            List<Activity> activities = new ArrayList<>();
+
+            for (MigrateActivity migrateActivity:migrateActivitys) {
+                Activity newActivity = new Activity();
+                String dateWithTime =migrateActivity.getDate()+"T18:00:00";
+                newActivity.setDate(LocalDateTime.parse(dateWithTime));
+                newActivity.setType(migrateActivity.getType());
+                newActivity.setDurationHours(migrateActivity.getDurationHours());
+                newActivity.setDurationMins(migrateActivity.getDurationMins());
+                newActivity.setDurationSecs(migrateActivity.getDurationSecs());
+                newActivity.setLocation(migrateActivity.getLocation());
+                newActivity.setDistance(Double.parseDouble( migrateActivity.getDistance().replace(",",".") ));
+                newActivity.setPulseAve(migrateActivity.getPulseAve());
+                newActivity.setPulseMax(migrateActivity.getPulseMax());
+                newActivity.setNotes(migrateActivity.getNotes());
+                newActivity.setWeather(migrateActivity.getWeather());
+                //calculate ave Speed and Pace
+                newActivity.setSpeedAve(calculateSpeedAve(newActivity.getDurationHours(),newActivity.getDurationMins(),newActivity.getDurationSecs(),newActivity.getDistance()));
+                newActivity.setPaceAve(calculatePaceAve(newActivity.getDurationHours(),newActivity.getDurationMins(),newActivity.getDurationSecs(),newActivity.getDistance()));;
+                newActivity.setCreated(newActivity.getDate());
+                newActivity.setModified(LocalDateTime.now());
+                newActivity.setOwner(user.getUsername());
+                activityRepository.save(newActivity);
+                logger.info("migrated Activity="+newActivity);
+                activities.add(newActivity);
+            }
+
+            return activities;
+
+        }
+
+        logger.info("You user is not authorised for oldActivity call");
+        return null;
     }
 
 }

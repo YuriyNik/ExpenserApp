@@ -3,8 +3,11 @@ package hello;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -95,33 +98,26 @@ public class TryThis {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
 
-        durationSample();
+       // durationSample();
 
+String input = "20,5";
+        Double value = Double.parseDouble( input.replace(",",".") );
+        System.out.printf(value.toString());
 
+        String datestr = new String("21-10-18");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yy");
+  //     LocalDateTime dateTime = LocalDateTime.parse(datestr, formatter);
 
+        String strDate = "21-10-18";
+        LocalDate aLD = LocalDate.parse(strDate,formatter);
 
-
-        Duration duration = Duration.parse("PT3H23M10s");
-      //  long duration = 4 * 60 * 60 * 1000;
-       // SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS", Locale.getDefault());
-       // log.info("Duration: " + sdf.format(new Date(duration - TimeZone.getDefault().getRawOffset())));
-        log.info(duration);
-log.info(formatDuration(duration));
-       /* Duration diff = Duration.parse("1:03:03");
-                String hms = String.format("%d:%02d:%02d",
-                diff.toHoursPart(),
-                diff.toMinutesPart(),
-                diff.toSecondsPart());
-        */
-        String datestr = new String("2008-11-20 17:45:19");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime dateTime = LocalDateTime.parse(datestr, formatter);
-
-        System.out.println("dateTime="+dateTime);
-
-
+        System.out.println("Date: " + aLD);
+        String date = "2018-10-18";
+        String strDatewithTime = date+"T12:00:00";
+        LocalDateTime aLDT = LocalDateTime.parse(strDatewithTime);
+        System.out.println("Date with Time: " + aLDT);
         LocalDateTime ldt = LocalDateTime.now();
         System.out.println("ldt.getMonthValue()="+ldt.getMonthValue());
         System.out.println(DateTimeFormatter.ofPattern("MM-dd-yyyy").format(ldt));

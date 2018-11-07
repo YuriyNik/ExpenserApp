@@ -51,7 +51,6 @@ public class Activity {
              String weather,
              Double speedAve,
              String paceAve,
-
              LocalDateTime created,
              LocalDateTime modified,
              String owner)
