@@ -57,8 +57,8 @@
 
 
    $http.get(host+'/activityForYear/'+$scope.curryear).then(function(response) {
-               $scope.activitySummarys = response.data;
-               $scope.activitySummarys.sort(sortByDateDesc());
+               $scope.activitiesList = response.data;
+               $scope.activitiesList.sort(sortByDateDesc());
           });
 
     function sortByDateDesc(){
@@ -76,8 +76,8 @@
                    then(function(response) {
                        console.log('success');
                        console.log(response);
-                       $scope.activitySummarys.push(response.data);
-                       $scope.activitySummarys.sort(sortByDateDesc());
+                       $scope.activitiesList.push(response.data);
+                       $scope.activitiesList.sort(sortByDateDesc());
                        $scope.activity = {};
                    }, function (response) {
                        console.log('error');
@@ -91,9 +91,9 @@
                $http.delete(host+'/activity/'+activity.id).
                    then(function(response) {
                       console.log(response);
-                      var index = $scope.activitySummarys.indexOf(activity);
+                      var index = $scope.activitiesList.indexOf(activity);
                       console.log('index='+index);
-                      $scope.activitySummarys.splice(index, 1);
+                      $scope.activitiesList.splice(index, 1);
                    }, function (response) {
                        console.log('error!');
                        console.log(response);
@@ -118,8 +118,8 @@
     $scope.saveActivity = function(selected){
             console.log('saveExpence selected = '+ $scope.selected.id+';'+$scope.selected.type+';'+$scope.selected.amount+';'+$scope.selected.date);
               var index = 0;
-              for(var i = 0; i < $scope.activitySummarys.length; i++){
-                 if($scope.activitySummarys[i].id==selected.id) {
+              for(var i = 0; i < $scope.activitiesList.length; i++){
+                 if($scope.activitiesList[i].id==selected.id) {
                     index= i;
                     break;
                  }
@@ -130,8 +130,8 @@
                   then(function(response) {
                               console.log('Update success');
                               console.log(response);
-                              $scope.activitySummarys[index] = angular.copy(response.data);
-                          //    $scope.activitySummarys.sort(sortByDateDesc());
+                              $scope.activitiesList[index] = angular.copy(response.data);
+                          //    $scope.activitiesList.sort(sortByDateDesc());
                               $scope.reset();
                   }, function (response) {
                               console.log('Update error');
@@ -144,8 +144,8 @@
       console.log('Activities showByType for type='+type);
       $http.get(host+'/activityByType/'+$scope.curryear+'/'+type).
                        then(function(response) {
-                       $scope.activitySummarys = response.data;
-                       $scope.activitySummarys.sort(sortByDateDesc());
+                       $scope.activitiesList = response.data;
+                       $scope.activitiesList.sort(sortByDateDesc());
                        console.log('activity reloaded by type');
                        $scope.ActivityType = type;
                        }, function (response) {
@@ -157,17 +157,17 @@
     $scope.showForYear = function(year){
         $scope.curryear = year;
         $http.get(host+'/activityForYear/'+year).then(function(response) {
-             $scope.activitySummarys = response.data;
-             $scope.activitySummarys.sort(sortByDateDesc());
+             $scope.activitiesList = response.data;
+             $scope.activitiesList.sort(sortByDateDesc());
         });
         $scope.ActivityType = '';
     };
 
      $scope.getTotal = function(){
-                   if (typeof $scope.activitySummarys !== "undefined") {
+                   if (typeof $scope.activitiesList !== "undefined") {
                    var total = 0;
-                   for(var i = 0; i < $scope.activitySummarys.length; i++){
-                       var distance = $scope.activitySummarys[i].distance;
+                   for(var i = 0; i < $scope.activitiesList.length; i++){
+                       var distance = $scope.activitiesList[i].distance;
                        total += distance;
                    }
                    return total;

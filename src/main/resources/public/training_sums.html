@@ -1,0 +1,23 @@
+<br/>
+&nbsp;Отчеты по тренировкам для <b>{{userDetails.username}}</b><br/>
+&nbsp;<button ng-click="showForAll()" style="color:blueviolet"><b>Показать за все время</b></button>
+<button ng-click="curryear=today.getFullYear();showForYear(curryear);" style="color:blueviolet"><b>Показать текущий  год</b></button>
+<br/>
+&nbsp;Выбрать год:<input type="number" ng-model="curryear" style="width: 7%;" required/>
+<button ng-click="showForYear(curryear)" style="color:blueviolet">Показать <b>{{curryear}}</b> </button>
+<button ng-click="showForYearByMonth(curryear)" style="color:blueviolet">Показать <b>{{curryear}} по месяцам</b> </button>
+
+<table border="1">
+    <td >Месяц</td><td>Год    </td><td>Вид</td><td>Дистация</td><td>Количество</td></tr>
+
+    <tr ng-repeat="activitySummary in activitySummarys | orderBy:'-month'">
+        <td align="center">{{activitySummary.month}}</td>
+        <td align="center"  >{{activitySummary.year}}</td>
+        <td ng-click="showForYearType(activitySummary.type,curryear)" style="color:blueviolet" align="left">{{activitySummary.type}}</td>
+        <td align="center" >{{activitySummary.totalDistance}}</td>
+        <td align="center" >{{activitySummary.count}}</td>
+
+        </td>
+    </tr>
+</table>
+&nbsp;&nbsp;Суммарно:<b>{{getDistanceSum()}}</b> км

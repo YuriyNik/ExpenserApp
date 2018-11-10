@@ -36,6 +36,11 @@
       templateUrl: 'trainings.html'
     })
 
+    .when('/training_sums', {
+      controller: 'TrainingSumsController',
+      templateUrl: 'training_sums.html'
+    })
+
     .when('/todos', {
       controller: 'TodoController',
       templateUrl: 'todos.html'

@@ -45,6 +45,14 @@
         console.log('expenceSummary reloaded');
     });
     };
+   $scope.showForYearType = function(type,year) {
+        console.log('Report for type='+type+';year='+year);
+        $http.get(host+'/reports/'+$scope.currmonth+'/'+year+'/'+type).
+        then(function(response) {
+        $scope.expenceSummarys = response.data;
+        console.log('expenceSummary showForYearType reloaded');
+    });
+    };
 
   $scope.getTotalSummary = function(){
         if (typeof $scope.expenceSummarys !== "undefined") {

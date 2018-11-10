@@ -12,7 +12,7 @@
     <tr ng-repeat="expenceSummary in expenceSummarys | orderBy:'-month'">
         <td align="center">{{expenceSummary.month}}</td>
         <td align="center"  >{{expenceSummary.year}}</td>
-        <td align="center" >{{expenceSummary.type}}</td>
+        <td ng-click="showForYearType(expenceSummary.type,curryear)" style="color:blueviolet" align="left">{{expenceSummary.type}}</td>
         <td align="center" >{{expenceSummary.totalAmount}}</td>
         <td align="center" >{{expenceSummary.count}}</td>
 

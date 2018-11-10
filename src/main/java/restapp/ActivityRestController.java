@@ -1,6 +1,7 @@
 package restapp;
 
 import model.Activity;
+import model.ActivitySummary;
 import model.MigrateActivity;
 import model.User;
 import org.apache.logging.log4j.LogManager;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -254,6 +254,27 @@ public class ActivityRestController {
 
         logger.info("You user is not authorised for oldActivity call");
         return null;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/activitySum/{year}")
+    public List<ActivitySummary> getActivitySummaryForYear(@PathVariable int year){
+        UserDetails user =
+                (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return activityRepository.getActivitySummaryForYear(user.getUsername(),year);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/activitySumAll")
+    public List<ActivitySummary> getActivitySummaryAll(){
+        UserDetails user =
+                (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return activityRepository.getActivitySummaryAll(user.getUsername());
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/activitySumByMonth/{year}")
+    public List<ActivitySummary> getActivitySummaryForYearByMonth(@PathVariable int year){
+        UserDetails user =
+                (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return activityRepository.getActivitySummaryForYearByMonth(user.getUsername(),year);
     }
 
 }

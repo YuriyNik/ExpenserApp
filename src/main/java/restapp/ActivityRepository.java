@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
 
-public interface ActivityRepository extends MongoRepository<Activity,String> {
+public interface ActivityRepository extends MongoRepository<Activity,String> , ActivityRepositoryCustom{
     public Activity findByid(String id);
     public List<Activity> findAll();
     @Query("{ 'owner':'?0','id':'?1'}")
