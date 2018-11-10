@@ -88,6 +88,16 @@ public class ActivityRestController {
         return null;
     }
 
+    //get all expenses for ADMIN only
+    @RequestMapping(method = RequestMethod.GET, value = "/activityForYear/{year}")
+    public List<Activity> getActivityForYear(@PathVariable int year) {
+        UserDetails user =
+                (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        logger.info("method:getActivityForYear="+year+";user="+user.getUsername());
+
+        return activityRepository.findforYear(user.getUsername(),year);
+    }
+
     //get all expenses for user
     @RequestMapping(method = RequestMethod.GET, value = "/activity")
     public List<Activity> getAllActivityForUser() {
@@ -98,12 +108,12 @@ public class ActivityRestController {
     }
 
     //get all expenses for user by type
-    @RequestMapping(method = RequestMethod.GET, value = "/activity/{type}")
-    public List<Activity> getAllActivityForUserByType(@PathVariable String type) {
-        logger.info("getAllActivityForUserByType");
+    @RequestMapping(method = RequestMethod.GET, value = "/activityByType/{year}/{type}")
+    public List<Activity> getActivityForUserByType(@PathVariable int year,@PathVariable String type) {
+        logger.info("getActivityForUserByType");
         UserDetails user =
                 (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return activityRepository.findByTypeForUser(user.getUsername(),type);
+        return activityRepository.findforYearAndType(user.getUsername(),year, type);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/activity/{id}")

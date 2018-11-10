@@ -15,5 +15,9 @@ public interface ActivityRepository extends MongoRepository<Activity,String> {
     public List<Activity> findAllForUser(String owner);
     @Query("{ 'owner':'?0','type':'?1'}")
     public List<Activity> findByTypeForUser(String owner, String type);
+    @Query("{ $and:[{'owner':'?0'},{'$expr':{'$eq':[{ '$year':'$date' },?1]}}]}")
+    public List<Activity> findforYear(String owner, int year);
+    @Query("{ $and:[{'owner':'?0'},{'type':'?2'},{'$expr':{'$eq':[{ '$year':'$date' },?1]}}]}")
+    public List<Activity> findforYearAndType(String owner, int year, String type);
 }
 

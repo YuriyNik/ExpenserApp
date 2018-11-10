@@ -24,8 +24,10 @@
     &nbsp;&nbsp; <button class="add-btn" ng-click="addActivity()"><b>Добавить</b></button><br/>
 </form>
 <br/>
-<b> Подитог на {{currmonth}}-{{curryear}} : {{getTotal()}}</b> км <b>{{ActivityType}}</b><br/>
-<button ng-click="showAll()" style="color:blueviolet">Показать все</button>
+&nbsp;&nbsp;Подитог на {{curryear}} :<b> {{getTotal()}}</b> км, тренировок <b>{{activitySummarys.length}}</b> <b>{{ActivityType}}</b><br/>
+Выбрать год:<input type="number" ng-model="curryear" style="width: 6%;" required/>
+<button ng-click="showForYear(curryear)" style="color:blueviolet">Показать <b>{{curryear}}</b> </button>
+<button ng-click="curryear=today.getFullYear();showForYear(curryear)" style="color:blueviolet">Показать текущий год</button>
 
 <table border="1">
     <td> Дата </td><td>Тип</td><td>Длит</td><td>Дист</td><td>ЧСС Ср</td><td>ЧСС Max</td><td>Место</td><td>Заметки</td><td>Погода</td>
@@ -40,8 +42,8 @@
         <td align="center" >{{activitySummary.pulseAve}}</td>
         <td align="center" >{{activitySummary.pulseMax}}</td>
         <td align="center" >{{activitySummary.location}}</td>
-        <td align="center" >{{activitySummary.notes}}</td>
-        <td align="center" >{{activitySummary.weather}}</td>
+        <td align="left" >{{activitySummary.notes}}</td>
+        <td align="left" >{{activitySummary.weather}}</td>
         <td align="center" >{{activitySummary.speedAve}}</td>
         <td align="center" >{{activitySummary.paceAve}}</td>
         <td><button ng-click="editActivity(activitySummary)">Изменить</button>

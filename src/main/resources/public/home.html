@@ -1,14 +1,13 @@
 <form ng-submit="submit()">
-    <b>{{userDetails.username}}</b> запиши-ка расходы - это просто:<br/>
-    <b>Сумма</b><input type="number" ng-model="expence.amount" name="amount" required /><br/>
+    &nbsp;&nbsp;  <b>{{userDetails.username}}</b> запиши-ка расходы - это просто:<br/>
+    &nbsp;&nbsp;<b>Сумма</b><input type="number" ng-model="expence.amount" name="amount" required /><br/>
     <span ng-show="expence.amount.$touched && expence.amount.$invalid">The name is required.</span>
-    <b>Статья </b><select ng-model="expence.type" name="type" >
-    <option value=""> расходов </option>
-    <option ng-repeat="option in data.userTypes" value="{{option}}">{{option}}</option>
-</select> <a href="#/user">Изменить список</a> &nbsp;&nbsp;<a href="#/reports">Отчеты </a> <br/>
-    <b>Дата</b><input type="date" ng-model="expence.date" name="date" /><br/>
-    <b>Комментарии</b><input type="memo" ng-model="expence.notes" name="notes" /><br/>
-    <input type="submit" id="submit" value="Добавить" />   <br/>
+    &nbsp;&nbsp;<b>Статья </b><select ng-model="expence.type" name="type" >
+     <option value=""> расходов </option>
+        <option ng-repeat="option in data.userTypes" value="{{option}}">{{option}}</option></select> <a href="#/user">Изменить список</a> &nbsp;&nbsp;<a href="#/reports">Отчеты </a> <br/>
+    &nbsp;&nbsp;<b>Дата</b><input type="date" ng-model="expence.date" name="date" /><br/>
+    &nbsp;&nbsp;<b>Комментарии</b><input type="memo" ng-model="expence.notes" name="notes" /><br/>
+    &nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" id="submit" value="Добавить" />   <br/>
 </form>
 <br/>
 <b> Подитог на {{currmonth}}-{{curryear}} : {{getTotal()}}</b> руб<br/>
