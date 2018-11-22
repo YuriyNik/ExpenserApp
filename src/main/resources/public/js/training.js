@@ -56,7 +56,7 @@
         });
 
 
-   $http.get(host+'/activityForYear/'+$scope.curryear).then(function(response) {
+   $http.get(host+'/activityForYear/'+$scope.currmonth+'/'+$scope.curryear+'/null').then(function(response) {
                $scope.activitiesList = response.data;
                $scope.activitiesList.sort(sortByDateDesc());
           });
@@ -142,7 +142,7 @@
 
     $scope.showByType = function(type) {
       console.log('Activities showByType for type='+type);
-      $http.get(host+'/activityByType/'+$scope.curryear+'/'+type).
+      $http.get(host+'/activityForYear/'+$scope.currmonth+'/'+$scope.curryear+'/'+type).
                        then(function(response) {
                        $scope.activitiesList = response.data;
                        $scope.activitiesList.sort(sortByDateDesc());
@@ -154,9 +154,10 @@
                        });
     };
 
-    $scope.showForYear = function(year){
+    $scope.showForYear = function(year,month){
         $scope.curryear = year;
-        $http.get(host+'/activityForYear/'+year).then(function(response) {
+        $scope.currmonth = month;
+        $http.get(host+'/activityForYear/'+$scope.currmonth+'/'+$scope.curryear+'/null').then(function(response) {
              $scope.activitiesList = response.data;
              $scope.activitiesList.sort(sortByDateDesc());
         });

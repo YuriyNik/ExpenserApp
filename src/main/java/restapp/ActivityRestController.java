@@ -89,13 +89,18 @@ public class ActivityRestController {
     }
 
     //get all expenses for ADMIN only
-    @RequestMapping(method = RequestMethod.GET, value = "/activityForYear/{year}")
-    public List<Activity> getActivityForYear(@PathVariable int year) {
+    @RequestMapping(method = RequestMethod.GET, value = "/activityForYear/{month}/{year}/{type}")
+    public List<Activity> getActivityForMonthYearType(@PathVariable int month, @PathVariable int year, @PathVariable String type) {
         UserDetails user =
                 (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        logger.info("method:getActivityForYear="+year+";user="+user.getUsername());
+        logger.info("method:getActivityForMonthYearType="+year+";month="+month+";type="+type+";user="+user.getUsername());
 
+        if ((!type.equals("null"))&& (month>0 && month<13)) return activityRepository.findforYearAndMonthAndType(user.getUsername(),type,month,year);
+        if (!type.equals("null")) return  activityRepository.findforYearAndType(user.getUsername(),year,type);
+        if (month>0 && month<13) return activityRepository.findforYearAndMonth(user.getUsername(),month,year);
         return activityRepository.findforYear(user.getUsername(),year);
+
+
     }
 
     //get all expenses for user

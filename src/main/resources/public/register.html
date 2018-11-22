@@ -2,8 +2,8 @@
 
 <b>{{messagePassword}}</b>
 <br/>
-&nbsp;Username&nbsp;<input type="text" ng-model="user.username" name="username" />(nickname на английском)<br/>
-&nbsp;Password&nbsp;&nbsp;<input type="password" ng-model="user.password" name="password" /> &nbsp;&nbsp;
+&nbsp;Username&nbsp;<input type="text" ng-model="user.username" name="username" pattern="[A-Za-z0-9-]{3,}" required/>(nickname на английском)<br/>
+&nbsp;Password&nbsp;&nbsp;<input type="password" ng-model="user.password" name="password" required/> &nbsp;&nbsp;
 <b><input type="submit" ng-click="newUser()" value="Создать" /> </b>  <br/>
 <br/>
 Ниже стандартные категории расходов, можешь поменять сейчас или позже
