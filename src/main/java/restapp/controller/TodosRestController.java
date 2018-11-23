@@ -1,4 +1,4 @@
-package restapp;
+package restapp.controller;
 
 
 import model.Todo;
@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import restapp.repository.TodosRepository;
+import restapp.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package restapp;
+package restapp.repository;
 
 import model.Todo;
 import org.springframework.data.mongodb.repository.MongoRepository;

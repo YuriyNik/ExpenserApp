@@ -1,4 +1,4 @@
-package restapp;
+package restapp.service;
 
 import model.User;
 import org.apache.logging.log4j.LogManager;
@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import restapp.repository.UserRepository;
 
 @Service
 public class UserDetailsServiceImp implements UserDetailsService {

@@ -1,4 +1,4 @@
-package restapp;
+package restapp.controller;
 
 
 import model.ExpenceSummary;
@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import restapp.repository.ExpenceRepository;
 
 import java.util.List;
 

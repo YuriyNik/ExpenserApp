@@ -1,4 +1,4 @@
-package restapp;
+package restapp.repository;
 
 import model.Activity;
 import model.ActivitySummary;

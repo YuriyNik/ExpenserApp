@@ -1,4 +1,4 @@
-package restapp;
+package restapp.repository;
 
 import model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;

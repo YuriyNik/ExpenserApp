@@ -1,4 +1,4 @@
-package restapp;
+package restapp.controller;
 
 import model.Activity;
 import model.ActivitySummary;
@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import restapp.repository.ActivityRepository;
+import restapp.repository.UserRepository;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
