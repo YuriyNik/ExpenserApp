@@ -71,7 +71,7 @@
     $scope.addActivity = function(){
          console.log('addActivity');
          console.log($scope.activity);
-         if (typeof $scope.activity.type == "undefined") $scope.activity.type='Роллеры';
+         if (typeof $scope.activity.type == "undefined") $scope.activity.type='Хотьба';
                    $http.post(host+'/activity',$scope.activity).
                    then(function(response) {
                        console.log('success');

@@ -67,7 +67,7 @@ public class ActivityRestController {
 
         //calculate ave Speed and Pace
         activity.setSpeedAve(calculateSpeedAve(activity.getDurationHours(),activity.getDurationMins(),activity.getDurationSecs(),activity.getDistance()));
-        activity.setPaceAve(calculatePaceAve(activity.getDurationHours(),activity.getDurationMins(),activity.getDurationSecs(),activity.getDistance()));;
+        activity.setPaceAve(calculatePaceAve(activity.getDurationHours(),activity.getDurationMins(),activity.getDurationSecs(),activity.getDistance()));
 
         activity.setCreated(LocalDateTime.now());
         UserDetails user =
@@ -180,7 +180,7 @@ public class ActivityRestController {
         }
         //calculate ave Speed and Pace
         activityFromDb.setSpeedAve(calculateSpeedAve(activityFromDb.getDurationHours(),activityFromDb.getDurationMins(),activityFromDb.getDurationSecs(),activityFromDb.getDistance()));
-        activityFromDb.setPaceAve(calculatePaceAve(activityFromDb.getDurationHours(),activityFromDb.getDurationMins(),activityFromDb.getDurationSecs(),activityFromDb.getDistance()));;
+        activityFromDb.setPaceAve(calculatePaceAve(activityFromDb.getDurationHours(),activityFromDb.getDurationMins(),activityFromDb.getDurationSecs(),activityFromDb.getDistance()));
 
         activityFromDb.setModified(LocalDateTime.now());
 
@@ -207,7 +207,7 @@ public class ActivityRestController {
         return activityLabels;
     }
     @RequestMapping(method=RequestMethod.POST,value="/activityLabels")
-    public String[] postФсешмшенLabels(@RequestBody String[] activityLabels) {
+    public String[] postActivityLabels(@RequestBody String[] activityLabels) {
         logger.info("postTodoLabels="+ Arrays.toString(activityLabels));
         UserDetails user =
                 (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -246,7 +246,7 @@ public class ActivityRestController {
                 newActivity.setWeather(migrateActivity.getWeather());
                 //calculate ave Speed and Pace
                 newActivity.setSpeedAve(calculateSpeedAve(newActivity.getDurationHours(),newActivity.getDurationMins(),newActivity.getDurationSecs(),newActivity.getDistance()));
-                newActivity.setPaceAve(calculatePaceAve(newActivity.getDurationHours(),newActivity.getDurationMins(),newActivity.getDurationSecs(),newActivity.getDistance()));;
+                newActivity.setPaceAve(calculatePaceAve(newActivity.getDurationHours(),newActivity.getDurationMins(),newActivity.getDurationSecs(),newActivity.getDistance()));
                 newActivity.setCreated(newActivity.getDate());
                 newActivity.setModified(LocalDateTime.now());
                 newActivity.setOwner(user.getUsername());
