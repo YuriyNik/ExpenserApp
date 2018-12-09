@@ -208,7 +208,7 @@ public class ActivityRestController {
     }
     @RequestMapping(method=RequestMethod.POST,value="/activityLabels")
     public String[] postActivityLabels(@RequestBody String[] activityLabels) {
-        logger.info("postTodoLabels="+ Arrays.toString(activityLabels));
+        logger.info("postActivityLabels="+ Arrays.toString(activityLabels));
         UserDetails user =
                 (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User userFromDB = userRepository.findByUsername(user.getUsername());
