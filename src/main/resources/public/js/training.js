@@ -33,10 +33,8 @@
         Double speedAve,
         Double paceAve,*/
     $scope.data = {
-        userTypes: [],
-        activityPlaces:[
-        'ЛО', 'ГАБО','Снежинка','ПаркЛианозово'
-        ]
+        userTypes: []
+       // activityPlaces:[]
        };
 
     console.log('Training started currmonth='+$scope.currmonth+';curryear='+$scope.curryear);
@@ -55,6 +53,13 @@
             $scope.data.activityLabels = response.data;
         });
 
+     $http.get(host+'/activityPlaces').
+        then(function(response){
+        console.log('activityPlaces='+response.data);
+        console.log(response);
+        $scope.data.activityPlaces = response.data;
+        });
+
 
    $http.get(host+'/activityForYear/'+$scope.currmonth+'/'+$scope.curryear+'/null').then(function(response) {
                $scope.activitiesList = response.data;
@@ -71,7 +76,7 @@
     $scope.addActivity = function(){
          console.log('addActivity');
          console.log($scope.activity);
-         if (typeof $scope.activity.type == "undefined") $scope.activity.type='Хотьба';
+         if (typeof $scope.activity.type == "undefined") $scope.activity.type='Ходьба';
                    $http.post(host+'/activity',$scope.activity).
                    then(function(response) {
                        console.log('success');

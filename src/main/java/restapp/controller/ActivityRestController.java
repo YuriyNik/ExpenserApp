@@ -218,6 +218,27 @@ public class ActivityRestController {
         return activityLabels;
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/activityPlaces")
+    public String[] getActivityPlaces(){
+        UserDetails user =
+                (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String[] activityPlaces =  userRepository.findByUsername(user.getUsername()).getActivityPlaces();
+        return activityPlaces;
+    }
+    @RequestMapping(method=RequestMethod.POST,value="/activityPlaces")
+    public String[] postActivityPlaces(@RequestBody String[] activityPlaces) {
+        logger.info("postActivityPlaces="+ Arrays.toString(activityPlaces));
+        UserDetails user =
+                (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userFromDB = userRepository.findByUsername(user.getUsername());
+        userFromDB.setActivityPlaces(activityPlaces);
+        userFromDB.setModified(LocalDateTime.now());
+        userRepository.save(userFromDB);
+        return activityPlaces;
+    }
+
+
+
     @RequestMapping(method= RequestMethod.POST,value="/oldActivity")
     public List<Activity> postActivity(@RequestBody List <MigrateActivity> migrateActivitys) {
         logger.info("ADMIN's method:oldActivity");

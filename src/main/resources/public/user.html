@@ -45,6 +45,24 @@
     <button type="submit" ng-click="addTodoLabel()">Добавить</button>
 </div>
 
+<b>Категории по любимым Местам тренировок:</b><br/>
+<ul>
+    <li ng-repeat="sportPlaces in data.activityPlaces" >
+        {{sportPlaces}}
+        <button ng-click="removeActivityPlaces($index)" align="center">Удалить</button>
+    </li>
+</ul>
+<div>
+    >> <input type="text" ng-model="inputActivityPlaces">
+    <button type="submit" ng-click="addActivityPlaces()">Добавить</button>
+</div>
+
+
+
+
+
+
+
 <br/>
 <br/>
 <b>Также можешь изменить свой пароль</b>

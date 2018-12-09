@@ -90,6 +90,46 @@
         console.log('Removed and updated='+$scope.data.activityLabels);
        };
 
+//add - post new  activityPlaces
+      $scope.addActivityPlaces = function() {
+
+      var a = $scope.data.activityPlaces.indexOf($scope.inputActivityPlaces);
+
+      if (($scope.inputActivityPlaces !== '') && (a == -1)) {
+
+        $scope.data.activityPlaces.push($scope.inputActivityPlaces);
+        $http.post(host+'/activityPlaces',$scope.data.activityPlaces).
+                then(function(response) {
+                    console.log('success');
+                    console.log(response);
+                }, function (response) {
+                    console.log('error');
+                    console.log(response);
+
+                });
+        console.log('Added and updated='+$scope.data.activityPlaces);
+        }
+        $scope.inputActivityPlaces = '';
+
+        };
+//remove expence activityPlaces
+      $scope.removeActivityPlaces = function(index) {
+        $scope.data.activityPlaces.splice(index, 1);
+        $http.post(host+'/activityPlaces',$scope.data.activityPlaces).
+                        then(function(response) {
+                            console.log('success');
+                            console.log(response);
+                        }, function (response) {
+                            console.log('error');
+                            console.log(response);
+
+                        });
+        console.log('Removed and updated='+$scope.data.activityPlaces);
+       };
+
+
+
+
 
 
 
@@ -168,6 +208,15 @@
                                      else { $scope.data.activityLabels = response.data;};
 
                                  });
+
+         $http.get(host+'/activityPlaces').
+                                    then(function(response) {
+                                        console.log('activityPlaces='+response.data);
+                                        if (response.data=='')
+                                           {$scope.data.activityPlaces= [];}
+                                           else { $scope.data.activityPlaces = response.data;};
+
+                                     });
 
         $scope.messagePassword='';
         $scope.changePass = function() {
