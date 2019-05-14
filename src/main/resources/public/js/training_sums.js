@@ -14,6 +14,11 @@
     $scope.data = {
         userTypes: []
        };
+    function sortByYearDesc(){
+            return function(a,b){
+                   return b.year - a.year;
+            };
+        };
 
     console.log('TrainingSumsController started currmonth='+$scope.currmonth+';curryear='+$scope.curryear);
     $http.get(host+'/userDetails').
@@ -27,6 +32,7 @@
     $http.get(host+'/activitySumAll/').
     then(function(response) {
          $scope.activitySummarys = response.data;
+         $scope.activitySummarys.sort(sortByYearDesc());
     });
 
     $scope.showForYear = function(year) {
@@ -34,6 +40,7 @@
         $http.get(host+'/activitySum/'+year).
         then(function(response) {
         $scope.activitySummarys = response.data;
+        $scope.activitySummarys.sort(sortByYearDesc());
         console.log('activitySummarys reloaded');
     });
     };
@@ -43,6 +50,7 @@
         $http.get(host+'/activitySumAll').
         then(function(response) {
         $scope.activitySummarys = response.data;
+        $scope.activitySummarys.sort(sortByYearDesc());
         console.log('activitySummarys showForAll reloaded');
     });
     };
