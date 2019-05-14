@@ -166,7 +166,12 @@ public class ActivityRestController {
         if(activityFromClient.getDistance()!=null) {
             activityFromDb.setDistance(activityFromClient.getDistance());
         }
-
+        if(activityFromClient.getPulseAve()>=0){
+            activityFromDb.setPulseAve(activityFromClient.getPulseAve());
+        }
+        if(activityFromClient.getPulseMax()>=0){
+            activityFromDb.setPulseMax(activityFromClient.getPulseMax());
+        }
         if(activityFromClient.getLocation()!=null){
             activityFromDb.setLocation(activityFromClient.getLocation());
         }
