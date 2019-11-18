@@ -10,6 +10,7 @@
     $scope.currmonth = new Date().getMonth() +1;
     $scope.curryear = new Date().getFullYear();//can be changed for testing
     console.log('curryear='+$scope.curryear);
+    $scope.yesterday = (function(d){ d.setDate(d.getDate()-1); return d})(new Date);
 
     $scope.ActivityType = '';
 

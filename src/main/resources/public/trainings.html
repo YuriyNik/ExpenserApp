@@ -1,6 +1,8 @@
 &nbsp;&nbsp;Вот и твои тренировки <b>{{userDetails.username}}</b>! <br/>
 <form>
-    &nbsp;&nbsp; <input class="add-input" type="date" ng-model="activity.date"/>Дата Занятия <br/>
+    &nbsp;<b>Дата</b><input class="add-input" type="date" ng-model="activity.date"/>
+        <button ng-click="activity.date=yesterday;" style="color:blueviolet">Вчера</button>
+        <br/>
     &nbsp;&nbsp; <b>Тип</b><select ng-model="activity.type" name="type" >
     <option value=""> тренировки </option>
     <option ng-repeat="option in data.activityLabels" value="{{option}}">{{option}}</option>

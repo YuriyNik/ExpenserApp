@@ -90,7 +90,7 @@ public class ActivityRestController {
         return null;
     }
 
-    //get all expenses for ADMIN only
+    //get all activity for the user only
     @RequestMapping(method = RequestMethod.GET, value = "/activityForYear/{month}/{year}/{type}")
     public List<Activity> getActivityForMonthYearType(@PathVariable int month, @PathVariable int year, @PathVariable String type) {
         UserDetails user =

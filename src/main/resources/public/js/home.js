@@ -7,6 +7,7 @@
      $scope.today = new Date();
      $scope.premonth = new Date().getMonth();
      $scope.prePremonth = new Date().getMonth() - 1;
+     $scope.yesterday = (function(d){ d.setDate(d.getDate()-1); return d})(new Date);
 
       $scope.currmonth = new Date().getMonth() +1;
 
