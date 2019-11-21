@@ -2,7 +2,7 @@
 
   var app = angular.module("ExpenceApplication");
 
-  var TodoController = function($scope, $http, host) {
+  var TodoController = function($scope,$cookieStore, $http, host) {
 
     console.log('Todos started');
 
@@ -13,6 +13,8 @@
         date:'',
         label:''
     }
+    $scope.label = $cookieStore.get('label');
+    console.log('Todo label get ='+$scope.label);
 
     $http.get(host+'/userDetails').
         then(function(response) {
@@ -22,9 +24,7 @@
                 console.log('error!');
                 console.log(response);
                 });
-    $http.get(host+'/todo').then(function(response) {
-         $scope.todos = response.data;
-    });
+
     $http.get(host+'/todoLabels').
            then(function(response) {
                             console.log('todoLabels='+response.data);
@@ -40,6 +40,8 @@
 
     $scope.showTodos = function(label){
     console.log('showTodos='+label);
+    $cookieStore.put('label', label);
+    console.log('$cookieStore showTodos put label='+$cookieStore.get('label'));
     if (label=='all')  {
          $scope.todo.label='';
          $http.get(host+'/todo').then(function(response) {
@@ -54,7 +56,7 @@
             } else {
             $scope.todo.label=label;
             $http.get(host+'/todoByLabel/'+label).then(function(response) {
-            console.log('todoByLabel=');
+            console.log('todoByLabel='+label);
             console.log(response);
             $scope.todos = response.data;
                 }
@@ -62,7 +64,7 @@
     }
 
     };
-
+    $scope.showTodos($scope.label);
     $scope.addTodo = function () {
      if ((typeof $scope.formTodoText == "undefined")||($scope.formTodoText == '')) return;
        console.log('$scope.formTodoText:'+ $scope.formTodoText);
