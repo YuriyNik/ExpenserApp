@@ -310,4 +310,11 @@ public class ActivityRestController {
         return activityRepository.getActivitySummaryForYearByMonth(user.getUsername(),year);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/activitySumByMonthAll")
+    public List<ActivitySummary> getActivitySummaryForYearByMonthAll(){
+        UserDetails user =
+                (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return activityRepository.getActivitySummaryByMonthAll(user.getUsername());
+    }
+
 }

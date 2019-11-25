@@ -8,7 +8,7 @@ public interface ActivityRepositoryCustom {
 
     public List<ActivitySummary> getActivitySummaryForYear(String owner, int year);
     public List<ActivitySummary> getActivitySummaryForYearByMonth(String owner, int year);
+    public List<ActivitySummary> getActivitySummaryByMonthAll(String owner);
     public List<ActivitySummary> getActivitySummaryAll(String owner);
-
 
 }

@@ -73,6 +73,30 @@ public class ActivityRepositoryImpl implements ActivityRepositoryCustom{
     }
 
     @Override
+    public List<ActivitySummary> getActivitySummaryByMonthAll(String owner) {
+
+        AggregationResults<ActivitySummary> results = operations.aggregate(newAggregation(Activity.class,
+                match(where("owner").is(owner)
+                        //       .andOperator(where("type").is(type))
+                ),
+
+                project()
+                        .andExpression("type").as("type")
+                        .andExpression("year(date)").as("year")
+                        .andExpression("month(date)").as("month")
+                        .andExpression("distance").as("distance")
+              //  ,
+              //  match(where("year").is(year))
+                ,
+                group("type","year","month")
+                        .sum("distance").as("totalDistance") //
+                        .count().as("count")
+        ), Activity.class,ActivitySummary.class);
+        logger.info("getActivitySummaryByMonthAll results.size="+results.getMappedResults().size());
+        return results.getMappedResults();
+    }
+
+    @Override
     public List<ActivitySummary> getActivitySummaryAll(String owner) {
 
         AggregationResults<ActivitySummary> results = operations.aggregate(newAggregation(Activity.class,

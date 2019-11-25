@@ -64,6 +64,15 @@
     });
     };
 
+   $scope.showByMonthAll = function() {
+            console.log('TrainingSumsController.showByMonthAll');
+            $http.get(host+'/activitySumByMonthAll').
+            then(function(response) {
+            $scope.activitySummarys = response.data;
+            console.log('activitySummarys showByMonthAll reloaded');
+        });
+        };
+
   $scope.getDistanceSum = function(){
         if (typeof $scope.activitySummarys !== "undefined") {
         var total = 0;
