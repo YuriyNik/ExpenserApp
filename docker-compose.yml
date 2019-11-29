@@ -1,4 +1,4 @@
-version: '3.5'
+version: '2'
 
 
 services:
@@ -11,6 +11,6 @@ services:
   mongo:
     image: 'mongo'
     volumes:
-      - /Users/yuriy/data/backup2019_11_15__04_04_01:/data/db
+      - /home/admin/data:/data/db
     ports:
       - '27017:27017'
