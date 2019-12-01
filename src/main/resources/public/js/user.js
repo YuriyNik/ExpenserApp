@@ -9,7 +9,8 @@
           userTypes: [],
           activityLabels: [],
           todoLabels: [],
-          activityPlaces: []
+          activityPlaces: [],
+          familyMembers: []
       };
 
       $scope.user = {

@@ -4,6 +4,7 @@ import model.Expence;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface ExpenceRepository extends MongoRepository<Expence,String>, ExpenceRepositoryCustom {
@@ -13,12 +14,12 @@ public interface ExpenceRepository extends MongoRepository<Expence,String>, Expe
     public List<Expence> findAll();
     @Query("{ 'owner':'?0'}")
     public List<Expence> findAllForUser(String owner);
-    @Query("{$and:[{'owner':'?0'},{'$expr': { '$eq': [{ '$month': '$date' }, ?1 ] }},{'$expr': { '$eq': [{ '$year': '$date' }, ?2 ] }}]}")
-    public List<Expence> findforMonth(String owner, int month, int year);
+    @Query("{$and:[{'owner':{$in:?0}},{'$expr': { '$eq': [{ '$month': '$date' }, ?1 ] }},{'$expr': { '$eq': [{ '$year': '$date' }, ?2 ] }}]}")
+    public List<Expence> findforMonth(ArrayList<String> owners, int month, int year);
     @Query("{ 'owner':'?0'}")
     public List<Expence> findByType(String owner,String type);
-    @Query("{$and:[{'owner':'?0'},{'type':'?1'},{'$expr': { '$eq': [{ '$month': '$date' }, ?2 ] }},{'$expr': { '$eq': [{ '$year': '$date' }, ?3 ] }}]}")
-    public List<Expence> findByTypeForMonth(String owner,String type,int month,int year);
+    @Query("{$and:[{'owner':{$in:?0}},{'type':'?1'},{'$expr': { '$eq': [{ '$month': '$date' }, ?2 ] }},{'$expr': { '$eq': [{ '$year': '$date' }, ?3 ] }}]}")
+    public List<Expence> findByTypeForMonth(ArrayList<String> owners,String type,int month,int year);
     @Query("{ 'owner':null}")
     public List<Expence> findByNullableOwner();
 

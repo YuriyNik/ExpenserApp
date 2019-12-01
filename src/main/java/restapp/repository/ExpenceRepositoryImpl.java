@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
@@ -25,10 +26,10 @@ public class ExpenceRepositoryImpl implements ExpenceRepositoryCustom {
 
 
     @Override
-    public List<ExpenceSummary> getReportsForYearAndType(String owner,int year, String type) {
+    public List<ExpenceSummary> getReportsForYearAndType(ArrayList<String> owners,int year, String type) {
 
         AggregationResults<ExpenceSummary> results = operations.aggregate(newAggregation(Expence.class,
-                 match(where("owner").is(owner)
+                 match(where("owner").in(owners)
                  .andOperator(where("type").is(type))),
 
                 project()
@@ -48,10 +49,10 @@ public class ExpenceRepositoryImpl implements ExpenceRepositoryCustom {
     }
 
     @Override
-    public List<ExpenceSummary> getReportsForYear(String owner,int year) {
+    public List<ExpenceSummary> getReportsForYear(ArrayList<String> owners, int year) {
 
         AggregationResults<ExpenceSummary> results = operations.aggregate(newAggregation(Expence.class, //
-                match(where("owner").is(owner)),
+                match(where("owner").in(owners)),
                 project()
                         .andExpression("type").as("type")
                         .andExpression("year(date)").as("year")
@@ -69,7 +70,7 @@ public class ExpenceRepositoryImpl implements ExpenceRepositoryCustom {
         return results.getMappedResults();
     }
     @Override
-    public List<ExpenceSummary> getReportsForMonth(String owner,int year, int month) {
+    public List<ExpenceSummary> getReportsForMonth(ArrayList<String> owners,int year, int month) {
 
         //  String datestr = new String("2015-11-20 17:45:19");
         //  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -77,7 +78,7 @@ public class ExpenceRepositoryImpl implements ExpenceRepositoryCustom {
         //   LocalDateTime dateTo = LocalDateTime.now();
 
         AggregationResults<ExpenceSummary> results = operations.aggregate(newAggregation(Expence.class, //
-                match(where("owner").is(owner))
+                match(where("owner").in(owners))
                 //   .andOperator(where("date").lte(LocalDateTime.now())
                 //.andOperator(where("year(date)").is(year)
                 //     .andOperator(where("date").regex("2016")

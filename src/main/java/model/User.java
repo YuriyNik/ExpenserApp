@@ -18,6 +18,8 @@ public class User {
     private String[] todoLabels;
     private String[] activityLabels;
     private String[] activityPlaces;
+    private String[] familyMembers;
+
 
     public User(){
 
@@ -101,11 +103,19 @@ public class User {
 
     public String[] getActivityPlaces() { return activityPlaces; }
 
+    public void setFamilyMembers(String[] familyMembers) {
+        this.familyMembers = familyMembers;
+    }
+
+    public String[] getFamilyMembers() {
+        return familyMembers;
+    }
+
     @Override
     public String toString() {
         return String.format(
-                "{id=%s, username='%s', roles='%s',expenceTypes='%s', activityLabels='%s',todoLabels='%s',activityPlaces='%s'}",
-                id, username, Arrays.toString(roles),Arrays.toString(expenceTypes),Arrays.toString(activityLabels),Arrays.toString(todoLabels),Arrays.toString(activityPlaces));
+                "{id=%s, username='%s', roles='%s',expenceTypes='%s', activityLabels='%s',todoLabels='%s',activityPlaces='%s',familyMembers='%s'}",
+                id, username, Arrays.toString(roles),Arrays.toString(expenceTypes),Arrays.toString(activityLabels),Arrays.toString(todoLabels),Arrays.toString(activityPlaces),Arrays.toString(familyMembers));
     }
 
 }

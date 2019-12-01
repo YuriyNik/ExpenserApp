@@ -72,7 +72,7 @@ public class RestappController {
     }
 
     @RequestMapping(method=RequestMethod.POST,value="/expenceTypes")
-    public String[] postexpence(@RequestBody String[] expenceTypes) {
+    public String[] postExpenceTypes(@RequestBody String[] expenceTypes) {
         logger.info("POST expenceTypes="+Arrays.toString(expenceTypes));
         UserDetails user =
                 (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -83,6 +83,25 @@ public class RestappController {
         return expenceTypes;
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/familyMembers")
+    public String[] getFamilyMembers(){
+        UserDetails user =
+                (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String[] familyMembers =  userRepository.findByUsername(user.getUsername()).getFamilyMembers();
+        return familyMembers;
+    }
+
+    @RequestMapping(method=RequestMethod.POST,value="/familyMembers")
+    public String[] postFamilyMembers(@RequestBody String[] familyMembers) {
+        logger.info("POST familyMembers="+Arrays.toString(familyMembers));
+        UserDetails user =
+                (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userFromDB = userRepository.findByUsername(user.getUsername());
+        userFromDB.setFamilyMembers(familyMembers);
+        userFromDB.setModified(LocalDateTime.now());
+        userRepository.save(userFromDB);
+        return familyMembers;
+    }
 
     @RequestMapping(method = RequestMethod.GET, value="/login")
     public String getLogin () {
