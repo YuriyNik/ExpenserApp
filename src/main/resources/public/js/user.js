@@ -128,6 +128,42 @@
         console.log('Removed and updated='+$scope.data.activityPlaces);
        };
 
+//add - post new  familyMembers
+      $scope.addFamilyMembers = function() {
+
+      var a = $scope.data.familyMembers.indexOf($scope.inputFamilyMembers);
+
+      if (($scope.inputFamilyMembers !== '') && (a == -1)) {
+
+        $scope.data.familyMembers.push($scope.inputFamilyMembers);
+        $http.post(host+'/familyMembers',$scope.data.familyMembers).
+                then(function(response) {
+                    console.log('success');
+                    console.log(response);
+                }, function (response) {
+                    console.log('error');
+                    console.log(response);
+
+                });
+        console.log('Added and updated='+$scope.data.familyMembers);
+        }
+        $scope.inputFamilyMembers = '';
+
+        };
+//remove expence familyMembers
+      $scope.removeFamilyMembers = function(index) {
+        $scope.data.familyMembers.splice(index, 1);
+        $http.post(host+'/familyMembers',$scope.data.familyMembers).
+                        then(function(response) {
+                            console.log('success');
+                            console.log(response);
+                        }, function (response) {
+                            console.log('error');
+                            console.log(response);
+
+                        });
+        console.log('Removed and updated='+$scope.data.familyMembers);
+       };
 
 
 
@@ -216,6 +252,14 @@
                                         if (response.data=='')
                                            {$scope.data.activityPlaces= [];}
                                            else { $scope.data.activityPlaces = response.data;};
+
+                                     });
+         $http.get(host+'/familyMembers').
+                                    then(function(response) {
+                                        console.log('familyMembers='+response.data);
+                                        if (response.data=='')
+                                           {$scope.data.familyMembers= [];}
+                                           else { $scope.data.familyMembers = response.data;};
 
                                      });
 

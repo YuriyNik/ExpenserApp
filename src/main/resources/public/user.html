@@ -57,7 +57,17 @@
     <button type="submit" ng-click="addActivityPlaces()">Добавить</button>
 </div>
 
-
+<b>Пользователи кто будет видеть твои расходы:</b><br/>
+<ul>
+    <li ng-repeat="familyUsers in data.familyMembers" >
+        {{familyUsers}}
+        <button ng-click="removeFamilyMembers($index)" align="center">Удалить</button>
+    </li>
+</ul>
+<div>
+    >> <input type="text" ng-model="inputFamilyMembers">
+    <button type="submit" ng-click="addFamilyMembers()">Добавить</button>
+</div>
 
 
 
