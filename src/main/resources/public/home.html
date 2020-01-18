@@ -6,8 +6,8 @@
      <option value=""> расходов </option>
         <option ng-repeat="option in data.userTypes" value="{{option}}">{{option}}</option></select> <a href="#/user">Изменить список</a> &nbsp;&nbsp;<a href="#/reports">Отчеты </a> <br/>
     &nbsp;&nbsp;<b>Дата</b><input type="date" ng-model="expence.date" name="date" />
-    <!--<button ng-click="expence.date=yesterday;" style="color:blueviolet">Вчера</button>
-    <br/> -->
+    <!--<button ng-click="expence.date=yesterday;" style="color:blueviolet">Вчера</button>-->
+    <br/>
     &nbsp;&nbsp;<b>Комментарии</b><input type="memo" ng-model="expence.notes" name="notes" /><br/>
     &nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" id="submit" value="Добавить" />   <br/>
 </form>
