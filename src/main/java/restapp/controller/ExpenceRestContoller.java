@@ -151,15 +151,15 @@ public class ExpenceRestContoller {
             logger.info("List size="+migrateExpences.size());
             List<Expence> expences = new ArrayList<>();
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
 
             for (MigrateExpence migrateExpence:migrateExpences) {
                 Expence expence = new Expence(
                         migrateExpence.getAmount(),
                         migrateExpence.getType(),
                         LocalDateTime.parse(migrateExpence.getDate(), formatter),
-                        LocalDateTime.parse(migrateExpence.getCreated(), formatter),
-                        LocalDateTime.parse(migrateExpence.getModified(), formatter),
+                        LocalDateTime.parse(migrateExpence.getDate(), formatter),
+                        LocalDateTime.now(),
                         migrateExpence.getNotes(),
                         user.getUsername()
                 );
