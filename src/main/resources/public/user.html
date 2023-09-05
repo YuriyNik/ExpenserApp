@@ -17,6 +17,26 @@
 
 <br/>
 
+<br/>
+<b>Валюты <b>{{userDetails.currencyTypes}}</b> :</b><br/>
+
+<!-- list of items with a button to remove that item -->
+<ul>
+    <li ng-repeat="currencyType in data.currencyTypes" >
+        {{currencyType}}
+        <button ng-click="removeCurrencyTypes($index)" align="center">Удалить</button>
+    </li>
+</ul>
+
+<!-- input and button it add a new item -->
+<div>
+    >> <input type="text" ng-model="inputCurrency">
+    <button type="submit" ng-click="addCurrencyTypes()">Добавить</button>
+</div>
+
+<br/>
+
+
 <b>Категории по СПОРТУ:</b><br/>
 <ul>
     <li ng-repeat="sportlabel in data.activityLabels" >

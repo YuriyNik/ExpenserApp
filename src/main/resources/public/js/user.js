@@ -7,6 +7,7 @@
 
       $scope.data = {
           userTypes: [],
+          currencyTypes: [],
           activityLabels: [],
           todoLabels: [],
           activityPlaces: []
@@ -89,7 +90,41 @@
                         });
         console.log('Removed and updated='+$scope.data.activityLabels);
        };
+//add - post new  currency
+      $scope.addCurrencyTypes = function() {
 
+      var a = $scope.data.currencyTypes.indexOf($scope.inputCurrency);
+
+      if (($scope.inputCurrency !== '') && (a == -1)) {
+
+        $scope.data.currencyTypes.push($scope.inputCurrency);
+        $http.post(host+'/currencyTypes',$scope.data.currencyTypes).
+                then(function(response) {
+                    console.log('success');
+                    console.log(response);
+                }, function (response) {
+                    console.log('error');
+                    console.log(response);
+                });
+        console.log('Added and updated='+$scope.data.currencyTypes);
+        }
+        $scope.inputCurrency = '';
+
+        };
+//remove expence activityLabels
+      $scope.removeCurrencyTypes = function(index) {
+        $scope.data.currencyTypes.splice(index, 1);
+        $http.post(host+'/currencyTypes',$scope.data.currencyTypes).
+                        then(function(response) {
+                            console.log('success');
+                            console.log(response);
+                        }, function (response) {
+                            console.log('error');
+                            console.log(response);
+
+                        });
+        console.log('Removed and updated='+$scope.data.currencyTypes);
+       };
 //add - post new  activityPlaces
       $scope.addActivityPlaces = function() {
 
@@ -191,6 +226,14 @@
                             else { $scope.data.userTypes = response.data;};
 
                         });
+       $http.get(host+'/currencyTypes').
+                        then(function(response) {
+                            console.log('currencyTypes='+response.data);
+                            if (response.data=='')
+                            {$scope.data.userTypes = [];}
+                            else { $scope.data.currencyTypes = response.data;};
+
+                        });
        $http.get(host+'/todoLabels').
                         then(function(response) {
                             console.log('todoLabels='+response.data);
@@ -200,7 +243,7 @@
 
                         });
 
-         $http.get(host+'/activityLabels').
+       $http.get(host+'/activityLabels').
                                  then(function(response) {
                                      console.log('activityLabels='+response.data);
                                      if (response.data=='')
@@ -209,7 +252,7 @@
 
                                  });
 
-         $http.get(host+'/activityPlaces').
+       $http.get(host+'/activityPlaces').
                                     then(function(response) {
                                         console.log('activityPlaces='+response.data);
                                         if (response.data=='')

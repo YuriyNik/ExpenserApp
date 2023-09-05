@@ -103,6 +103,9 @@ public class ExpenceRestContoller {
         if(expenceFromClient.getAmount()!=null) {
             expenceFromDb.setAmount(expenceFromClient.getAmount());
         }
+        if(expenceFromClient.getCurrency()!=null) {
+            expenceFromDb.setCurrency(expenceFromClient.getCurrency());
+        }
         if(expenceFromClient.getType()!=null) {
             expenceFromDb.setType(expenceFromClient.getType());
         }
@@ -156,6 +159,7 @@ public class ExpenceRestContoller {
             for (MigrateExpence migrateExpence:migrateExpences) {
                 Expence expence = new Expence(
                         migrateExpence.getAmount(),
+                        migrateExpence.getCurrency(),
                         migrateExpence.getType(),
                         LocalDateTime.parse(migrateExpence.getDate(), formatter),
                         LocalDateTime.parse(migrateExpence.getDate(), formatter),

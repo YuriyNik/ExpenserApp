@@ -23,6 +23,7 @@
                  "Аптека",
                  "Подарки"
                  ],
+                 currencyTypes: ["ILS","USD","EUR","RUB","KZT","BRL"],
                  activityLabels: ["Лыжи","Роллеры","Бег"],
                  todoLabels: ["Личные","Работа","Купить"]
             };

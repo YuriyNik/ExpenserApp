@@ -15,7 +15,8 @@
         console.log('curryear='+$scope.curryear);
 
         $scope.data = {
-            userTypes: []
+            userTypes: [],
+            currencyTypes: []
            };
         $scope.selected = {};
 
@@ -43,6 +44,11 @@
         then(function(response) {
             console.log('expenceTypes='+response.data);
             $scope.data.userTypes = response.data;
+        });
+        $http.get(host+'/currencyTypes').
+        then(function(response) {
+            console.log('currencyTypes='+response.data);
+            $scope.data.currencyTypes = response.data;
         });
         // start of editing functions: gets the template to ng-include for a table row / item
            $scope.getTemplate = function (expence) {

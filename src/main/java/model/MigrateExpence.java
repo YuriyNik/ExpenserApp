@@ -9,6 +9,7 @@ public class MigrateExpence {
     private String id;
 
     private Double amount;
+    private String currency;
     private String type;
     private String notes;
     private String date;
@@ -20,16 +21,17 @@ public class MigrateExpence {
     @Override
     public String toString() {
         return String.format(
-                "Expence[id=%s, amount='%s', category='%s', date='%s', created='%s', modified='%s',notes='%s', reportId='%s', owner='%s']",
-                id, amount, type, date, created, modified, notes,reportid,owner);
+                "Expence[id=%s, amount='%s', currency='%s', category='%s', date='%s', created='%s', modified='%s',notes='%s', reportId='%s', owner='%s']",
+                id, amount, currency, type, date, created, modified, notes,reportid,owner);
     }
 
     public MigrateExpence(){
 
     }
 
-    public MigrateExpence(Double amount, String type, String date, String created, String modified,String notes ,String report_id, String owner) {
+    public MigrateExpence(Double amount, String currency, String type, String date, String created, String modified,String notes ,String report_id, String owner) {
         this.amount = amount;
+        this.currency = currency;
         this.type = type;
         this.date = date;
         this.created = created;
@@ -49,6 +51,14 @@ public class MigrateExpence {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public String getDate() {

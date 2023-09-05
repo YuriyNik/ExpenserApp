@@ -9,6 +9,7 @@ public class Expence {
     private String id;
 
     private Double amount;
+    private String currency;
     private String type;
     private String notes;
     private LocalDateTime date;
@@ -19,16 +20,17 @@ public class Expence {
     @Override
     public String toString() {
         return String.format(
-                "Expence[id=%s, amount='%s', category='%s', date='%s', created='%s', modified='%s',notes='%s', owner='%s']",
-                id, amount, type, date, created, modified, notes,owner);
+                "Expence[id=%s, amount='%s',currency='%s' ,category='%s', date='%s', created='%s', modified='%s',notes='%s', owner='%s']",
+                id, amount, currency, type, date, created, modified, notes,owner);
     }
 
     public Expence(){
 
     }
 
-    public Expence(Double amount, String type, LocalDateTime date, LocalDateTime created, LocalDateTime modified,String notes , String owner) {
+    public Expence(Double amount, String currency, String type, LocalDateTime date, LocalDateTime created, LocalDateTime modified,String notes , String owner) {
         this.amount = amount;
+        this.currency = currency;
         this.type = type;
         this.date = date;
         this.created = created;
@@ -51,6 +53,12 @@ public class Expence {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+    public String getCurrency(){ return  currency; }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public LocalDateTime getDate() {

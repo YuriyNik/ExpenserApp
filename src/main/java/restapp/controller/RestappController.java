@@ -83,6 +83,28 @@ public class RestappController {
         return expenceTypes;
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/currencyTypes")
+    public String[] getCurrencyTypes(){
+        UserDetails user =
+                (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String[] currencyTypes =  userRepository.findByUsername(user.getUsername()).getCurrencyTypes();
+        System.out.println("get currencyTypes="+currencyTypes);
+        return currencyTypes;
+    }
+
+    @RequestMapping(method=RequestMethod.POST,value="/currencyTypes")
+    public String[] postCurrencyTypes(@RequestBody String[] currencyTypes) {
+        logger.info("POST currencyTypes="+Arrays.toString(currencyTypes));
+        UserDetails user =
+                (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userFromDB = userRepository.findByUsername(user.getUsername());
+        userFromDB.setCurrencyTypes(currencyTypes);
+        userFromDB.setModified(LocalDateTime.now());
+        userRepository.save(userFromDB);
+        System.out.println("post currencyTypes="+currencyTypes);
+        return currencyTypes;
+    }
+
 
     @RequestMapping(method = RequestMethod.GET, value="/login")
     public String getLogin () {

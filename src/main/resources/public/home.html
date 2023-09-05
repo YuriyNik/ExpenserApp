@@ -2,6 +2,10 @@
     &nbsp;&nbsp;  <b>{{userDetails.username}}</b> запиши-ка расходы - это просто:<br/>
     &nbsp;&nbsp;<b>Сумма</b><input type="number" ng-model="expence.amount" name="amount" required /><br/>
     <span ng-show="expence.amount.$touched && expence.amount.$invalid">The name is required.</span>
+    &nbsp;&nbsp;<b>валюта</b><select ng-model="expence.currency" name="currency" >
+    <option value="">валюта</option>
+    <option ng-repeat="currency in data.currencyTypes" value="{{currency}}">{{currency}}</option></select>  <br/>
+    <br/>
     &nbsp;&nbsp;<b>Статья </b><select ng-model="expence.type" name="type" >
      <option value=""> расходов </option>
         <option ng-repeat="option in data.userTypes" value="{{option}}">{{option}}</option></select> <a href="#/user">Изменить список</a> &nbsp;&nbsp;<a href="#/reports">Отчеты </a> <br/>
@@ -21,7 +25,7 @@
 год:<input type="number" ng-model="curryear" style="width: 6%;" required/>
 <button ng-click="showForThisMonth(currmonth)" style="color:blueviolet">Показать <b>{{currmonth}}-{{curryear}}</b> </button><br/>
 <table border="1">
-    <td >Дата</td><td>  &nbsp; &nbsp;&nbsp; Сумма&nbsp;&nbsp;&nbsp;    </td><td>Тип(Кликни на него)</td><td>Примечание</td><td>Удалить</td></tr>
+    <td >Дата</td><td>  &nbsp; &nbsp;&nbsp; Сумма&nbsp;&nbsp;&nbsp;    </td><td>Валюта</td><td>Тип(Кликни на него)</td><td>Примечание</td><td>Удалить</td></tr>
 
     <tr ng-repeat="expence in expences" ng-include="getTemplate(expence)">
     </tr>
@@ -29,6 +33,7 @@
 <script type="text/ng-template" id="display">
     <td align="center">{{expence.date|date:'yyyy-MM-dd'}}</td>
     <td align="center" ><b>{{expence.amount}}</b></td>
+    <td align="center" ><b>{{expence.currency}}</b></td>
     <td ng-click="showByType(expence.type)" style="color:blueviolet" align="left">{{expence.type}}</td>
     <td align="left">{{expence.notes}}</td>
     <td><button ng-click="editExpence(expence)">Изменить</button>
@@ -37,9 +42,14 @@
 <script type="text/ng-template" id="edit">
     <td> <input type="date" ng-model="selected.date" /> </td>
     <td> <input type="number" ng-model="selected.amount" /> </td>
+    <td> <select ng-model="selected.currency" name="currency">
+        <option value="{{selected.currency}}">{{selected.currency}}</option>
+        <option ng-repeat="currency in data.currencyTypes" value="{{currency}}">{{currency}}</option>
+        </select>
+    </td>
     <td><select ng-model="selected.type" name="type" >
         <option value="{{selected.type}}">{{selected.type}}</option>
-        <option ng-repeat="option in data.userTypes" value="{{option}}">{{option}}</option>
+        <option ng-repeat="type in data.userTypes" value="{{type}}">{{type}}</option>
     </select>
     </td>
     <td> <input type="text" ng-model="selected.notes" /> </td>

@@ -15,6 +15,7 @@ public class User {
     private LocalDateTime created;
     private LocalDateTime modified;
     private String[] expenceTypes;
+    private String[] currencyTypes;
     private String[] todoLabels;
     private String[] activityLabels;
     private String[] activityPlaces;
@@ -81,6 +82,14 @@ public class User {
         return expenceTypes;
     }
 
+    public void setCurrencyTypes(String[] currencyTypes) {
+        this.currencyTypes = currencyTypes;
+    }
+
+    public String[] getCurrencyTypes() {
+        return currencyTypes;
+    }
+
     public void setTodoLabels(String[] todoLabels) {
         this.todoLabels = todoLabels;
     }
@@ -104,8 +113,8 @@ public class User {
     @Override
     public String toString() {
         return String.format(
-                "{id=%s, username='%s', roles='%s',expenceTypes='%s', activityLabels='%s',todoLabels='%s',activityPlaces='%s'}",
-                id, username, Arrays.toString(roles),Arrays.toString(expenceTypes),Arrays.toString(activityLabels),Arrays.toString(todoLabels),Arrays.toString(activityPlaces));
+                "{id=%s, username='%s', roles='%s',expenceTypes='%s', currencyTypes='%s',activityLabels='%s',todoLabels='%s',activityPlaces='%s'}",
+                id, username, Arrays.toString(roles),Arrays.toString(expenceTypes),Arrays.toString(currencyTypes),Arrays.toString(activityLabels),Arrays.toString(todoLabels),Arrays.toString(activityPlaces));
     }
 
 }
