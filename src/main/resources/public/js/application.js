@@ -2,7 +2,7 @@
 
   var app = angular.module("ExpenceApplication", ["ngRoute", "ngCookies", 'base64']);
 
-  app.constant('host', '');//'http://localhost:8080');
+  app.constant('host','');//, 'http://localhost:8080');
 
   app.config(function($routeProvider) {
 
