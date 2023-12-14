@@ -29,7 +29,7 @@ public class Activity {
     @Override
     public String toString() {
         return String.format(
-                "Activity[id=%s, date = '%s', type='%s', durationHours =%s ,durationMins =%s ,durationSecs =%s , distance = %s, pulseAve = %s, pulseMax=%s,  location =%s, notes=%S , weather =%s, speedAve =%s, paceAve =%s, created='%s', modified='%s', owner='%s']",
+                "Activity[id=%s, date = '%s', type='%s', durationHours =%s ,durationMins =%s ,durationSecs =%s , distance = %s, pulseAve = %s, pulseMax=%s,  location =%s, notes=%s , weather =%s, speedAve =%s, paceAve =%s, created='%s', modified='%s', owner='%s']",
                 id, date, type,  durationHours,durationMins,durationSecs,distance , pulseAve, pulseMax, location, notes, weather, speedAve, paceAve, created, modified, owner);
     }
 
