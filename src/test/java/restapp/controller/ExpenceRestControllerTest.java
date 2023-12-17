@@ -36,7 +36,7 @@ public class ExpenceRestControllerTest {
         expence.setType("food");
         // Заполните объект Expence данными для теста
 
-        headers.setBasicAuth("test", "test");
+        headers.setBasicAuth("testUser", "password");
         HttpEntity<Expence> requestEntity = new HttpEntity<>(expence, headers);
         Expence responseExpence = restTemplate.postForObject("/expence",requestEntity , Expence.class);
 
@@ -46,7 +46,7 @@ public class ExpenceRestControllerTest {
 
     @Test
     public void testListAllExpence() {
-        List<Expence> expences = restTemplate.withBasicAuth("test","test").getForObject("/expenceForThisMonth/12/2023", List.class);
+        List<Expence> expences = restTemplate.withBasicAuth("testUser","password").getForObject("/expenceForThisMonth/12/2023", List.class);
 
         assertNotNull(expences);
         // Добавьте дополнительные проверки, если необходимо
@@ -60,7 +60,7 @@ public class ExpenceRestControllerTest {
         int year = 2023;
         String type = "food";
 
-        List<ExpenceSummary> expenceSummaries = restTemplate.withBasicAuth("test","test").getForObject(
+        List<ExpenceSummary> expenceSummaries = restTemplate.withBasicAuth("testUser","password").getForObject(
                 String.format("/reports/%d/%d/%s", month, year, type), List.class);
 
         assertNotNull(expenceSummaries);
